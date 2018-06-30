@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+	<script>
+
+	var app = angular.module('CDS-config-app', []);
+
+	app.controller('configurator', function($scope) {
+
+		$scope.todos = [ {text:'Learn AngularJS', done:true},
+
+		{text:'build an AngularJS app', done:false}];
+
+
+		$scope.addTodo = function() {
+
+			if($scope.todoText !== '') {
+
+				$scope.todos.push({text:$scope.todoText, done:false});
+
+				$scope.todoText = '';
+
+			}
+
+		};
+
+
+		$scope.removeCompleted = function() {
+
+			for (var i = $scope.todos.length - 1; i >= 0; i--){
+
+			    if( $scope.todos[i].done === true){
+
+			        $scope.todos[i].text = "done";
+
+			        $scope.todos.splice(i,1);
+
+			    }
+
+			}
+
+		};
+
+	});
+
+	</script>
+
+	</head>
+
+	<body ng-app="CDS-config-app">
+	<div class="container">
+
+		<div class="jumbotron">
+
+			<h1>To-Do App</h1>
+
+			<div ng-controller="todoList">
+
+				<span>Items: {{todos.length}}</span>
+
+				<ul>
+
+					<li ng-repeat="todo in todos">
+
+					<label class="checkbox">
+
+					<input type="checkbox" ng-model="todo.done">
+
+					<span class="done-{{todo.done}}">{{todo.text}}</span>
+
+					</label>
+
+					</li>
+
+				</ul>
+
+				<form ng-submit="addTodo()">
+
+					<input type="text" ng-model="todoText" size="30"
+
+					  placeholder="add new todo here">
+
+					<input type="submit" value="add">
+
+				</form>
+
+				<form ng-submit="removeCompleted()">
+
+					<input type="submit" value="remove completed">
+
+				</form>
+
+			</div>
+			<hr>
+			<h1>Configurator App</h1>
+
+			<div ng-controller="configurator">
+
+				<span>Please select which type of installation:</span><br>
+
+
+					<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button" >New Installation</button>
+					<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button">Existing Installation</button>
+
+				<ul>
+
+					<li ng-repeat="todo in todos">
+
+					<label class="checkbox">
+
+					<input type="checkbox" ng-model="todo.done">
+
+					<span class="done-{{todo.done}}">{{todo.text}}</span>
+
+					</label>
+
+					</li>
+
+				</ul>
+
+				<form ng-submit="addTodo()">
+
+					<input type="text" ng-model="todoText" size="30"
+
+					  placeholder="add new todo here">
+
+					<input type="submit" value="add">
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+	</body>
+
+</html>
