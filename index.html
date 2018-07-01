@@ -30,6 +30,7 @@
 
 		};
 
+		$scope.showExisting = function() {};
 
 		$scope.removeCompleted = function() {
 
@@ -58,46 +59,7 @@
 
 		<div class="jumbotron">
 
-			<h1>To-Do App</h1>
-
-			<div ng-controller="todoList">
-
-				<span>Items: {{todos.length}}</span>
-
-				<ul>
-
-					<li ng-repeat="todo in todos">
-
-					<label class="checkbox">
-
-					<input type="checkbox" ng-model="todo.done">
-
-					<span class="done-{{todo.done}}">{{todo.text}}</span>
-
-					</label>
-
-					</li>
-
-				</ul>
-
-				<form ng-submit="addTodo()">
-
-					<input type="text" ng-model="todoText" size="30"
-
-					  placeholder="add new todo here">
-
-					<input type="submit" value="add">
-
-				</form>
-
-				<form ng-submit="removeCompleted()">
-
-					<input type="submit" value="remove completed">
-
-				</form>
-
-			</div>
-			<hr>
+			
 			<h1>Configurator App</h1>
 
 			<div ng-controller="configurator">
