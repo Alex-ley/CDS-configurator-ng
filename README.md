@@ -1,4 +1,4 @@
-# ng-CDS-Config
+# CDS-Configurator-ng
 
 A simple Single Page Application (SPA) project using Angular.js framework
 
