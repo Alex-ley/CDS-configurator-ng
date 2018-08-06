@@ -1,0 +1,33 @@
+#new-installation ul{
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+#new-installation ul li{
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+#new-installation:after{
+  display: block;
+  content: "";
+  clear: both;
+}
+
+#new-installation form:after{
+  display: block;
+  content: "";
+  clear: both;
+}
+
+#new-left{
+  float: left;
+  width: 50%;
+}
+
+#new-right{
+  float: left;
+  width: 50%;
+}

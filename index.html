@@ -2,6 +2,7 @@
 <html>
 	<head>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<script src="app.js"></script>
 
@@ -13,8 +14,78 @@
 				<h1>CDS Configurator App</h1>
 				<div ng-controller="configurator">
 					<span>Please select which type of installation:</span><br>
-						<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button" >New Installation</button>
-						<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button">Existing Installation</button>
+						<button ng-click="new_installation()" class"btn btn-outline-primary" type="button" >New Installation</button>
+						<button ng-click="existing_installation()" class"btn btn-outline-primary" type="button">Existing Installation</button>
+						<section id="new-installation">
+							<h4>New Installation</h4>
+							<form ng-submit="addTodo()">
+									<div id="new-left">
+										<ul>
+											<li ng-repeat="(key,value) in new_values">
+												<label for="{{'new_' + key}}">{{key}}</label><br>
+												<input id="{{'new_' + key}}" type="text" ng-change="update_new()" ng-model="new_values[key]">
+											</li>
+										</ul>
+									</div>
+									<div id="new-right">
+										<table style="width:100%">
+										  <tr>
+										    <th>QTY</th>
+										    <th>PN</th>
+										    <th>DESCRIPTION</th>
+										  </tr>
+										  <tr>
+										    <td>1</td>
+										    <td>7230.0000</td>
+										    <td>Test PN</td>
+										  </tr>
+										  <tr>
+												<td>2</td>
+										    <td>7230.0200</td>
+										    <td>Test PN2</td>
+										  </tr>
+										</table>
+									</div>
+									<input type="submit" value="submit">
+							</form>
+						</section>
+						<section id="existing-installation">
+							<h4>Existing Installation</h4>
+							<form ng-submit="addTodo()">
+									<div id="existing-left">
+										<ul>
+											<li ng-repeat="(key,value) in existing_values">
+												<label for="{{'exist_' + key}}">{{key}}</label><br>
+												<input id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]">
+											</li>
+										</ul>
+									</div>
+									<div id="existing-right">
+										<table style="width:100%">
+										  <tr>
+										    <th>QTY</th>
+										    <th>PN</th>
+										    <th>DESCRIPTION</th>
+										  </tr>
+										  <tr>
+										    <td>1</td>
+										    <td>7230.0000</td>
+										    <td>Test PN</td>
+										  </tr>
+										  <tr>
+												<td>2</td>
+										    <td>7230.0200</td>
+										    <td>Test PN2</td>
+										  </tr>
+										</table>
+									</div>
+									<input type="submit" value="submit">
+							</form>
+						</section>
+					<hr>
+					<h1>To Do List</h1>
+					<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button" >Remove Completed</button>
+					<br><br>
 					<ul>
 						<li ng-repeat="todo in todos">
 						<label class="checkbox">
