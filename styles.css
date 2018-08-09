@@ -31,3 +31,31 @@
   float: left;
   width: 50%;
 }
+
+section.hidden {
+  display: none;
+}
+
+#existing-installation ul{
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+#existing-installation ul li{
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+#existing-installation:after{
+  display: block;
+  content: "";
+  clear: both;
+}
+
+#existing-installation form:after{
+  display: block;
+  content: "";
+  clear: both;
+}
