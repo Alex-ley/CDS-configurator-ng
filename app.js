@@ -13,6 +13,7 @@ var app = angular.module('CDS-config-app', []);
 							};
 
 		$scope.existing_values = {
+								'Packages':{'text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'WE_Packages':{'text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'Controllers':{'text':'Instrument Controllers on license key','value':1, 'disabled':false, 'show':false},
 								'Clients':{'text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
@@ -57,9 +58,9 @@ var app = angular.module('CDS-config-app', []);
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 		$scope.existing_result = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 
 		$scope.new_options_1 = [
@@ -128,19 +129,16 @@ var app = angular.module('CDS-config-app', []);
 		$scope.existing_options = {
 					'Single':{
 							'7.x to 7.x+1 upgrade':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
 										],
 							'Upgrade with support contracts':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 7.x to 7.x+1 with support contract','NOTES':'one time per license package'}
 										],
 							'6.8 to 7.2':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
 										],
 							'Adding Remote Data Client for data reprocessing':[
 											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
@@ -244,17 +242,21 @@ var app = angular.module('CDS-config-app', []);
 
 		$scope.new_installation = function() {
 			// alert("new");
-			if ($scope.new_section == "hidden") {
-				$scope.new_section = "";
-				$scope.existing_section = "hidden";
+			if ($scope.new_section.show == false) {
+				$scope.new_section.show = true;
+				$scope.new_section.class = 'btn btn-primary';
+				$scope.existing_section.show = false;
+				$scope.existing_section.class = 'btn btn-outline-primary';
 			}
 		};
 
 		$scope.existing_installation = function() {
 			// alert("existing");
-			if ($scope.existing_section == "hidden") {
-				$scope.existing_section = "";
-				$scope.new_section = "hidden";
+			if ($scope.existing_section.show == false) {
+				$scope.existing_section.show = true;
+				$scope.existing_section.class = 'btn btn-primary';
+				$scope.new_section.show = false;
+				$scope.new_section.class = 'btn btn-outline-primary';
 			}
 		};
 
@@ -362,16 +364,70 @@ var app = angular.module('CDS-config-app', []);
 
 		$scope.update_category = function() {
 			$scope.selected_option = $scope.modification_options[$scope.selected_category][0];
-
-
+			$scope.update_existing();
 		};
 
 		$scope.update_existing = function() {
-			alert("update exist");
+			// alert("update exist");
+			var TF = parseInt($scope.existing_values['TF']['value']) || 0;
+			var GC = parseInt($scope.existing_values['GC']['value']) || 0;
+			var LC = parseInt($scope.existing_values['LC']['value']) || 0;
+			$scope.existing_values['Total']['value'] = TF + GC + LC;
+
+			var Clients = parseInt($scope.existing_values['Clients']['value']) || 0;
+			var Data = parseInt($scope.existing_values['Data']['value']) || 0;
+			$scope.existing_values['Total_Clients']['value'] = Clients + Data;
+
+			var Controllers = parseInt($scope.existing_values['Controllers']['value']) || 0;
+			var Total_Clients = parseInt($scope.existing_values['Total_Clients']['value']) || 0;
+			$scope.existing_values['Max_Controllers_Clients']['value'] = Math.max(Controllers,Total_Clients);
+
+			var Instruments = parseInt($scope.existing_values['Total']['value']) || 0;
+			$scope.existing_values['Max_Instruments_Clients']['value'] = Math.max(Instruments,Total_Clients);
+
+			$scope.existing_result = [];
+			// Existing Part (only 1)
+			var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
+			// alert(parts_array[0]['QTY']);
+
+			$scope.existing_valid = true;
+			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
+			for (var j = 0; j < parts_array.length; j++){
+					var lookup_qty = parts_array[j]['QTY'];
+					var qty = parseInt(parts_array[j]['QTY']) || parseInt($scope.existing_values[lookup_qty]['value']);
+					parts_array[j]['QTY'] = qty;
+					if(qty > parseInt(parts_array[j]['MAX'])){
+						parts_array[j]['Valid'] = 'is-invalid';
+						$scope.existing_valid = false;
+						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
+					}else {
+						parts_array[j]['Valid'] = 'is-valid';
+					}
+					// $scope.existing_result.push(obj);
+			}
+			$scope.existing_result = parts_array;
 		};
 
-		$scope.new_section = "hidden";
-		$scope.existing_section = "hidden";
+		$scope.update_quantities = function() {
+			$scope.existing_valid = true;
+			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
+			for (var j = 0; j < $scope.existing_result.length; j++){
+					var lookup_qty = $scope.existing_result[j]['QTY'];
+					var qty = parseInt($scope.existing_result[j]['QTY']) || parseInt($scope.existing_values[lookup_qty]['value']);
+					$scope.existing_result[j]['QTY'] = qty;
+					if(qty > parseInt($scope.existing_result[j]['MAX'])){
+						$scope.existing_result[j]['Valid'] = 'is-invalid';
+						$scope.existing_valid = false;
+						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
+					}else {
+						$scope.existing_result[j]['Valid'] = 'is-valid';
+					}
+			}
+		};
+
+		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
+		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
+		$scope.existing_validation = {'style':'','text':''};
 
 	}]);
 

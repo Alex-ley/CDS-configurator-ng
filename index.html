@@ -11,27 +11,40 @@
 	</head>
 
 	<body ng-app="CDS-config-app">
-		<div class="container">
-			<div class="jumbotron">
+		<div id="container" class="container-fluid">
+			<div id="jumbotron" class="jumbotron">
+				<button type="button" class="btn btn-primary">Primary</button>
+				<button type="button" class="btn btn-secondary">Secondary</button>
+				<button type="button" class="btn btn-success">Success</button>
+				<button type="button" class="btn btn-danger">Danger</button>
+				<button type="button" class="btn btn-warning">Warning</button>
+				<button type="button" class="btn btn-info">Info</button>
+				<button type="button" class="btn btn-light">Light</button>
+				<button type="button" class="btn btn-dark">Dark</button>
+				<button type="button" class="btn btn-link">Link</button>
 				<h1>CDS Configurator App</h1>
 				<div ng-controller="configurator">
 					<span>Please select which type of installation:</span><br>
-						<button ng-click="new_installation()" class"btn btn-outline-primary" type="button" >New Installation</button>
-						<button ng-click="existing_installation()" class"btn btn-outline-primary" type="button">Existing Installation</button>
+						<button ng-click="new_installation()" class="{{new_section.class}}" type="button" >New Installation</button>
+						<button ng-click="existing_installation()" class="{{existing_section.class}}" type="button">Existing Installation</button>
 						<hr>
-						<section id="new-installation" class="{{new_section}}">
+						<section id="new-installation" ng-show="new_section.show">
 							<h4>New Installation</h4>
 							<form ng-submit="TBC()">
 									<div id="new-left">
 										<ul>
 											<li ng-repeat="(key,value) in new_values" ng-show="new_values[key]['show']">
-												<label for="{{'new_' + key}}">{{new_values[key]['text']}}</label><br>
-												<input id="{{'new_' + key}}" type="text" ng-change="update_new()" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
+												<div class="form-group">
+											    <label for="{{'new_' + key}}"><strong>{{new_values[key]['text']}}</strong></label>
+											    <input class="form-control" aria-describedby="{{'new_' + key + '_help'}}" id="{{'new_' + key}}" type="text" ng-change="update_new()" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
+											    <small id="{{'new_' + key + '_help'}}" class="form-text text-muted"></small>
+											  </div>
 											</li>
 										</ul>
 									</div>
 									<div id="new-right">
-										<table style="width:100%">
+										<h4>Option 1:</h4>
+										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
 										    <th>PN</th>
@@ -46,7 +59,8 @@
 										  </tr>
 										</table>
 										<br><br>
-										<table style="width:100%">
+										<h4>Option 2:</h4>
+										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
 										    <th>PN</th>
@@ -65,45 +79,54 @@
 									<input type="submit" value="submit">
 							</form>
 						</section>
-						<section id="existing-installation" class="{{existing_section}}">
+						<section id="existing-installation" ng-show="existing_section.show">
 							<h4>Existing Installation</h4>
 							<form ng-submit="TBC()">
 									<div id="existing-left">
 										<ul>
 											<li>
-												<label for="selected_installation">Current Installation Package</label><br>
-												<select id="selected_installation" ng-change="update_installation_type()" ng-model="selected_installation" ng-options="x for x in installation_type"></select>
+												<div class="form-group">
+													<label for="selected_installation"><strong>Current Installation Package</strong></label><br>
+													<select class="form-control" id="selected_installation" ng-change="update_installation_type()" ng-model="selected_installation" ng-options="x for x in installation_type"></select>
+												</div>
 											</li>
 											<li ng-repeat="(key,value) in existing_values" ng-show="existing_values[key]['show']">
-												<label for="{{'exist_' + key}}">{{existing_values[key]['text']}}</label><br>
-												<input id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
-											</li>
-											<li>
-												<label for="selected_category">How would you like to modify</label><br>
-												<select id="selected_category" ng-change="update_category()" ng-model="selected_category" ng-options="x for x in modification_categories"></select>
-											</li>
-											<li>
-												<label for="selected_option">Specifically</label><br>
-												<select id="selected_option" ng-change="update_existing()" ng-model="selected_option" ng-options="x for x in modification_options[selected_category]"></select>
+												<div class="form-group">
+											    <label for="{{'exist_' + key}}"><strong>{{existing_values[key]['text']}}</strong></label>
+											    <input class="form-control" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
+											    <small id="{{'exist_' + key + '_help'}}" class="form-text text-muted"></small>
+											  </div>
 											</li>
 										</ul>
 									</div>
 									<div id="existing-right">
-										<table style="width:100%">
+										<ul>
+											<li>
+												<div class="form-group">
+													<label for="selected_category"><strong>How would you like to modify</strong></label><br>
+													<select class="form-control" id="selected_category" ng-change="update_category()" ng-model="selected_category" ng-options="x for x in modification_categories"></select>
+												</div>
+											</li>
+											<li>
+												<div class="form-group">
+													<label for="selected_option"><strong>Specifically</strong></label><br>
+													<select class="form-control" id="selected_option" ng-change="update_existing()" ng-model="selected_option" ng-options="x for x in modification_options[selected_category]"></select>
+												</div>
+											</li>
+										</ul>
+										<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
 										    <th>PN</th>
 										    <th>DESCRIPTION</th>
+												<th>NOTES</th>
 										  </tr>
-										  <tr>
-										    <td>1</td>
-										    <td>7230.0000</td>
-										    <td>Test PN</td>
-										  </tr>
-										  <tr>
-												<td>2</td>
-										    <td>7230.0200</td>
-										    <td>Test PN2</td>
+											<tr ng-repeat="obj in existing_result">
+												<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities()"></div></td>
+										    <td>{{obj.PN}}</td>
+										    <td>{{obj.DESC}}</td>
+												<td>{{obj.NOTES}}</td>
 										  </tr>
 										</table>
 									</div>
@@ -114,7 +137,7 @@
 				</div> <!-- end of configurator -->
 				<div ng-controller="to-do">
 					<h1>To Do List</h1>
-					<button ng-click="removeCompleted()" class"btn btn-outline-primary" type="button" >Remove Completed</button>
+					<button ng-click="removeCompleted()" class="btn btn-outline-danger" type="button" >Remove Completed</button>
 					<br><br>
 					<ul>
 						<li ng-repeat="todo in todos">
@@ -124,9 +147,11 @@
 						</label>
 						</li>
 					</ul>
-					<form ng-submit="addTodo()">
-						<input type="text" ng-model="todoText" size="30" placeholder="add new todo here">
-						<input type="submit" value="add">
+					<form class="form-inline" ng-submit="addTodo()">
+						<div class="form-group">
+							<input class="form-control" type="text" ng-model="todoText" size="30" placeholder="add new todo here" style="margin-right: 10px;">
+							<input type="submit" value="add" class="btn btn-success">
+						</div>
 					</form>
 				</div> <!-- end of to-do -->
 			</div>
