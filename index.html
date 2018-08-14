@@ -13,7 +13,7 @@
 	<body ng-app="CDS-config-app">
 		<div id="container" class="container-fluid">
 			<div id="jumbotron" class="jumbotron">
-				<button type="button" class="btn btn-primary">Primary</button>
+				<!-- <button type="button" class="btn btn-primary">Primary</button>
 				<button type="button" class="btn btn-secondary">Secondary</button>
 				<button type="button" class="btn btn-success">Success</button>
 				<button type="button" class="btn btn-danger">Danger</button>
@@ -21,7 +21,7 @@
 				<button type="button" class="btn btn-info">Info</button>
 				<button type="button" class="btn btn-light">Light</button>
 				<button type="button" class="btn btn-dark">Dark</button>
-				<button type="button" class="btn btn-link">Link</button>
+				<button type="button" class="btn btn-link">Link</button> -->
 				<h1>CDS Configurator App</h1>
 				<div ng-controller="configurator">
 					<span>Please select which type of installation:</span><br>
@@ -76,7 +76,7 @@
 										</table>
 										<br>
 									</div>
-									<input type="submit" value="submit">
+									<input type="submit" value="submit" class="btn btn-success">
 							</form>
 						</section>
 						<section id="existing-installation" ng-show="existing_section.show">
@@ -93,14 +93,14 @@
 											<li ng-repeat="(key,value) in existing_values" ng-show="existing_values[key]['show']">
 												<div class="form-group">
 											    <label for="{{'exist_' + key}}"><strong>{{existing_values[key]['text']}}</strong></label>
-											    <input class="form-control" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
-											    <small id="{{'exist_' + key + '_help'}}" class="form-text text-muted"></small>
+											    <input class="{{'form-control ' + existing_values[key]['valid']}}" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
+											    <small id="{{'exist_' + key + '_help'}}" class="form-text text-muted">{{existing_values[key]['small']}}</small>
 											  </div>
 											</li>
 										</ul>
 									</div>
 									<div id="existing-right">
-										<ul>
+										<ul id="existing-dropdowns">
 											<li>
 												<div class="form-group">
 													<label for="selected_category"><strong>How would you like to modify</strong></label><br>
@@ -130,7 +130,7 @@
 										  </tr>
 										</table>
 									</div>
-									<input type="submit" value="submit">
+									<input type="submit" value="submit" class="btn btn-success">
 							</form>
 						</section>
 					<hr>

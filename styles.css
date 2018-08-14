@@ -67,6 +67,10 @@ body {
   width: 65%;
 }
 
+#new-right h4{
+  padding-left: 10px;
+}
+
 .hidden {
   display: none;
 }
@@ -105,6 +109,15 @@ body {
 #existing-right{
   float: left;
   width: 65%;
+}
+
+#existing-right h4{
+  padding-left: 10px;
+}
+
+ul#existing-dropdowns{
+  padding-left: 15px;
+  padding-right: 60px;
 }
 
 /* MEDIA QUERIES */

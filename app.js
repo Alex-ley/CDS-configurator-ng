@@ -13,19 +13,19 @@ var app = angular.module('CDS-config-app', []);
 							};
 
 		$scope.existing_values = {
-								'Packages':{'text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
-								'WE_Packages':{'text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
-								'Controllers':{'text':'Instrument Controllers on license key','value':1, 'disabled':false, 'show':false},
-								'Clients':{'text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
-								'TF':{'text':'Thermo Fisher Instruments','value':2, 'disabled':false, 'show':true},
-								'GC':{'text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
-								'LC':{'text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
-								'Total':{'text':'Total Instruments','value':2, 'disabled':true, 'show':true},
-								'Data':{'text':'Data Clients','value':2, 'disabled':false, 'show':true},
-								'Total_Clients':{'text':'Total Clients','value':3, 'disabled':false, 'show':false},
-								'License':{'text':'License key','value':1, 'disabled':false, 'show':false},
-								'Max_Controllers_Clients':{'text':'Max of controllers / clients','value':3, 'disabled':false, 'show':false},
-								'Max_Instruments_Clients':{'text':'Max of instruments / clients','value':3, 'disabled':false, 'show':false}
+								'Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
+								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
+								'Controllers':{'valid':'','small':'','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
+								'Clients':{'valid':'','small':'','text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
+								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
+								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
+								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
+								'Data':{'valid':'','small':'','text':'Data Clients','value':2, 'disabled':false, 'show':true},
+								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':3, 'disabled':false, 'show':false},
+								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
+								'Max_Controllers_Clients':{'valid':'','small':'','text':'Max of controllers / clients','value':3, 'disabled':false, 'show':false},
+								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':3, 'disabled':false, 'show':false}
 							};
 
 		$scope.installation_type = ['Single','Workgroup','Enterprise','Existing SE/WE','Existing a-la-carte'];
@@ -128,6 +128,14 @@ var app = angular.module('CDS-config-app', []);
 
 		$scope.existing_options = {
 					'Single':{
+							'max':{
+										'Clients':{'value':1},
+										'TF':{'value':1},
+										'GC':{'value':0},
+										'LC':{'value':0},
+										'Total':{'value':1},
+										'Data':{'value':999999}
+										},
 							'7.x to 7.x+1 upgrade':[
 											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
 											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
@@ -141,101 +149,292 @@ var app = angular.module('CDS-config-app', []);
 											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
 										],
 							'Adding Remote Data Client for data reprocessing':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0030','DESC':'Remote Data Client','NOTES':''}
 										],
 							'Adding Client license':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0300','DESC':'Enterprise Client','NOTES':''}
 										],
 							'Adding Instrument license':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1000','DESC':'Enterprise Thermo Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1002','DESC':'Enterprise 3rd Party GC Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1003','DESC':'Enterprise 3rd Party LC Instrument','NOTES':''}
 										],
 							'Adding Workstation package (SE, DE, WSO, WSS,WE)':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-invalid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Adding optional add-ons':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7000.0020','DESC':'Spectral License','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0034','DESC':'Secure add-on/Compliance','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Report Designer Pro','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Fraction Collection','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7100.0082','DESC':'SDK Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0050','DESC':'XPS','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7200.0090','DESC':'XPS Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0090','DESC':'Virtual Column Basic (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0092','DESC':'Virtual Column Complete (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0046','DESC':'Intact Protein Deconvolution','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0044','DESC':'Non-targeted MS-Processing/Biopharma QC Package','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7100.0085','DESC':'SDK Runtime','NOTES':'once per client'}
 										],
 							'Adding a contract':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Add Class 2/3 Instrument Licence':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Only available for Enterprise':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'must upgrade to enterprise in order to do this','NOTES':''}
 											]
 									},
 					'Workgroup':{
+							'max':{
+										'Clients':{'value':3},
+										'TF':{'value':12},
+										'GC':{'value':12},
+										'LC':{'value':6},
+										'Total':{'value':12},
+										'Data':{'value':999999}
+										},
 							'7.x to 7.x+1 upgrade':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
 										],
 							'Upgrade with support contracts':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 7.x to 7.x+1 with support contract','NOTES':'one time per license package'}
 										],
 							'6.8 to 7.2':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
 										],
 							'Adding Remote Data Client for data reprocessing':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0030','DESC':'Remote Data Client','NOTES':''}
 										],
 							'Adding Client license':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0300','DESC':'Enterprise Client','NOTES':''}
 										],
 							'Adding Instrument license':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1000','DESC':'Enterprise Thermo Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1002','DESC':'Enterprise 3rd Party GC Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1003','DESC':'Enterprise 3rd Party LC Instrument','NOTES':''}
 										],
 							'Adding Workstation package (SE, DE, WSO, WSS,WE)':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-invalid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Adding optional add-ons':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7000.0020','DESC':'Spectral License','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0034','DESC':'Secure add-on/Compliance','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Report Designer Pro','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Fraction Collection','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7100.0082','DESC':'SDK Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0050','DESC':'XPS','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7200.0090','DESC':'XPS Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0090','DESC':'Virtual Column Basic (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0092','DESC':'Virtual Column Complete (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0046','DESC':'Intact Protein Deconvolution','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0044','DESC':'Non-targeted MS-Processing/Biopharma QC Package','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7100.0085','DESC':'SDK Runtime','NOTES':'once per client'}
 										],
 							'Adding a contract':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Add Class 2/3 Instrument Licence':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
 										],
 							'Only available for Enterprise':[
-											{'QTY':'Clients','PN':'7100.0108','DESC':'SE (Single Edition)','NOTES':'test'},
-											{'QTY':'Data','PN':'7200.0030','DESC':'Remote Data Client','NOTES':'test2'},
-											{'QTY':'License','PN':'7050.0104A','DESC':'CM7 License key - New','NOTES':'test3'}
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'must upgrade to enterprise in order to do this','NOTES':''}
+											]
+									},
+					'Enterprise':{
+							'max':{
+										'Clients':{'value':3},
+										'TF':{'value':12},
+										'GC':{'value':12},
+										'LC':{'value':6},
+										'Total':{'value':12},
+										'Data':{'value':999999}
+										},
+							'7.x to 7.x+1 upgrade':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
+										],
+							'Upgrade with support contracts':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 7.x to 7.x+1 with support contract','NOTES':'one time per license package'}
+										],
+							'6.8 to 7.2':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
+										],
+							'Adding Remote Data Client for data reprocessing':[
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0030','DESC':'Remote Data Client','NOTES':''}
+										],
+							'Adding Client license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0300','DESC':'Enterprise Client','NOTES':''}
+										],
+							'Adding Instrument license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1000','DESC':'Enterprise Thermo Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1002','DESC':'Enterprise 3rd Party GC Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1003','DESC':'Enterprise 3rd Party LC Instrument','NOTES':''}
+										],
+							'Adding Workstation package (SE, DE, WSO, WSS,WE)':[
+											{'Valid':'is-invalid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Adding optional add-ons':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7000.0020','DESC':'Spectral License','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0034','DESC':'Secure add-on/Compliance','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Report Designer Pro','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Fraction Collection','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7100.0082','DESC':'SDK Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0050','DESC':'XPS','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7200.0090','DESC':'XPS Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0090','DESC':'Virtual Column Basic (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0092','DESC':'Virtual Column Complete (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0046','DESC':'Intact Protein Deconvolution','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0044','DESC':'Non-targeted MS-Processing/Biopharma QC Package','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7100.0085','DESC':'SDK Runtime','NOTES':'once per client'}
+										],
+							'Adding a contract':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Add Class 2/3 Instrument Licence':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Only available for Enterprise':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'must upgrade to enterprise in order to do this','NOTES':''}
+											]
+									},
+					'Existing SE/WE':{
+							'max':{
+										'Clients':{'value':3},
+										'TF':{'value':12},
+										'GC':{'value':12},
+										'LC':{'value':6},
+										'Total':{'value':12},
+										'Data':{'value':999999}
+										},
+							'7.x to 7.x+1 upgrade':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
+										],
+							'Upgrade with support contracts':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 7.x to 7.x+1 with support contract','NOTES':'one time per license package'}
+										],
+							'6.8 to 7.2':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
+										],
+							'Adding Remote Data Client for data reprocessing':[
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0030','DESC':'Remote Data Client','NOTES':''}
+										],
+							'Adding Client license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0300','DESC':'Enterprise Client','NOTES':''}
+										],
+							'Adding Instrument license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1000','DESC':'Enterprise Thermo Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1002','DESC':'Enterprise 3rd Party GC Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1003','DESC':'Enterprise 3rd Party LC Instrument','NOTES':''}
+										],
+							'Adding Workstation package (SE, DE, WSO, WSS,WE)':[
+											{'Valid':'is-invalid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Adding optional add-ons':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7000.0020','DESC':'Spectral License','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0034','DESC':'Secure add-on/Compliance','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Report Designer Pro','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Fraction Collection','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7100.0082','DESC':'SDK Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0050','DESC':'XPS','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7200.0090','DESC':'XPS Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0090','DESC':'Virtual Column Basic (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0092','DESC':'Virtual Column Complete (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0046','DESC':'Intact Protein Deconvolution','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0044','DESC':'Non-targeted MS-Processing/Biopharma QC Package','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7100.0085','DESC':'SDK Runtime','NOTES':'once per client'}
+										],
+							'Adding a contract':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Add Class 2/3 Instrument Licence':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Only available for Enterprise':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'must upgrade to enterprise in order to do this','NOTES':''}
+											]
+									},
+					'Existing a-la-carte':{
+							'max':{
+										'Clients':{'value':3},
+										'TF':{'value':12},
+										'GC':{'value':12},
+										'LC':{'value':6},
+										'Total':{'value':12},
+										'Data':{'value':999999}
+										},
+							'7.x to 7.x+1 upgrade':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0106','DESC':'Upgrade 7.x to 7.x+1','NOTES':'one time per license package'}
+										],
+							'Upgrade with support contracts':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 7.x to 7.x+1 with support contract','NOTES':'one time per license package'}
+										],
+							'6.8 to 7.2':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'7050.0105','DESC':'License key Upgrade','NOTES':'one time per license key'},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'Packages','PN':'7200.0107','DESC':'Upgrade 6.8 to 7.2','NOTES':'one time per license package'}
+										],
+							'Adding Remote Data Client for data reprocessing':[
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0030','DESC':'Remote Data Client','NOTES':''}
+										],
+							'Adding Client license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.0300','DESC':'Enterprise Client','NOTES':''}
+										],
+							'Adding Instrument license':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0109','DESC':'Upgrade to Enterprise','NOTES':'one time per license package'},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1000','DESC':'Enterprise Thermo Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1002','DESC':'Enterprise 3rd Party GC Instrument','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1000000','QTY':'1','PN':'7200.1003','DESC':'Enterprise 3rd Party LC Instrument','NOTES':''}
+										],
+							'Adding Workstation package (SE, DE, WSO, WSS,WE)':[
+											{'Valid':'is-invalid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Adding optional add-ons':[
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7000.0020','DESC':'Spectral License','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Packages','PN':'7200.0034','DESC':'Secure add-on/Compliance','NOTES':'once per license package'},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Report Designer Pro','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'included','QTY':'1','PN':'included','DESC':'Fraction Collection','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7100.0082','DESC':'SDK Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0050','DESC':'XPS','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'1','PN':'7200.0090','DESC':'XPS Developer','NOTES':'once per developer (Approval from Product Management is required before quoting)'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0090','DESC':'Virtual Column Basic (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7000.0092','DESC':'Virtual Column Complete (inkludiert in Enterprise)','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0046','DESC':'Intact Protein Deconvolution','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7200.0044','DESC':'Non-targeted MS-Processing/Biopharma QC Package','NOTES':'once per client'},
+											{'Valid':'is-valid', 'MAX':'1','QTY':'Total_Clients','PN':'7100.0085','DESC':'SDK Runtime','NOTES':'once per client'}
+										],
+							'Adding a contract':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Add Class 2/3 Instrument Licence':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''},
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'','NOTES':''}
+										],
+							'Only available for Enterprise':[
+											{'Valid':'is-valid', 'MAX':'not available','QTY':'1','PN':'not available','DESC':'must upgrade to enterprise in order to do this','NOTES':''}
 											]
 									}
 			};
@@ -359,7 +558,24 @@ var app = angular.module('CDS-config-app', []);
 					$scope.existing_values['Controllers']['show'] = false;
 				// alert('other');
 			}
+			$scope.check_existing_validity();
+		};
 
+		$scope.check_existing_validity = function() {
+			$scope.existing_options['Workgroup']['max']['TF'].value = parseInt($scope.existing_values['Clients'].value) * 4;
+			$scope.existing_options['Workgroup']['max']['GC'].value = parseInt($scope.existing_values['Clients'].value) * 4;
+			$scope.existing_options['Workgroup']['max']['LC'].value = parseInt($scope.existing_values['Clients'].value) * 2;
+			$scope.existing_options['Workgroup']['max']['Total'].value = parseInt($scope.existing_values['Clients'].value) * 4;
+
+			for (k in $scope.existing_options[$scope.selected_installation]['max']) {
+				if ($scope.existing_values[k].value > $scope.existing_options[$scope.selected_installation]['max'][k].value) {
+					$scope.existing_values[k]['valid'] = 'is-invalid';
+					$scope.existing_values[k]['small'] = 'max. qty exceeded';
+				}else {
+					$scope.existing_values[k]['valid'] = '';
+					$scope.existing_values[k]['small'] = '';
+				}
+			}
 		};
 
 		$scope.update_category = function() {
@@ -406,6 +622,7 @@ var app = angular.module('CDS-config-app', []);
 					// $scope.existing_result.push(obj);
 			}
 			$scope.existing_result = parts_array;
+			$scope.check_existing_validity();
 		};
 
 		$scope.update_quantities = function() {
