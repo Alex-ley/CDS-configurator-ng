@@ -126,8 +126,12 @@ var app = angular.module('CDS-config-app', []);
 								}
 						];
 
-		$http.get('existing_options.json').then(function(data){
-			$scope.existing_options = data;
+		$http.get('existing_options.json').then(function(response){
+			console.log('fetch succesful');
+			console.log(response.data);
+			$scope.existing_options = response.data;
+		},function(error){
+			console.log('fetch error');
 		});
 
 		$scope.new_installation = function() {
