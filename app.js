@@ -126,7 +126,7 @@ var app = angular.module('CDS-config-app', []);
 								}
 						];
 
-		$http.get('existing_options.json').success(function(data){
+		$http.get('existing_options.json').then(function(data){
 			$scope.existing_options = data;
 		});
 
