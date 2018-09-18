@@ -13,7 +13,7 @@ var app = angular.module('CDS-config-app', []);
 							};
 
 		$scope.existing_values = {
-								'Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
+								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':true},
 								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'Controllers':{'valid':'','small':'','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
 								'Clients':{'valid':'','small':'','text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
@@ -27,6 +27,10 @@ var app = angular.module('CDS-config-app', []);
 								'Max_Controllers_Clients':{'valid':'','small':'','text':'Max of controllers / clients','value':3, 'disabled':false, 'show':false},
 								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':3, 'disabled':false, 'show':false}
 							};
+
+		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
+		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
+		$scope.existing_validation = {'style':'','text':''};
 
 		$scope.installation_type = ['Single','Workgroup','Enterprise','Existing SE/WE','Existing a-la-carte'];
 		$scope.selected_installation = 'Single';
@@ -128,10 +132,11 @@ var app = angular.module('CDS-config-app', []);
 
 		$http.get('existing_options.json').then(function(response){
 			console.log('fetch succesful');
-			console.log(response.data);
+			// console.log(response.data);
 			$scope.existing_options = response.data;
 		},function(error){
 			console.log('fetch error');
+			console.log(error);
 		});
 
 		$scope.new_installation = function() {
@@ -238,22 +243,111 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.update_installation_type = function() {
+			$scope.show_hide_existing();
+			$scope.update_existing_result();
+			var calc_qty = true;
+			$scope.update_quantities_result(calc_qty);
+			$scope.check_existing_validity();
+		};
+
+		$scope.update_existing = function() {
+			$scope.update_existing_result();
+			var calc_qty = true;
+			$scope.update_quantities_result(calc_qty);
+			$scope.check_existing_validity();
+		};
+
+		$scope.update_category = function() {
+			$scope.selected_option = $scope.modification_options[$scope.selected_category][0];
+			$scope.update_existing();
+		};
+
+		$scope.update_quantities = function() {
+			var calc_qty = false;
+			$scope.update_quantities_result(calc_qty);
+		};
+
+		$scope.show_hide_existing = function() {
 			if ($scope.selected_installation == 'Existing SE/WE') {
 					$scope.existing_values['WE_Packages']['show'] = true;
 					$scope.existing_values['Controllers']['show'] = false;
+					$scope.existing_values['Data']['show'] = true;
 				// alert('SE/WE');
 			}
 			else if ($scope.selected_installation == 'Existing a-la-carte') {
 					$scope.existing_values['WE_Packages']['show'] = false;
 					$scope.existing_values['Controllers']['show'] = true;
+					$scope.existing_values['Data']['show'] = true;
+				// alert('a-la-carte');
+			}
+			else if ($scope.selected_installation == 'Enterprise') {
+					$scope.existing_values['Data']['show'] = false;
+					// $scope.existing_values['Data']['value'] = 0;
 				// alert('a-la-carte');
 			}
 			else {
 					$scope.existing_values['WE_Packages']['show'] = false;
 					$scope.existing_values['Controllers']['show'] = false;
+					$scope.existing_values['Data']['show'] = true;
 				// alert('other');
 			}
-			$scope.check_existing_validity();
+		};
+
+		$scope.update_existing_result = function() {
+			// alert("update exist");
+			var TF = parseInt($scope.existing_values['TF']['value']) || 0;
+			var GC = parseInt($scope.existing_values['GC']['value']) || 0;
+			var LC = parseInt($scope.existing_values['LC']['value']) || 0;
+			$scope.existing_values['Total']['value'] = TF + GC + LC;
+
+			var Clients = parseInt($scope.existing_values['Clients']['value']) || 0;
+			var Data = parseInt($scope.existing_values['Data']['value']) || 0;
+			$scope.existing_values['Total_Clients']['value'] = Clients + Data;
+
+			var Controllers = parseInt($scope.existing_values['Controllers']['value']) || 0;
+			var Total_Clients = parseInt($scope.existing_values['Total_Clients']['value']) || 0;
+			$scope.existing_values['Max_Controllers_Clients']['value'] = Math.max(Controllers,Total_Clients);
+
+			var Instruments = parseInt($scope.existing_values['Total']['value']) || 0;
+			$scope.existing_values['Max_Instruments_Clients']['value'] = Math.max(Instruments,Clients); //Total_Clients
+
+		};
+
+		$scope.update_quantities_result = function(calc_qty) {
+			$scope.existing_result = [];
+			// Existing Part (only 1)
+			var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
+			// // alert(parts_array[0]['QTY']);
+			// $scope.existing_result = parts_array;
+			$scope.existing_valid = true;
+			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
+			for (var j = 0; j < parts_array.length; j++){
+					var lookup_qty = parts_array[j]['QTY'];
+					// alert(lookup_qty);
+					if (calc_qty) {
+						if (lookup_qty > 0) {
+							var qty = lookup_qty;
+						}else {
+							var qty = parseInt($scope.parts_array[lookup_qty]['value']) || 1;
+							var max = parseInt($scope.parts_array[j]['MAX']);
+						}
+					}else {
+						var qty = parseInt($scope.existing_result[j]['QTY']) || 0;
+						var max = parseInt($scope.existing_result[j]['MAX']);
+					}
+
+					if(qty > max){
+						$scope.existing_result[j]['Valid'] = 'is-invalid';
+						$scope.existing_valid = false;
+						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
+					}else {
+						$scope.existing_result[j]['Valid'] = 'is-valid';
+					}
+			}
+			$scope.existing_result = parts_array;
+			if ($scope.parts_array[j]['QTY'] > 0) {
+				$scope.parts_array[j]['QTY'] = qty;
+			}
 		};
 
 		$scope.check_existing_validity = function() {
@@ -273,73 +367,6 @@ var app = angular.module('CDS-config-app', []);
 			}
 		};
 
-		$scope.update_category = function() {
-			$scope.selected_option = $scope.modification_options[$scope.selected_category][0];
-			$scope.update_existing();
-		};
-
-		$scope.update_existing = function() {
-			// alert("update exist");
-			var TF = parseInt($scope.existing_values['TF']['value']) || 0;
-			var GC = parseInt($scope.existing_values['GC']['value']) || 0;
-			var LC = parseInt($scope.existing_values['LC']['value']) || 0;
-			$scope.existing_values['Total']['value'] = TF + GC + LC;
-
-			var Clients = parseInt($scope.existing_values['Clients']['value']) || 0;
-			var Data = parseInt($scope.existing_values['Data']['value']) || 0;
-			$scope.existing_values['Total_Clients']['value'] = Clients + Data;
-
-			var Controllers = parseInt($scope.existing_values['Controllers']['value']) || 0;
-			var Total_Clients = parseInt($scope.existing_values['Total_Clients']['value']) || 0;
-			$scope.existing_values['Max_Controllers_Clients']['value'] = Math.max(Controllers,Total_Clients);
-
-			var Instruments = parseInt($scope.existing_values['Total']['value']) || 0;
-			$scope.existing_values['Max_Instruments_Clients']['value'] = Math.max(Instruments,Total_Clients);
-
-			$scope.existing_result = [];
-			// Existing Part (only 1)
-			var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
-			// alert(parts_array[0]['QTY']);
-
-			$scope.existing_valid = true;
-			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
-			for (var j = 0; j < parts_array.length; j++){
-					var lookup_qty = parts_array[j]['QTY'];
-					var qty = parseInt(parts_array[j]['QTY']) || parseInt($scope.existing_values[lookup_qty]['value']);
-					parts_array[j]['QTY'] = qty;
-					if(qty > parseInt(parts_array[j]['MAX'])){
-						parts_array[j]['Valid'] = 'is-invalid';
-						$scope.existing_valid = false;
-						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
-					}else {
-						parts_array[j]['Valid'] = 'is-valid';
-					}
-					// $scope.existing_result.push(obj);
-			}
-			$scope.existing_result = parts_array;
-			$scope.check_existing_validity();
-		};
-
-		$scope.update_quantities = function() {
-			$scope.existing_valid = true;
-			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
-			for (var j = 0; j < $scope.existing_result.length; j++){
-					var lookup_qty = $scope.existing_result[j]['QTY'];
-					var qty = parseInt($scope.existing_result[j]['QTY']) || parseInt($scope.existing_values[lookup_qty]['value']);
-					$scope.existing_result[j]['QTY'] = qty;
-					if(qty > parseInt($scope.existing_result[j]['MAX'])){
-						$scope.existing_result[j]['Valid'] = 'is-invalid';
-						$scope.existing_valid = false;
-						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
-					}else {
-						$scope.existing_result[j]['Valid'] = 'is-valid';
-					}
-			}
-		};
-
-		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
-		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
-		$scope.existing_validation = {'style':'','text':''};
 
 	}]);
 

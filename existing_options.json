@@ -305,40 +305,40 @@
          }
       },
       "7.x to 7.x+1 upgrade": [
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "1",
-            "PN": "7050.0105",
-            "DESC": "License key Upgrade",
-            "NOTES": "one time per license key"
-         },
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
-            "PN": "7200.0106",
-            "DESC": "Upgrade 7.x to 7.x+1",
-            "NOTES": "one time per license package"
-         }
+        {
+           "Valid": "is-valid",
+           "MAX": "1",
+           "QTY": "1",
+           "PN": "7050.0105",
+           "DESC": "License key Upgrade",
+           "NOTES": "one time per license key"
+        },
+        {
+           "Valid": "is-valid",
+           "MAX": "3",
+           "QTY": "Packages",
+           "PN": "7200.0106",
+           "DESC": "Upgrade 7.x to 7.x+1",
+           "NOTES": "one time per license package"
+        }
       ],
       "Upgrade with support contracts": [
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "1",
-            "PN": "7050.0105",
-            "DESC": "License key Upgrade",
-            "NOTES": "one time per license key"
-         },
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
-            "PN": "7200.0107",
-            "DESC": "Upgrade 7.x to 7.x+1 with support contract",
-            "NOTES": "one time per license package"
-         }
+        {
+           "Valid": "is-valid",
+           "MAX": "1",
+           "QTY": "1",
+           "PN": "7050.0105",
+           "DESC": "License key Upgrade",
+           "NOTES": "one time per license key"
+        },
+        {
+           "Valid": "is-valid",
+           "MAX": "3",
+           "QTY": "Packages",
+           "PN": "7200.0106",
+           "DESC": "Upgrade 7.x to 7.x+1 with support contract",
+           "NOTES": "one time per license package"
+        }
       ],
       "6.8 to 7.2": [
          {
@@ -371,7 +371,7 @@
       "Adding Client license": [
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Packages",
             "PN": "7200.0109",
             "DESC": "Upgrade to Enterprise",
@@ -389,7 +389,7 @@
       "Adding Instrument license": [
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Packages",
             "PN": "7200.0109",
             "DESC": "Upgrade to Enterprise",
@@ -433,7 +433,7 @@
       "Adding optional add-ons": [
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Packages",
             "PN": "7000.0020",
             "DESC": "Spectral License",
@@ -441,7 +441,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Packages",
             "PN": "7200.0034",
             "DESC": "Secure add-on/Compliance",
@@ -465,7 +465,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "1",
             "PN": "7100.0082",
             "DESC": "SDK Developer",
@@ -473,7 +473,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7200.0050",
             "DESC": "XPS",
@@ -481,7 +481,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "1",
             "PN": "7200.0090",
             "DESC": "XPS Developer",
@@ -489,7 +489,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7000.0090",
             "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
@@ -497,7 +497,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7000.0092",
             "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
@@ -505,7 +505,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7200.0046",
             "DESC": "Intact Protein Deconvolution",
@@ -513,7 +513,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7200.0044",
             "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
@@ -521,7 +521,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7100.0085",
             "DESC": "SDK Runtime",
@@ -541,19 +541,19 @@
       "Add Class 2/3 Instrument Licence": [
          {
             "Valid": "is-valid",
-            "MAX": "not available",
-            "QTY": "1",
-            "PN": "not available",
-            "DESC": "",
-            "NOTES": ""
+            "MAX": "12",
+            "QTY": "TF",
+            "PN": "7000.0002",
+            "DESC": "3rd Party GC for WE",
+            "NOTES": "per TF instrument/Class 1 license"
          },
          {
             "Valid": "is-valid",
-            "MAX": "not available",
+            "MAX": "6",
             "QTY": "1",
-            "PN": "not available",
-            "DESC": "",
-            "NOTES": ""
+            "PN": "7000.0003",
+            "DESC": "3rd Party LC for WE",
+            "NOTES": "per TF instrument/Class 1 license"
          }
       ],
       "Only available for Enterprise": [
@@ -570,19 +570,19 @@
    "Enterprise": {
       "max": {
          "Clients": {
-            "value": 3
+            "value": 999999
          },
          "TF": {
-            "value": 12
+            "value": 999999
          },
          "GC": {
-            "value": 12
+            "value": 999999
          },
          "LC": {
-            "value": 6
+            "value": 999999
          },
          "Total": {
-            "value": 12
+            "value": 999999
          },
          "Data": {
             "value": 999999
@@ -599,11 +599,11 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
+            "MAX": "999999",
+            "QTY": "Max_Instruments_Clients",
             "PN": "7200.0106",
             "DESC": "Upgrade 7.x to 7.x+1",
-            "NOTES": "one time per license package"
+            "NOTES": "per instrument or client, whichever is largest"
          }
       ],
       "Upgrade with support contracts": [
@@ -627,7 +627,7 @@
       "6.8 to 7.2": [
          {
             "Valid": "is-valid",
-            "MAX": "not available",
+            "MAX": "1",
             "QTY": "1",
             "PN": "7050.0105",
             "DESC": "License key Upgrade",
@@ -635,32 +635,24 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "not available",
-            "QTY": "Packages",
+            "MAX": "999999",
+            "QTY": "Max_Instruments_Clients",
             "PN": "7200.0107",
             "DESC": "Upgrade 6.8 to 7.2",
-            "NOTES": "one time per license package"
+            "NOTES": "per instrument or client, whichever is largest"
          }
       ],
       "Adding Remote Data Client for data reprocessing": [
          {
-            "Valid": "is-valid",
-            "MAX": "1000000",
+            "Valid": "is-invalid",
+            "MAX": "not available",
             "QTY": "1",
-            "PN": "7200.0030",
-            "DESC": "Remote Data Client",
+            "PN": "not available",
+            "DESC": "Must purchase a normal client",
             "NOTES": ""
          }
       ],
       "Adding Client license": [
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
-            "PN": "7200.0109",
-            "DESC": "Upgrade to Enterprise",
-            "NOTES": "one time per license package"
-         },
          {
             "Valid": "is-valid",
             "MAX": "1000000",
@@ -671,14 +663,6 @@
          }
       ],
       "Adding Instrument license": [
-         {
-            "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
-            "PN": "7200.0109",
-            "DESC": "Upgrade to Enterprise",
-            "NOTES": "one time per license package"
-         },
          {
             "Valid": "is-valid",
             "MAX": "1000000",
@@ -717,19 +701,19 @@
       "Adding optional add-ons": [
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Packages",
-            "PN": "7000.0020",
+            "MAX": "included",
+            "QTY": "1",
+            "PN": "included",
             "DESC": "Spectral License",
-            "NOTES": "once per license package"
+            "NOTES": ""
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "included",
             "QTY": "Packages",
-            "PN": "7200.0034",
+            "PN": "included",
             "DESC": "Secure add-on/Compliance",
-            "NOTES": "once per license package"
+            "NOTES": ""
          },
          {
             "Valid": "is-valid",
@@ -749,7 +733,7 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "999999",
             "QTY": "1",
             "PN": "7100.0082",
             "DESC": "SDK Developer",
@@ -757,69 +741,93 @@
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
+            "MAX": "999999",
+            "QTY": "Clients",
             "PN": "7200.0050",
             "DESC": "XPS",
             "NOTES": "once per client"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
+            "MAX": "included",
             "QTY": "1",
-            "PN": "7200.0090",
+            "PN": "included",
             "DESC": "XPS Developer",
             "NOTES": "once per developer (Approval from Product Management is required before quoting)"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
-            "PN": "7000.0090",
+            "MAX": "included",
+            "QTY": "Clients",
+            "PN": "included",
             "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
             "NOTES": "once per client"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
-            "PN": "7000.0092",
+            "MAX": "included",
+            "QTY": "Clients",
+            "PN": "included",
             "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
             "NOTES": "once per client"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
+            "MAX": "999999",
+            "QTY": "Clients",
             "PN": "7200.0046",
             "DESC": "Intact Protein Deconvolution",
             "NOTES": "once per client"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
+            "MAX": "999999",
+            "QTY": "Clients",
             "PN": "7200.0044",
             "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
             "NOTES": "once per client"
          },
          {
             "Valid": "is-valid",
-            "MAX": "1",
-            "QTY": "Total_Clients",
+            "MAX": "999999",
+            "QTY": "Clients",
             "PN": "7100.0085",
             "DESC": "SDK Runtime",
             "NOTES": "once per client"
          }
       ],
       "Adding a contract": [
+        {
+            "Valid": "is-valid",
+            "MAX": "1000000",
+            "QTY": "Clients",
+            "PN": "7203.0300",
+            "DESC": "ECM7 CONTRACT: SECURE CLIENT CLIENT",
+            "NOTES": "one time per Enterprise Client"
+         },
          {
             "Valid": "is-valid",
-            "MAX": "not available",
-            "QTY": "1",
-            "PN": "not available",
-            "DESC": "",
-            "NOTES": ""
+            "MAX": "1000000",
+            "QTY": "TF",
+            "PN": "7203.1000",
+            "DESC": "ECM7 CONTRACT: THERMO SCIENTIFIC INSTR.",
+            "NOTES": "one time per Thermo Instrument license/Class 1"
+         },
+         {
+            "Valid": "is-valid",
+            "MAX": "1000000",
+            "QTY": "GC",
+            "PN": "7203.1002",
+            "DESC": "ECM7 CONTRACT: THIRD PARTY GC",
+            "NOTES": "one time per 3rd party GC Instrument license/Class2"
+         },
+         {
+            "Valid": "is-valid",
+            "MAX": "1000000",
+            "QTY": "LC",
+            "PN": "7201.1003",
+            "DESC": "ECM7 CONTRACT: THIRD PARTY LC",
+            "NOTES": "one time per 3rd party LC Instrument license/Class3"
          }
       ],
       "Add Class 2/3 Instrument Licence": [

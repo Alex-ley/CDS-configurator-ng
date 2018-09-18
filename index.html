@@ -27,7 +27,7 @@
 					<span>Please select which type of installation:</span><br>
 						<button ng-click="new_installation()" class="{{new_section.class}}" type="button" >New Installation</button>
 						<button ng-click="existing_installation()" class="{{existing_section.class}}" type="button">Existing Installation</button>
-						<hr>
+						<hr ng-show="new_section.show || existing_section.show">
 						<section id="new-installation" ng-show="new_section.show">
 							<h4>New Installation</h4>
 							<form ng-submit="TBC()">
