@@ -314,40 +314,45 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.update_quantities_result = function(calc_qty) {
-			$scope.existing_result = [];
+			// $scope.existing_result = [];
 			// Existing Part (only 1)
 			var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
 			// // alert(parts_array[0]['QTY']);
 			// $scope.existing_result = parts_array;
+			$scope.existing_result = parts_array;
 			$scope.existing_valid = true;
 			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
 			for (var j = 0; j < parts_array.length; j++){
 					var lookup_qty = parts_array[j]['QTY'];
+					// console.log(lookup_qty, calc_qty);
 					// alert(lookup_qty);
 					if (calc_qty) {
-						if (lookup_qty > 0) {
+						if (parseInt(lookup_qty) > 0) {
 							var qty = lookup_qty;
 						}else {
-							var qty = parseInt($scope.parts_array[lookup_qty]['value']) || 1;
-							var max = parseInt($scope.parts_array[j]['MAX']);
+							var qty = parseInt($scope.existing_values[lookup_qty]['value']) || 1; 	// no need for scope ($scope.parts_array[lookup_qty]);
+							$scope.existing_result[j]['QTY'] = qty;
+							var max = parseInt(parts_array[j]['MAX']); // no need for scope $scope.parts_array
 						}
 					}else {
 						var qty = parseInt($scope.existing_result[j]['QTY']) || 0;
 						var max = parseInt($scope.existing_result[j]['MAX']);
 					}
-
+					// console.log(qty,max);
 					if(qty > max){
 						$scope.existing_result[j]['Valid'] = 'is-invalid';
 						$scope.existing_valid = false;
 						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
 					}else {
+						// console.log($scope.existing_result);
 						$scope.existing_result[j]['Valid'] = 'is-valid';
 					}
 			}
-			$scope.existing_result = parts_array;
-			if ($scope.parts_array[j]['QTY'] > 0) {
-				$scope.parts_array[j]['QTY'] = qty;
-			}
+			// $scope.existing_result = parts_array;
+			// console.log(parts_array);
+			// if (parts_array[j]['QTY'] > 0) {
+			// 	parts_array[j]['QTY'] = qty;
+			// }
 		};
 
 		$scope.check_existing_validity = function() {
