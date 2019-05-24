@@ -2,15 +2,15 @@ var app = angular.module('CDS-config-app', []);
 	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
 
 		$scope.new_values = {
-								'TF':{'text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
-								'GC':{'text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
-								'LC':{'text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
-								'Total':{'text':'Total Instruments','value':1, 'disabled':true, 'show':true},
-								'Clients':{'text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
-								'Data':{'text':'Data Clients','value':0, 'disabled':false, 'show':true},
-								'Total_Clients':{'text':'Total Clients','value':1, 'disabled':false, 'show':false},
-								'License':{'text':'License key','value':1, 'disabled':false, 'show':false},
-								'Max_Instruments_Clients':{'text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
+								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
+								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
+								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
+								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
+								'Clients':{'valid':'','small':'','text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
+								'Data':{'valid':'','small':'','text':'Data Clients','value':0, 'disabled':false, 'show':true},
+								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':1, 'disabled':false, 'show':false},
+								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
+								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
 
 		$scope.existing_values = {
@@ -237,6 +237,8 @@ var app = angular.module('CDS-config-app', []);
 				for (var c = 1; c <= 3; c++) {
 						// console.log(c);
 						$scope.new_values['Clients'].value = c;
+						$scope.new_values['Clients'].small = "Auto-calculated";
+						$scope.new_values['Clients'].valid = "is-valid";
 						part_1();
 					if ($scope.new_valid == true) {
 						if ($scope.new_values['Total'].value == 2 & $scope.new_values['TF'].value == 2) {
@@ -247,10 +249,14 @@ var app = angular.module('CDS-config-app', []);
 				}
 			}
 			else {
+				$scope.new_values['Clients'].small = "Manually entered";
+				$scope.new_values['Clients'].valid = "";
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
 			if(!$scope.new_valid){
+				$scope.new_values['Clients'].small += " - option 1 invalid"
+				$scope.new_values['Clients'].valid = "is-invalid";
 				for (var j = 0; j < 3; j++){
 					$scope.new_result_1.push({'QTY':'_','PN':'_','DESC':'_MAX_QTY_EXCEEDED_','NOTES':'_'});
 				}

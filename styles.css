@@ -217,4 +217,8 @@ ul#existing-dropdowns{
     clear: both;
     width: 100%;
   }
+
+  .table {
+    font-size: 3.5vw;
+  }
 }

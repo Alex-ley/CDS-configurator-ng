@@ -36,8 +36,8 @@
 											<li ng-repeat="(key,value) in new_values" ng-show="new_values[key]['show']">
 												<div class="form-group">
 											    <label for="{{'new_' + key}}"><strong>{{new_values[key]['text']}}</strong></label>
-											    <input class="form-control" aria-describedby="{{'new_' + key + '_help'}}" id="{{'new_' + key}}" type="text" ng-change="update_new(key)" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
-											    <small id="{{'new_' + key + '_help'}}" class="form-text text-muted"></small>
+											    <input class="{{'form-control ' + new_values[key]['valid']}}" aria-describedby="{{'new_' + key + '_help'}}" id="{{'new_' + key}}" type="text" ng-change="update_new(key)" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
+											    <small id="{{'new_' + key + '_help'}}" class="form-text text-muted">{{new_values[key]['small']}}</small>
 											  </div>
 											</li>
 										</ul>
