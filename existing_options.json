@@ -152,7 +152,7 @@
             "MAX": "1",
             "QTY": "Packages",
             "PN": "7000.0020",
-            "DESC": "Spectral License",
+            "DESC": "Spectral License (3D data collection for DAD, FLD or MS)",
             "NOTES": "once per license package"
          },
          {
@@ -436,7 +436,7 @@
             "MAX": "3",
             "QTY": "Packages",
             "PN": "7000.0020",
-            "DESC": "Spectral License",
+            "DESC": "Spectral License (3D data collection for DAD, FLD or MS)",
             "NOTES": "once per license package"
          },
          {
@@ -704,7 +704,7 @@
             "MAX": "included",
             "QTY": "1",
             "PN": "included",
-            "DESC": "Spectral License",
+            "DESC": "Spectral License (3D data collection for DAD, FLD or MS)",
             "NOTES": ""
          },
          {
@@ -760,7 +760,7 @@
             "MAX": "included",
             "QTY": "Clients",
             "PN": "included",
-            "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Basic (Included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -768,7 +768,7 @@
             "MAX": "included",
             "QTY": "Clients",
             "PN": "included",
-            "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Complete (Included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -1012,7 +1012,7 @@
             "MAX": "1",
             "QTY": "Packages",
             "PN": "7000.0020",
-            "DESC": "Spectral License",
+            "DESC": "Spectral License (3D data collection for DAD, FLD or MS)",
             "NOTES": "once per license package"
          },
          {
@@ -1296,7 +1296,7 @@
             "MAX": "1",
             "QTY": "Packages",
             "PN": "7000.0020",
-            "DESC": "Spectral License",
+            "DESC": "Spectral License (3D data collection for DAD, FLD or MS)",
             "NOTES": "once per license package"
          },
          {
