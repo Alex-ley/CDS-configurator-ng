@@ -208,7 +208,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0090",
-            "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Basic (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -216,7 +216,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0092",
-            "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Complete (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -492,7 +492,7 @@
             "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7000.0090",
-            "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Basic (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -500,7 +500,7 @@
             "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7000.0092",
-            "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Complete (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -1068,7 +1068,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0090",
-            "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Basic (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -1076,7 +1076,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0092",
-            "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Complete (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -1352,7 +1352,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0090",
-            "DESC": "Virtual Column Basic (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Basic (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
@@ -1360,7 +1360,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7000.0092",
-            "DESC": "Virtual Column Complete (inkludiert in Enterprise)",
+            "DESC": "Virtual Column Complete (included in Enterprise)",
             "NOTES": "once per client"
          },
          {
