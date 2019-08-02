@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" style="">
+   <title>my vector image</title>
+   <!-- Created with Vector Paint - http://www.vectorpaint.yaks.com/ https://chrome.google.com/webstore/detail/hnbpdiengicdefcjecjbnjnoifekhgdo -->
+   <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none"/>
+   <rect fill="none" stroke="#000000" stroke-linejoin="round" stroke-dashoffset="" fill-rule="nonzero" id="svg_7" x="303" y="113" width="171" height="152" style="color: rgb(0, 0, 0);" class="" stroke-opacity="1"/>
+   <g class="" style="opacity:1" transform="translate(25,25)">
+     <line fill="#242424" stroke="#222222" x1="125" y1="70" x2="75" y2="115" id="svg_6" stroke-width="3" class=""/>
+     <line fill="#242424" stroke="#222222" x1="125" y1="200" x2="75" y2="155" id="svg_6" stroke-width="3" class=""/>
+     <g class="" style="" transform="translate(0,0)">
+        <rect fill="#919191" stroke="#222222" id="svg_1" x="0" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[0]['svgClass']}}" />
+          <text x="9" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#ce8a2b" stroke="#222222" id="svg_2" x="0" y="25" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[1]['svgClass']}}" />
+          <text x="9" y="42" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="37.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#0404b8" stroke="#222222" id="svg_3" x="0" y="50" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[2]['svgClass']}}" />
+          <text x="9" y="67" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="62.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#04b804" stroke="#222222" id="svg_4" x="0" y="75" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[3]['svgClass']}}" />
+          <text x="9" y="92" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="87.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#242424" stroke="#222222" id="svg_5" x="100" y="30" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
+          <text x="115" y="55" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
+     </g>
+     <g class="" style="" transform="translate(0,85)">
+        <rect fill="#919191" stroke="#222222" id="svg_1" x="150" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[4]['svgClass']}}" />
+          <text x="159" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="150" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#ce8a2b" stroke="#222222" id="svg_2" x="150" y="25" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[5]['svgClass']}}" />
+          <text x="159" y="42" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="150" y1="37.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#0404b8" stroke="#222222" id="svg_3" x="150" y="50" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[6]['svgClass']}}" />
+          <text x="159" y="67" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="150" y1="62.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#04b804" stroke="#222222" id="svg_4" x="150" y="75" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[7]['svgClass']}}" />
+          <text x="159" y="92" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="150" y1="87.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#242424" stroke="#222222" id="svg_5" x="50" y="30" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
+          <text x="65" y="55" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
+     </g>
+     <g class="" style="" transform="translate(0,170)">
+        <rect fill="#919191" stroke="#222222" id="svg_1" x="0" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[8]['svgClass']}}" />
+          <text x="9" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#ce8a2b" stroke="#222222" id="svg_2" x="0" y="25" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[9]['svgClass']}}" />
+          <text x="9" y="42" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="37.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#0404b8" stroke="#222222" id="svg_3" x="0" y="50" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[10]['svgClass']}}" />
+          <text x="9" y="67" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="62.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#04b804" stroke="#222222" id="svg_4" x="0" y="75" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{svgClass[11]['svgClass']}}" />
+          <text x="9" y="92" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+          <line fill="#242424" stroke="#222222" x1="50" y1="87.5" x2="100" y2="50" id="svg_6" class=""/>
+        <rect fill="#242424" stroke="#222222" id="svg_5" x="100" y="30" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
+          <text x="115" y="55" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
+     </g>
+   </g>
+</svg>

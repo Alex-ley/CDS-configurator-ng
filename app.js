@@ -1,4 +1,30 @@
 var app = angular.module('CDS-config-app', []);
+	//camel cased directive name
+	//in your HTML, this will be named as v-bars-chart
+	// app.directive('myCustomSvg', ['$parse', function ($parse) {
+	// 	//explicitly creating a directive definition variable
+	// 	//this may look verbose but is good for clarification purposes
+	// 	//in real life you'd want to simply return the object {...}
+	// 	var directiveDefinitionObject = {
+	// 			//We restrict its use to an element
+	// 			//as usually  <bars-chart> is semantically
+	// 			//more understandable
+	// 			restrict: 'E',
+	// 			templateNamespace:'svg',
+	// 			//this is important,
+	// 			//we don't want to overwrite our directive declaration
+	// 			//in the HTML mark-up,
+	// 			// template: '<div id="test"></div>',
+	// 			templateUrl: 'SE_WE_v2.svg', //'svg.html',
+	// 			replace: true,
+	// 			//our data source would be an array
+	// 			//passed thru chart-data attribute
+	// 			scope: {svgClass: '='},
+	//
+	// 			}
+	// 	 return directiveDefinitionObject;
+	// }]);
+
 	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
 
 		$scope.new_values = {
@@ -6,8 +32,8 @@ var app = angular.module('CDS-config-app', []);
 								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
-								'Clients':{'valid':'','small':'','text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
-								'Data':{'valid':'','small':'','text':'Data Clients','value':0, 'disabled':false, 'show':true},
+								'Clients':{'valid':'','small':'','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
+								'Data':{'valid':'','small':'','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
 								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':1, 'disabled':false, 'show':false},
 								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
 								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
@@ -17,19 +43,33 @@ var app = angular.module('CDS-config-app', []);
 								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':true},
 								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'Controllers':{'valid':'','small':'','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
-								'Clients':{'valid':'','small':'','text':'Instrument Clients','value':1, 'disabled':false, 'show':true},
+								'Clients':{'valid':'','small':'','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
 								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
-								'Data':{'valid':'','small':'','text':'Data Clients','value':2, 'disabled':false, 'show':true},
-								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':3, 'disabled':false, 'show':false},
+								'Data':{'valid':'','small':'','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
+								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':1, 'disabled':false, 'show':false},
 								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
-								'Max_Controllers_Clients':{'valid':'','small':'','text':'Max of controllers / clients','value':3, 'disabled':false, 'show':false},
-								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':3, 'disabled':false, 'show':false}
+								'Max_Controllers_Clients':{'valid':'','small':'','text':'Max of controllers / clients','value':1, 'disabled':false, 'show':false},
+								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
-
+		$scope.new_WE = [
+			{'active': false, 'svgClass':"svg_LC"},
+			{'active': false, 'svgClass':"svg_GC"},
+			{'active': false, 'svgClass':"svg_TF"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"}
+		];
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
+		$scope.new_bottom = {'show':false,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.existing_validation = {'style':'','text':''};
 
@@ -68,8 +108,14 @@ var app = angular.module('CDS-config-app', []);
 			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 
+		$scope.current_new_options_1 = {
+			'name' : 'Single Edition',
+			'Edition_visible' : [1,0],
+			'IPC_visible' : [1,0,0]
+		}
 		$scope.new_options_1 = [
 								{
+								'name':'1 x Single Edition',
 								'max':{
 											'Clients':{'value':1},
 											'TF':{'value':1},
@@ -89,6 +135,7 @@ var app = angular.module('CDS-config-app', []);
 								},
 
 								{
+								'name':'2 x Single Edition',
 								'max':{
 											'Clients':{'value':2},
 											'TF':{'value':2},
@@ -108,6 +155,7 @@ var app = angular.module('CDS-config-app', []);
 								},
 
 								{
+								'name':'Workgroup Edition',
 								'max':{
 											'Clients':{'value':3},
 											'TF':{'value':12},
@@ -184,6 +232,7 @@ var app = angular.module('CDS-config-app', []);
 
 		$scope.update_new = function(key) {
 			// alert("update new");
+			$scope.new_bottom.show = true;
 			// Part 1
 			const part_1 = function(){
 				var TF = parseInt($scope.new_values['TF']['value']) || 0;
@@ -201,6 +250,7 @@ var app = angular.module('CDS-config-app', []);
 				$scope.new_options_1[2]['max']['GC'].value = Clients * 4;
 				$scope.new_options_1[2]['max']['LC'].value = Clients * 2;
 				$scope.new_options_1[2]['max']['Total'].value = Clients * 4;
+				$scope.new_options_1[2]['name'] = Clients + ' x Workgroup Edition';
 
 				$scope.new_result_1 = [];
 				$scope.new_result_2 = [];
@@ -228,10 +278,13 @@ var app = angular.module('CDS-config-app', []);
 							}
 
 						}
+						$scope.current_new_options_1.name = $scope.new_options_1[i].name;
+						i > 1 ? $scope.current_new_options_1.Edition_visible = [0,1] : $scope.current_new_options_1.Edition_visible = [1,0];
 						break; //break the outer for loop as valid result was found
 					}
 				}
 			};
+
 			if (key !== 'Clients') {
 				// console.log(key);
 				for (var c = 1; c <= 3; c++) {
@@ -254,11 +307,50 @@ var app = angular.module('CDS-config-app', []);
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
+			$scope.current_new_options_1.IPC_visible = [0,0,0];
+			for (var n = 0; n < $scope.new_values['Clients'].value; n++) {
+				$scope.current_new_options_1.IPC_visible[n] = 1;
+			}
+
 			if(!$scope.new_valid){
 				$scope.new_values['Clients'].small += " - option 1 invalid"
 				$scope.new_values['Clients'].valid = "is-invalid";
+				$scope.new_bottom.show = false;
 				for (var j = 0; j < 3; j++){
 					$scope.new_result_1.push({'QTY':'_','PN':'_','DESC':'_MAX_QTY_EXCEEDED_','NOTES':'_'});
+				}
+			} else {
+				for (var i = 0; i < $scope.new_WE.length; i++) {
+					$scope.new_WE[i].active = false;
+					$scope.new_WE[i].svgClass = 'svg_unused';
+				}
+				var counter = 0;
+				for (var i = 0; i < $scope.new_values['LC'].value; i++) {
+					$scope.new_WE[counter].active = true;
+					$scope.new_WE[counter].svgClass = 'svg_LC';
+					if ((i+1) % 2 == 0) {
+						counter += 3;
+					} else {
+						counter += 1;
+					}
+				}
+				for (var i = 0; i < $scope.new_values['GC'].value; i++) {
+					for (var j = 0; j < 12; j++) {
+						if ($scope.new_WE[j].active == false) {
+							$scope.new_WE[j].active = true;
+							$scope.new_WE[j].svgClass = 'svg_GC';
+							break;
+						}
+					}
+				}
+				for (var i = 0; i < $scope.new_values['TF'].value; i++) {
+					for (var j = 0; j < 12; j++) {
+						if ($scope.new_WE[j].active == false) {
+							$scope.new_WE[j].active = true;
+							$scope.new_WE[j].svgClass = 'svg_TF';
+							break;
+						}
+					}
 				}
 			}
 
