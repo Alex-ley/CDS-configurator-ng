@@ -31,6 +31,23 @@ svg {
     width: 100%;
 }
 
+section {
+  padding: 10px;
+  border-left: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.no-top-padding {
+  padding-top: 0px !important;
+}
+
+#nav-tabs {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  margin-bottom: 0px;
+  margin-top: 15px;
+}
+
 .graph {
   width: 100%;
   height: 50%;
@@ -161,6 +178,14 @@ ul#existing-dropdowns{
   padding-right: 60px;
 }
 
+#options_svg {
+  padding-right: 7.5px;
+}
+
+#legend {
+  padding-left: 7.5px;
+}
+
 /* MEDIA QUERIES */
 
 /* @media only screen and (max-width: 576px){
@@ -173,6 +198,10 @@ ul#existing-dropdowns{
   #jumbotron{
 
   }
+
+  /* .card h4{
+    font-size: 2.5vw;
+  } */
 }
 
 @media only screen and (max-width: 768px){
@@ -225,6 +254,18 @@ ul#existing-dropdowns{
     clear: both;
     width: 100%;
   }
+
+  #legend .card {
+    margin-top: 10px !important;
+  }
+
+  #options_svg {
+    padding-right: 15px;
+  }
+
+  #legend {
+    padding-left: 15px;
+  }
 }
 
 @media only screen and (max-width: 576px){
@@ -262,4 +303,5 @@ ul#existing-dropdowns{
   .table {
     font-size: 3.5vw;
   }
+
 }

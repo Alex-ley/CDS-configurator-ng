@@ -68,6 +68,13 @@ var app = angular.module('CDS-config-app', []);
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused"}
 		];
+
+		$scope.tabs_information = [
+			{'show': true, 'tabClass':"nav-item nav-link active"},
+			{'show': true, 'tabClass':"nav-item nav-link"},
+			{'show': true, 'tabClass':"nav-item nav-link disabled"},
+			{'show': false, 'tabClass':"nav-item nav-link disabled"}
+		];
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.new_bottom = {'show':false,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
@@ -313,7 +320,7 @@ var app = angular.module('CDS-config-app', []);
 			}
 
 			if(!$scope.new_valid){
-				$scope.new_values['Clients'].small += " - option 1 invalid"
+				$scope.new_values['Clients'].small += " - option 2 invalid"
 				$scope.new_values['Clients'].valid = "is-invalid";
 				$scope.new_bottom.show = false;
 				for (var j = 0; j < 3; j++){
@@ -339,7 +346,7 @@ var app = angular.module('CDS-config-app', []);
 						if ($scope.new_WE[j].active == false) {
 							$scope.new_WE[j].active = true;
 							$scope.new_WE[j].svgClass = 'svg_GC';
-							break;
+							break; //break inner-loop each time you find a slot free
 						}
 					}
 				}
@@ -348,7 +355,7 @@ var app = angular.module('CDS-config-app', []);
 						if ($scope.new_WE[j].active == false) {
 							$scope.new_WE[j].active = true;
 							$scope.new_WE[j].svgClass = 'svg_TF';
-							break;
+							break; //break inner-loop each time you find a slot free
 						}
 					}
 				}
@@ -512,6 +519,29 @@ var app = angular.module('CDS-config-app', []);
 					$scope.existing_values[k]['small'] = '';
 				}
 			}
+		};
+
+		$scope.new_tab = function(tab) {
+			// console.log(tab);
+			var temp = $scope.tabs_information[parseInt(tab)].tabClass.split(" ");
+			if (temp[temp.length-1] == "disabled") {
+
+			}
+			else {
+				for (var i = 0; i < $scope.tabs_information.length; i++) {
+					temp = $scope.tabs_information[i].tabClass.split(" ");
+					if (i == parseInt(tab)) {
+						$scope.tabs_information[i].tabClass = "nav-item nav-link active";
+					}
+					else if (temp[temp.length-1] == "disabled") {
+
+					}
+					else {
+						$scope.tabs_information[i].tabClass = "nav-item nav-link";
+					}
+				}
+			}
+
 		};
 
 
