@@ -48,6 +48,14 @@ section {
   margin-top: 15px;
 }
 
+#nav-tabs .active{
+  /* border-color: #dee2e6 #dee2e6 #fff; */
+  border-left: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(0,0,0,.1);
+  border-top: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(255,255,255,1);
+}
+
 .graph {
   width: 100%;
   height: 50%;

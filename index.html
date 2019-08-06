@@ -28,15 +28,27 @@
 						<button ng-click="new_installation()" class="{{new_section.class}}" type="button" >New Installation</button>
 						<button ng-click="existing_installation()" class="{{existing_section.class}}" type="button">Existing Installation</button>
 						<!-- <hr ng-show="new_section.show || existing_section.show"> -->
-						<nav class="nav nav-tabs nav-fill" id="nav-tabs" ng-show="new_section.show || existing_section.show">
-						  <a class="{{tabs_information[0].tabClass}}" href="#" ng-click="new_tab(0)">Part 1</a>
-						  <a class="{{tabs_information[1].tabClass}}" href="#" ng-click="new_tab(1)">Part 2</a>
-						  <a class="{{tabs_information[2].tabClass}}" href="#" ng-click="new_tab(2)">Part 3</a>
-						  <a ng-show="{{false}}" class="{{tabs_information[3].tabClass}}" href="#" ng-click="new_tab(3)">Part 4</a>
+						<nav class="nav nav-tabs nav-fill" id="nav-tabs" ng-show="new_section.show">
+						  <a ng-repeat="obj in tabs_information['new'] track by obj.id"
+									ng-show="{{obj.show}}"
+									class="{{obj.tabClass}}"
+									href="#"
+									ng-click="new_tab('new', obj.id)">
+									{{obj.name}}
+							</a>
+						</nav>
+						<nav class="nav nav-tabs nav-fill" id="nav-tabs" ng-show="existing_section.show">
+							<a ng-repeat="obj in tabs_information['existing'] track by obj.id"
+									ng-show="{{obj.show}}"
+									class="{{obj.tabClass}}"
+									href="#"
+									ng-click="new_tab('existing', obj.id)">
+									{{obj.name}}
+							</a>
 						</nav>
 						<section id="new-installation" ng-show="new_section.show">
 							<h4>New Installation</h4>
-							<form ng-submit="TBC()">
+							<form ng-show="tabs_information['new'][0].active"> <!--  ng-submit="TBC()"  -->
 								<div id="new-top">
 									<div id="new-left">
 										<ul>
@@ -50,7 +62,14 @@
 										</ul>
 									</div>
 									<div id="new-right">
-										<h4>Option 1 (Enterprise):</h4>
+										<div class="row">
+											<div class="col col-8">
+												<h4>Option 1 (Enterprise):</h4>
+											</div>
+											<div class="col col-4">
+												<button type="button" ng-click="option_selected('Option 1', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 1</button>
+											</div>
+										</div>
 										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
@@ -66,7 +85,14 @@
 										  </tr>
 										</table>
 										<br>
-										<h4>Option 2 (Workstation):</h4>
+										<div class="row">
+											<div class="col col-8">
+												<h4>Option 2 (Workstation):</h4>
+											</div>
+											<div class="col col-4">
+												<button type="button" ng-click="option_selected('Option 2', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 2</button>
+											</div>
+										</div>
 										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
@@ -83,13 +109,32 @@
 										</table>
 										<!-- <br> -->
 										<!-- <input type="submit" value="submit" class="btn btn-success"> -->
-										<button type="button" style="margin-bottom: 5px;" class="btn btn-success">Submit</button>
 									</div>
 								</div>
 							</form>
-							<div class="row">
+							<form ng-show="tabs_information['new'][1].active">
+								<h6>{{tabs_information['new_chosen']}}</h6>
+								<table style="width:100%" class="table">
+									<tr>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in new_result_chosen">
+										<td>{{obj.QTY}}</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
+							</form>
+							<form ng-show="tabs_information['new'][2].active">
+								<h6>{{tabs_information['new_chosen']}}</h6>
+							</form>
+							<div class="row" ng-show="new_bottom.show && tabs_information['new'][0].active">
 								<div class="col col-md-6 col-12" id="options_svg">
-									<div class="card " ng-show="new_bottom.show">
+									<div class="card">
 										<h4 class="card-header">Option 2:<br>{{current_new_options_1.name}}</h4>
 										<div class="card-body no-top-padding">
 											<div class="graph">
@@ -171,7 +216,7 @@
 									</div>
 								</div>
 								<div class="col col-md-6 col-12" id="legend">
-									<div class="card" ng-show="new_bottom.show">
+									<div class="card">
 										<h4 class="card-header">Option 2:<br>Legend</h4>
 										<div class="card-body no-top-padding">
 											<div class="graph">
@@ -211,7 +256,7 @@
 						</section>
 						<section id="existing-installation" ng-show="existing_section.show">
 							<h4>Existing Installation</h4>
-							<form ng-submit="TBC()">
+							<form ng-show="tabs_information['existing'][0].active"> <!--  ng-submit="TBC()"  -->
 									<div id="existing-left">
 										<ul>
 											<li>
@@ -262,6 +307,12 @@
 									</div>
 									<!-- <input type="submit" value="submit" class="btn btn-success"> -->
 									<button type="button" class="btn btn-success">Submit</button>
+							</form>
+							<form ng-show="tabs_information['existing'][1].active">
+								<h6>Part 2</h6>
+							</form>
+							<form ng-show="tabs_information['existing'][2].active">
+								<h6>Part 3</h6>
 							</form>
 						</section>
 					<!-- <hr> -->

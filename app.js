@@ -69,12 +69,21 @@ var app = angular.module('CDS-config-app', []);
 			{'active': false, 'svgClass':"svg_unused"}
 		];
 
-		$scope.tabs_information = [
-			{'show': true, 'tabClass':"nav-item nav-link active"},
-			{'show': true, 'tabClass':"nav-item nav-link"},
-			{'show': true, 'tabClass':"nav-item nav-link disabled"},
-			{'show': false, 'tabClass':"nav-item nav-link disabled"}
-		];
+		$scope.tabs_information = {
+			'new':[
+					{'id': 0, 'name': 'Part 1', 'show': true, 'active': true, 'tabClass':"nav-item nav-link active"},
+					{'id': 1, 'name': 'Part 2', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
+					{'id': 2, 'name': 'Part 3', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
+					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
+		  ],
+			'new_chosen': 'Please select Option 1 or 2',
+			'existing':[
+					{'id': 0, 'name': 'Part 1', 'show': true, 'active': true, 'tabClass':"nav-item nav-link active"},
+					{'id': 1, 'name': 'Part 2', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
+					{'id': 2, 'name': 'Part 3', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
+					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
+		  ]
+	  };
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.new_bottom = {'show':false,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
@@ -105,6 +114,11 @@ var app = angular.module('CDS-config-app', []);
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 		$scope.new_result_2 = [
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+		];
+		$scope.new_result_chosen = [
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
@@ -521,29 +535,37 @@ var app = angular.module('CDS-config-app', []);
 			}
 		};
 
-		$scope.new_tab = function(tab) {
+		$scope.new_tab = function(new_or_existing, tab) {
 			// console.log(tab);
-			var temp = $scope.tabs_information[parseInt(tab)].tabClass.split(" ");
+			var temp = $scope.tabs_information[new_or_existing][parseInt(tab)].tabClass.split(" ");
 			if (temp[temp.length-1] == "disabled") {
 
 			}
 			else {
-				for (var i = 0; i < $scope.tabs_information.length; i++) {
-					temp = $scope.tabs_information[i].tabClass.split(" ");
+				for (var i = 0; i < $scope.tabs_information[new_or_existing].length; i++) {
+					temp = $scope.tabs_information[new_or_existing][i].tabClass.split(" ");
 					if (i == parseInt(tab)) {
-						$scope.tabs_information[i].tabClass = "nav-item nav-link active";
+						$scope.tabs_information[new_or_existing][i].tabClass = "nav-item nav-link active";
+						$scope.tabs_information[new_or_existing][i].active = true;
 					}
 					else if (temp[temp.length-1] == "disabled") {
 
 					}
 					else {
-						$scope.tabs_information[i].tabClass = "nav-item nav-link";
+						$scope.tabs_information[new_or_existing][i].tabClass = "nav-item nav-link";
+						$scope.tabs_information[new_or_existing][i].active = false;
 					}
 				}
 			}
-
 		};
 
+		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
+			$scope.tabs_information['new_chosen'] = option_chosen;
+			var temp = option_chosen == "Option 2" ? $scope.new_result_1 : $scope.new_result_2;
+			// console.log(temp);
+			$scope.new_result_chosen = temp;
+			$scope.new_tab(new_or_existing, tab);
+		};
 
 	}]);
 
