@@ -132,8 +132,38 @@
 							<form ng-show="tabs_information['new'][2].active">
 								<h6>{{tabs_information['new_chosen']}}</h6>
 							</form>
-							<div class="row" ng-show="new_bottom.show && tabs_information['new'][0].active">
-								<div class="col col-md-6 col-12" id="options_svg">
+							<div class="row" id="bottom-row" ng-show="new_bottom.show && tabs_information['new'][0].active">
+								<div class="col col-lg-4 col-md-6 col-12" id="enterprise_svg">
+									<div class="card">
+										<h4 class="card-header">Option 1:<br>Enterprise</h4>
+										<div class="card-body no-top-padding">
+											<div class="graph">
+												<canvas width=300 height=300></canvas>
+												<svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMin">
+													<!-- <my-custom-svg svg-class="new_WE"></my-custom-svg> -->
+													<rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none"/>
+													<g id="Enterprise" class="" style="opacity:{{1}}" transform="translate(25,25)">
+														<g class="" style="opacity:{{1}}" transform="translate(0,0)">
+															<g ng-repeat="obj in new_enterprise['inst']">
+												        <rect fill="#919191" stroke="#222222" id="inst_{{$index * 2}}" x="0" ng-attr-y="{{$index * 26}}" width="50" height="24" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[$index * 2]['svgClass']}}" />
+															    <text x="9" ng-attr-y="{{$index * 26 + 17}}" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" stroke="#222222" x1="50" ng-attr-y1="{{$parent.$index * 26 + 12}}" x2="100" ng-attr-y2="{{$index * 52 + 26}}" id="line_{{$parent.$index + '_' + $index * 2}}" class=""/>
+																<rect fill="#919191" stroke="#222222" id="inst_{{$index * 2 + 1}}" x="200" ng-attr-y="{{$index * 26}}" width="50" height="24" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[$index * 2 + 1]['svgClass']}}" />
+																	<text x="209" ng-attr-y="{{$index * 26 + 17}}" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
+																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" stroke="#222222" x1="200" ng-attr-y1="{{$parent.$index * 26 + 12}}" x2="150" ng-attr-y2="{{$index * 52 + 26}}" id="line_{{$parent.$index + '_' + $index * 2 + 1}}" class=""/>
+															</g>
+															<g ng-repeat="obj in new_enterprise['IPC']">
+																<rect fill="#242424" stroke="#222222" id="IPC_{{$index}}" x="100" ng-attr-y="{{$index * 52 + 6}}"  width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
+ 											          	<text x="115" ng-attr-y="{{$index * 52 + 31}}" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
+															</g>
+											      </g>
+											    </g>
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col col-lg-4 col-md-6 col-12" id="options_svg">
 									<div class="card">
 										<h4 class="card-header">Option 2:<br>{{current_new_options_1.name}}</h4>
 										<div class="card-body no-top-padding">
@@ -215,9 +245,9 @@
 										</div>
 									</div>
 								</div>
-								<div class="col col-md-6 col-12" id="legend">
+								<div class="col col-lg-4 col-md-6 col-12" id="legend">
 									<div class="card">
-										<h4 class="card-header">Option 2:<br>Legend</h4>
+										<h4 class="card-header">Legend:<br>Option 1 & 2</h4>
 										<div class="card-body no-top-padding">
 											<div class="graph">
 												<canvas width=300 height=300></canvas>

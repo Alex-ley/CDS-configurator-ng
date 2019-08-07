@@ -84,6 +84,12 @@ var app = angular.module('CDS-config-app', []);
 					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
 		  ]
 	  };
+
+		$scope.new_enterprise = {
+			'inst': [1,2,3,4,5,6],
+			'IPC': [1,2,3]
+		}
+
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.new_bottom = {'show':false,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
