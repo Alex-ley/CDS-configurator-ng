@@ -84,6 +84,18 @@ section {
   fill:#70ad47
 }
 
+.svg_dashed_line_true {
+  stroke-dasharray: 5;
+}
+
+.text_10 {
+  font-size: 10px;
+}
+
+.text {
+  font-size: 13px;
+}
+
 .container {
     width: 90%;
     margin-right: auto;

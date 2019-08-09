@@ -55,9 +55,7 @@ var app = angular.module('CDS-config-app', []);
 								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
 		$scope.new_WE = [
-			{'active': false, 'svgClass':"svg_LC"},
-			{'active': false, 'svgClass':"svg_GC"},
-			{'active': false, 'svgClass':"svg_TF"},
+			{'active': true, 'svgClass':"svg_TF"},
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused"},
@@ -66,7 +64,12 @@ var app = angular.module('CDS-config-app', []);
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused"},
-			{'active': false, 'svgClass':"svg_unused"}
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused"},
+			{'active': false, 'svgClass':"svg_unused", 'extra':0},
+			{'active': false, 'svgClass':"svg_unused", 'extra':0},
+			{'active': false, 'svgClass':"svg_unused", 'extra':0}
 		];
 
 		$scope.tabs_information = {
@@ -86,12 +89,12 @@ var app = angular.module('CDS-config-app', []);
 	  };
 
 		$scope.new_enterprise = {
-			'inst': [1,2,3,4,5,6],
-			'IPC': [1,2,3]
+			'inst': [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+			'IPC': [1,2,3,4]
 		}
 
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
-		$scope.new_bottom = {'show':false,'class':'tbc'};
+		$scope.new_bottom = {'show':true,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.existing_validation = {'style':'','text':''};
 
@@ -323,6 +326,8 @@ var app = angular.module('CDS-config-app', []);
 					if ($scope.new_valid == true) {
 						if ($scope.new_values['Total'].value == 2 & $scope.new_values['TF'].value == 2) {
 							$scope.new_values['Clients'].value = 2;
+							$scope.new_WE[1].active = true;
+							$scope.new_WE[1].svgClass = 'svg_TF';
 						}
 						break;
 					}
@@ -343,14 +348,69 @@ var app = angular.module('CDS-config-app', []);
 				$scope.new_values['Clients'].small += " - option 2 invalid"
 				$scope.new_values['Clients'].valid = "is-invalid";
 				$scope.new_bottom.show = false;
+				$scope.current_new_options_1.name = "Quantity Exceeded"
 				for (var j = 0; j < 3; j++){
 					$scope.new_result_1.push({'QTY':'_','PN':'_','DESC':'_MAX_QTY_EXCEEDED_','NOTES':'_'});
+				}
+				var temp_enterprise = {
+					'svg_TF': $scope.new_values['TF'].value,
+					'svg_GC': $scope.new_values['GC'].value,
+					'svg_LC': $scope.new_values['LC'].value
+				}
+				var counter = 0;
+				var incrementer = 0;
+				while (counter < 12) {
+					if ((incrementer+3) % 3 == 0) {
+						if (temp_enterprise['svg_TF']>0) {
+							temp_enterprise['svg_TF'] -=1;
+							$scope.new_WE[counter].active = true;
+							$scope.new_WE[counter].svgClass = 'svg_TF';
+							counter +=1;
+							incrementer +=1;
+							continue;
+						}
+					} else if ((incrementer+2) % 3 == 0){
+						if (temp_enterprise['svg_GC']>0) {
+							temp_enterprise['svg_GC'] -=1;
+							$scope.new_WE[counter].active = true;
+							$scope.new_WE[counter].svgClass = 'svg_GC';
+							counter +=1;
+							incrementer +=1;
+							continue;
+						}
+					} else {
+						if (temp_enterprise['svg_LC']>0) {
+							temp_enterprise['svg_LC'] -=1;
+							$scope.new_WE[counter].active = true;
+							$scope.new_WE[counter].svgClass = 'svg_LC';
+							counter +=1;
+							incrementer +=1;
+							continue;
+						}
+					}
+					incrementer +=1;
+				}
+				if (temp_enterprise['svg_TF']>0) {
+					$scope.new_WE[12].active = true;
+					$scope.new_WE[12].svgClass = 'svg_TF';
+					$scope.new_WE[12].extra = temp_enterprise['svg_TF'];
+				}
+				if (temp_enterprise['svg_GC']>0) {
+					$scope.new_WE[13].active = true;
+					$scope.new_WE[13].svgClass = 'svg_GC';
+					$scope.new_WE[13].extra = temp_enterprise['svg_GC'];
+				}
+				if (temp_enterprise['svg_LC']>0) {
+					$scope.new_WE[14].active = true;
+					$scope.new_WE[14].svgClass = 'svg_LC';
+					$scope.new_WE[14].extra = temp_enterprise['svg_LC'];
 				}
 			} else {
 				for (var i = 0; i < $scope.new_WE.length; i++) {
 					$scope.new_WE[i].active = false;
 					$scope.new_WE[i].svgClass = 'svg_unused';
 				}
+				$scope.new_WE[0].svgClass = 'svg_TF';
 				var counter = 0;
 				for (var i = 0; i < $scope.new_values['LC'].value; i++) {
 					$scope.new_WE[counter].active = true;

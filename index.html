@@ -132,7 +132,7 @@
 							<form ng-show="tabs_information['new'][2].active">
 								<h6>{{tabs_information['new_chosen']}}</h6>
 							</form>
-							<div class="row" id="bottom-row" ng-show="new_bottom.show && tabs_information['new'][0].active">
+							<div class="row" id="bottom-row" ng-show="tabs_information['new'][0].active"> <!-- new_bottom.show &&  -->
 								<div class="col col-lg-4 col-md-6 col-12" id="enterprise_svg">
 									<div class="card">
 										<h4 class="card-header">Option 1:<br>Enterprise</h4>
@@ -145,16 +145,35 @@
 													<g id="Enterprise" class="" style="opacity:{{1}}" transform="translate(25,25)">
 														<g class="" style="opacity:{{1}}" transform="translate(0,0)">
 															<g ng-repeat="obj in new_enterprise['inst']">
-												        <rect fill="#919191" stroke="#222222" id="inst_{{$index * 2}}" x="0" ng-attr-y="{{$index * 26}}" width="50" height="24" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[$index * 2]['svgClass']}}" />
-															    <text x="9" ng-attr-y="{{$index * 26 + 17}}" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
-																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" stroke="#222222" x1="50" ng-attr-y1="{{$parent.$index * 26 + 12}}" x2="100" ng-attr-y2="{{$index * 52 + 26}}" id="line_{{$parent.$index + '_' + $index * 2}}" class=""/>
-																<rect fill="#919191" stroke="#222222" id="inst_{{$index * 2 + 1}}" x="200" ng-attr-y="{{$index * 26}}" width="50" height="24" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[$index * 2 + 1]['svgClass']}}" />
+												        <rect fill="#919191" stroke="#222222" id="inst_{{$index * 2}}"
+																	width="50" height="24" style="color: rgb(0, 0, 0);"
+																	ng-attr-x="{{($index+1) % 2 == 0 ? 200 : 0}}"
+																	ng-attr-y="{{(($index+1) % 2 == 0 ? $index * 13 -13 : ($index+1) * 13 -13) + ($index>11 ? 10 : 0)}}"
+																	ng-attr-class="{{new_WE[$index]['svgClass']}}">
+																</rect>
+															    <text style="font-weight: bold; font-family: sans-serif; fill: #ffffff"
+																		ng-attr-class="{{$index>11 ? 'text_10' : 'text'}}"
+																		ng-attr-x="{{(($index+1) % 2 == 0 ? 209 : 9)-($index>11 ? 5: 0)}}"
+																		ng-attr-y="{{(($index+1) % 2 == 0 ? $index*13 +4: ($index+1)*13 +4)+ ($index>11 ? 10 : 0)}}">
+																		{{'INST' + ($index>11 ? ' x' + new_WE[$index].extra : '')}}
+																	</text>
+																	<line ng-if="$index == 12" x1="-2" y1="160" x2="254" y2="160" fill="#242424" stroke="#222222" class="svg_dashed_line_true"/>
+																	<text ng-if="$index == 12" x="0" y="230" style="font: bold 10px sans-serif; fill: #222222">Enterprise network is too large to be shown fully</text>
+																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" stroke="#222222"
+																		ng-attr-x1="{{($parent.$index+1) % 2 == 0 ? 200 : 50}}"
+																		ng-attr-y1="{{(($parent.$index+1) % 2 == 0 ? $parent.$index * 13 : ($parent.$index+1) * 13)+ ($parent.$index>11 ? 10 : 0)}}"
+																		ng-attr-x2="{{($parent.$index+1) % 2 == 0 ? 150 : 100}}"
+																		ng-attr-y2="{{$index * 52 + 26 + ($index>2 ? 10 : 0)}}"
+																		id="line_{{$parent.$index + '_' + $index}}"
+																		ng-attr-class="{{'svg_dashed_line_'.concat($parent.$index > 11 || $index > 2)}}">
+																	</line>
+																<!-- <rect fill="#919191" stroke="#222222" id="inst_{{$index * 2 + 1}}" x="200" ng-attr-y="{{$index * 26}}" width="50" height="24" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[$index * 2 + 1]['svgClass']}}" />
 																	<text x="209" ng-attr-y="{{$index * 26 + 17}}" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
-																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" stroke="#222222" x1="200" ng-attr-y1="{{$parent.$index * 26 + 12}}" x2="150" ng-attr-y2="{{$index * 52 + 26}}" id="line_{{$parent.$index + '_' + $index * 2 + 1}}" class=""/>
+																	<line ng-repeat="obj in new_enterprise['IPC']" fill="#242424" ng-attr-class="{{'svg_dashed_line_'.concat($parent.$index > 5 || $index > 2)}}" stroke="#222222" x1="200" ng-attr-y1="{{$parent.$index * 26 + 12}}" x2="150" ng-attr-y2="{{$index * 52 + 26}}" id="line_{{$parent.$index + '_' + $index * 2 + 1}}" class=""/> -->
 															</g>
 															<g ng-repeat="obj in new_enterprise['IPC']">
-																<rect fill="#242424" stroke="#222222" id="IPC_{{$index}}" x="100" ng-attr-y="{{$index * 52 + 6}}"  width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
- 											          	<text x="115" ng-attr-y="{{$index * 52 + 31}}" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
+																<rect fill="#242424" stroke="#222222" id="IPC_{{$index}}" x="100" ng-attr-y="{{$index * 52 + 6 + ($index>2 ? 10 : 0)}}"  width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
+ 											          	<text x="115" ng-attr-y="{{$index * 52 + 31 + ($index>2 ? 10 : 0)}}" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
 															</g>
 											      </g>
 											    </g>
@@ -169,7 +188,7 @@
 										<div class="card-body no-top-padding">
 											<div class="graph">
 												<canvas width=300 height=300></canvas>
-												<svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMin">
+												<svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMin" ng-show="new_bottom.show">
 													<!-- <my-custom-svg svg-class="new_WE"></my-custom-svg> -->
 													<rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none"/>
 													<g id="Single Edition" class="" style="opacity:{{current_new_options_1.Edition_visible[0]}}" transform="translate(25,25)">
