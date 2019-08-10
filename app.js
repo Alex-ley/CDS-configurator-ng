@@ -69,6 +69,8 @@ var app = angular.module('CDS-config-app', []);
 			{'active': false, 'svgClass':"svg_unused"},
 			{'active': false, 'svgClass':"svg_unused", 'extra':0},
 			{'active': false, 'svgClass':"svg_unused", 'extra':0},
+			{'active': false, 'svgClass':"svg_unused", 'extra':0},
+			{'active': false, 'svgClass':"svg_unused", 'extra':0},
 			{'active': false, 'svgClass':"svg_unused", 'extra':0}
 		];
 
@@ -89,8 +91,8 @@ var app = angular.module('CDS-config-app', []);
 	  };
 
 		$scope.new_enterprise = {
-			'inst': [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-			'IPC': [1,2,3,4]
+			'inst': [1],
+			'IPC': [1]
 		}
 
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
@@ -329,6 +331,10 @@ var app = angular.module('CDS-config-app', []);
 							$scope.new_WE[1].active = true;
 							$scope.new_WE[1].svgClass = 'svg_TF';
 						}
+						$scope.new_enterprise['IPC'] = [];
+						for (var ipc = 1; ipc <= c; ipc++) {
+							$scope.new_enterprise['IPC'].push(ipc);
+						}
 						break;
 					}
 				}
@@ -339,12 +345,23 @@ var app = angular.module('CDS-config-app', []);
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
-			$scope.current_new_options_1.IPC_visible = [0,0,0];
+			$scope.current_new_options_1.IPC_visible = [1,0,0];
+			$scope.new_enterprise['IPC'] = [];
+			$scope.new_WE[16].extra = 0;
 			for (var n = 0; n < $scope.new_values['Clients'].value; n++) {
 				$scope.current_new_options_1.IPC_visible[n] = 1;
+				n < 4 ? $scope.new_enterprise['IPC'].push(n+1) : null;
+				n >= 3 ? $scope.new_WE[16].extra +=1 : null;
 			}
+			$scope.new_enterprise['IPC'][0] = 1;
 
 			if(!$scope.new_valid){
+				if (key !== 'Clients') {
+					$scope.new_values['Clients'].value = 4;  //at least 4 IPC required
+					$scope.new_values['Total_Clients'].value = 4 + $scope.new_values['Data'].value;
+					$scope.new_enterprise['IPC'] = [1,2,3,4];
+					$scope.new_WE[16].extra = 1;
+				}
 				$scope.new_values['Clients'].small += " - option 2 invalid"
 				$scope.new_values['Clients'].valid = "is-invalid";
 				$scope.new_bottom.show = false;
@@ -357,14 +374,17 @@ var app = angular.module('CDS-config-app', []);
 					'svg_GC': $scope.new_values['GC'].value,
 					'svg_LC': $scope.new_values['LC'].value
 				}
+				$scope.new_enterprise['inst'] = [];
+				const limit = (key !== 'Clients' ? 12 : Math.min($scope.new_values['Total'].value,12)); //either go to 12 or total instruments if less
 				var counter = 0;
 				var incrementer = 0;
-				while (counter < 12) {
+				while (counter < limit) { //allocate each instrument to a slot taking turns
 					if ((incrementer+3) % 3 == 0) {
 						if (temp_enterprise['svg_TF']>0) {
 							temp_enterprise['svg_TF'] -=1;
 							$scope.new_WE[counter].active = true;
 							$scope.new_WE[counter].svgClass = 'svg_TF';
+							$scope.new_enterprise['inst'].push(counter+1);
 							counter +=1;
 							incrementer +=1;
 							continue;
@@ -374,6 +394,7 @@ var app = angular.module('CDS-config-app', []);
 							temp_enterprise['svg_GC'] -=1;
 							$scope.new_WE[counter].active = true;
 							$scope.new_WE[counter].svgClass = 'svg_GC';
+							$scope.new_enterprise['inst'].push(counter+1);
 							counter +=1;
 							incrementer +=1;
 							continue;
@@ -383,6 +404,7 @@ var app = angular.module('CDS-config-app', []);
 							temp_enterprise['svg_LC'] -=1;
 							$scope.new_WE[counter].active = true;
 							$scope.new_WE[counter].svgClass = 'svg_LC';
+							$scope.new_enterprise['inst'].push(counter+1);
 							counter +=1;
 							incrementer +=1;
 							continue;
@@ -390,20 +412,26 @@ var app = angular.module('CDS-config-app', []);
 					}
 					incrementer +=1;
 				}
-				if (temp_enterprise['svg_TF']>0) {
-					$scope.new_WE[12].active = true;
-					$scope.new_WE[12].svgClass = 'svg_TF';
-					$scope.new_WE[12].extra = temp_enterprise['svg_TF'];
+				if (temp_enterprise['svg_TF']>0) { //any remaining instruments save in spillover holders
+					var instruments = $scope.new_enterprise['inst'].length;
+					$scope.new_WE[instruments].active = true;
+					$scope.new_WE[instruments].svgClass = 'svg_TF';
+					$scope.new_WE[instruments].extra = temp_enterprise['svg_TF'];
+					$scope.new_enterprise['inst'].push(instruments+1);
 				}
 				if (temp_enterprise['svg_GC']>0) {
-					$scope.new_WE[13].active = true;
-					$scope.new_WE[13].svgClass = 'svg_GC';
-					$scope.new_WE[13].extra = temp_enterprise['svg_GC'];
+					var instruments = $scope.new_enterprise['inst'].length;
+					$scope.new_WE[instruments].active = true;
+					$scope.new_WE[instruments].svgClass = 'svg_GC';
+					$scope.new_WE[instruments].extra = temp_enterprise['svg_GC'];
+					$scope.new_enterprise['inst'].push(instruments+1);
 				}
 				if (temp_enterprise['svg_LC']>0) {
-					$scope.new_WE[14].active = true;
-					$scope.new_WE[14].svgClass = 'svg_LC';
-					$scope.new_WE[14].extra = temp_enterprise['svg_LC'];
+					var instruments = $scope.new_enterprise['inst'].length;
+					$scope.new_WE[instruments].active = true;
+					$scope.new_WE[instruments].svgClass = 'svg_LC';
+					$scope.new_WE[instruments].extra = temp_enterprise['svg_LC'];
+					$scope.new_enterprise['inst'].push(instruments+1);
 				}
 			} else {
 				for (var i = 0; i < $scope.new_WE.length; i++) {
@@ -411,10 +439,12 @@ var app = angular.module('CDS-config-app', []);
 					$scope.new_WE[i].svgClass = 'svg_unused';
 				}
 				$scope.new_WE[0].svgClass = 'svg_TF';
+				$scope.new_enterprise['inst'] = [];
 				var counter = 0;
 				for (var i = 0; i < $scope.new_values['LC'].value; i++) {
 					$scope.new_WE[counter].active = true;
 					$scope.new_WE[counter].svgClass = 'svg_LC';
+					$scope.new_enterprise['inst'].push(i+1);
 					if ((i+1) % 2 == 0) {
 						counter += 3;
 					} else {
@@ -426,6 +456,7 @@ var app = angular.module('CDS-config-app', []);
 						if ($scope.new_WE[j].active == false) {
 							$scope.new_WE[j].active = true;
 							$scope.new_WE[j].svgClass = 'svg_GC';
+							$scope.new_enterprise['inst'].push(i+1);
 							break; //break inner-loop each time you find a slot free
 						}
 					}
@@ -435,12 +466,13 @@ var app = angular.module('CDS-config-app', []);
 						if ($scope.new_WE[j].active == false) {
 							$scope.new_WE[j].active = true;
 							$scope.new_WE[j].svgClass = 'svg_TF';
+							$scope.new_enterprise['inst'].push(i+1);
 							break; //break inner-loop each time you find a slot free
 						}
 					}
 				}
 			}
-
+			
 			// Part 2
 			$scope.new_valid = true;
 			for (k in $scope.new_values){
