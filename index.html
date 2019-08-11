@@ -113,7 +113,7 @@
 								</div>
 							</form>
 							<form ng-show="tabs_information['new'][1].active">
-								<h6>{{tabs_information['new_chosen']}}</h6>
+								<h6>{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</h6>
 								<table style="width:100%" class="table">
 									<tr>
 										<th>QTY</th>
@@ -128,9 +128,24 @@
 										<td>{{obj.NOTES}}</td>
 									</tr>
 								</table>
+								<h4>Please edit your optional add-ons:</h4><span style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+								<table style="width:100%" class="table">
+									<tr>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in new_add_ons">
+										<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities()"></div></td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
 							</form>
 							<form ng-show="tabs_information['new'][2].active">
-								<h6>{{tabs_information['new_chosen']}}</h6>
+								<h6>{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</h6>
 							</form>
 							<div class="row" id="bottom-row" ng-show="tabs_information['new'][0].active"> <!-- new_bottom.show &&  -->
 								<div class="col col-lg-4 col-md-6 col-12" id="enterprise_svg">

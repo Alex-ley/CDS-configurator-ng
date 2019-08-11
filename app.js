@@ -28,6 +28,7 @@ var app = angular.module('CDS-config-app', []);
 	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
 
 		$scope.new_values = {
+								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
 								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
@@ -82,6 +83,7 @@ var app = angular.module('CDS-config-app', []);
 					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
 		  ],
 			'new_chosen': 'Please select Option 1 or 2',
+			'new_chosen_type': '',
 			'existing':[
 					{'id': 0, 'name': 'Part 1', 'show': true, 'active': true, 'tabClass':"nav-item nav-link active"},
 					{'id': 1, 'name': 'Part 2', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
@@ -99,6 +101,7 @@ var app = angular.module('CDS-config-app', []);
 		$scope.new_bottom = {'show':true,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.existing_validation = {'style':'','text':''};
+		$scope.new_add_ons_validation = {'style':'','text':''};
 
 		$scope.installation_type = ['Single','Workgroup','Enterprise','Existing SE/WE','Existing a-la-carte'];
 		$scope.selected_installation = 'Single';
@@ -134,6 +137,11 @@ var app = angular.module('CDS-config-app', []);
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
+		$scope.new_add_ons = [
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+		];
 		$scope.existing_result = [
 			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
@@ -149,6 +157,7 @@ var app = angular.module('CDS-config-app', []);
 								{
 								'name':'1 x Single Edition',
 								'max':{
+											'Packages':{'value':1},
 											'Clients':{'value':1},
 											'TF':{'value':1},
 											'GC':{'value':0},
@@ -169,6 +178,7 @@ var app = angular.module('CDS-config-app', []);
 								{
 								'name':'2 x Single Edition',
 								'max':{
+											'Packages':{'value':1},
 											'Clients':{'value':2},
 											'TF':{'value':2},
 											'GC':{'value':0},
@@ -189,6 +199,7 @@ var app = angular.module('CDS-config-app', []);
 								{
 								'name':'Workgroup Edition',
 								'max':{
+											'Packages':{'value':1},
 											'Clients':{'value':3},
 											'TF':{'value':12},
 											'GC':{'value':12},
@@ -213,6 +224,7 @@ var app = angular.module('CDS-config-app', []);
 		$scope.new_options_2 = [
 								{
 								'max':{
+											'Packages':{'value':1},
 											'Clients':{'value':999999},
 											'TF':{'value':999999},
 											'GC':{'value':999999},
@@ -472,7 +484,7 @@ var app = angular.module('CDS-config-app', []);
 					}
 				}
 			}
-			
+
 			// Part 2
 			$scope.new_valid = true;
 			for (k in $scope.new_values){
@@ -574,15 +586,25 @@ var app = angular.module('CDS-config-app', []);
 
 		};
 
-		$scope.update_quantities_result = function(calc_qty) {
+		$scope.update_quantities_result = function(calc_qty, new_or_existing = 'existing') {
 			// $scope.existing_result = [];
 			// Existing Part (only 1)
-			var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
+			if (new_or_existing == 'existing') {
+				var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
+				var new_or_existing_values = 'existing_values';
+				var new_or_existing_result = 'existing_result';
+				var new_or_existing_validation = 'existing_validation';
+			} else { //new_or_existing = 'new'
+				var parts_array = $scope.existing_options[$scope.tabs_information['new_chosen_type']]['Adding optional add-ons'];
+				var new_or_existing_values = 'new_values';
+				var new_or_existing_result = 'new_add_ons';
+				var new_or_existing_validation = 'new_add_ons_validation';
+			}
 			// // alert(parts_array[0]['QTY']);
 			// $scope.existing_result = parts_array;
-			$scope.existing_result = parts_array;
-			$scope.existing_valid = true;
-			$scope.existing_validation = {'style':'green','text':'Quantities are valid, please edit for your needs'};
+			$scope[new_or_existing_result] = parts_array;
+			// $scope.existing_valid = true;
+			$scope[new_or_existing_validation] = {'style':'green','text':'Quantities are valid, please edit for your needs'};
 			for (var j = 0; j < parts_array.length; j++){
 					var lookup_qty = parts_array[j]['QTY'];
 					// console.log(lookup_qty, calc_qty);
@@ -591,22 +613,22 @@ var app = angular.module('CDS-config-app', []);
 						if (parseInt(lookup_qty) > 0) {
 							var qty = lookup_qty;
 						}else {
-							var qty = parseInt($scope.existing_values[lookup_qty]['value']) || 1; 	// no need for scope ($scope.parts_array[lookup_qty]);
-							$scope.existing_result[j]['QTY'] = qty;
+							var qty = parseInt($scope[new_or_existing_values][lookup_qty]['value']) || 1; 	// no need for scope ($scope.parts_array[lookup_qty]);
+							$scope[new_or_existing_result][j]['QTY'] = qty;
 							var max = parseInt(parts_array[j]['MAX']); // no need for scope $scope.parts_array
 						}
 					}else {
-						var qty = parseInt($scope.existing_result[j]['QTY']) || 0;
-						var max = parseInt($scope.existing_result[j]['MAX']);
+						var qty = parseInt($scope[new_or_existing_result][j]['QTY']) || 0;
+						var max = parseInt($scope[new_or_existing_result][j]['MAX']);
 					}
 					// console.log(qty,max);
 					if(qty > max){
-						$scope.existing_result[j]['Valid'] = 'is-invalid';
-						$scope.existing_valid = false;
-						$scope.existing_validation = {'style':'red','text':'Max quantity exceeded, please adjust'};
+						$scope[new_or_existing_result][j]['Valid'] = 'is-invalid';
+						// $scope.existing_valid = false;
+						$scope[new_or_existing_validation] = {'style':'red','text':'Max quantity exceeded, please adjust'};
 					}else {
 						// console.log($scope.existing_result);
-						$scope.existing_result[j]['Valid'] = 'is-valid';
+						$scope[new_or_existing_result][j]['Valid'] = 'is-valid';
 					}
 			}
 			// $scope.existing_result = parts_array;
@@ -659,10 +681,13 @@ var app = angular.module('CDS-config-app', []);
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
 			$scope.tabs_information['new_chosen'] = option_chosen;
+			var temp = $scope.current_new_options_1.name.split(" ");
+			$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
 			var temp = option_chosen == "Option 2" ? $scope.new_result_1 : $scope.new_result_2;
 			// console.log(temp);
 			$scope.new_result_chosen = temp;
 			$scope.new_tab(new_or_existing, tab);
+			$scope.update_quantities_result(true, 'new');
 		};
 
 	}]);
