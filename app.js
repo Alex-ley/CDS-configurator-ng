@@ -689,7 +689,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
-			if (!$scope.new_valid) { return false;	}
+			if (!$scope.new_valid && !!$scope.new_valid2) { return false;	}
 			$scope.tabs_information['new_chosen'] = option_chosen;
 			var temp = $scope.current_new_options_1.name.split(" ");
 			$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
