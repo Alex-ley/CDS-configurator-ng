@@ -1,4 +1,4 @@
-var app = angular.module('CDS-config-app', []);
+var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 	//camel cased directive name
 	//in your HTML, this will be named as v-bars-chart
 	// app.directive('myCustomSvg', ['$parse', function ($parse) {
@@ -26,7 +26,8 @@ var app = angular.module('CDS-config-app', []);
 	// }]);
 
 	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
-
+		$scope.new_valid = false; //Workstation
+		$scope.new_valid2 = false; //Enterprise
 		$scope.new_values = {
 								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
 								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
@@ -39,7 +40,7 @@ var app = angular.module('CDS-config-app', []);
 								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
 								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
-
+		$scope.existing_valid = false;
 		$scope.existing_values = {
 								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':true},
 								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
@@ -83,6 +84,7 @@ var app = angular.module('CDS-config-app', []);
 					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
 		  ],
 			'new_chosen': 'Please select Option 1 or 2',
+			'new_chosen_style' : 'red',
 			'new_chosen_type': '',
 			'existing':[
 					{'id': 0, 'name': 'Part 1', 'show': true, 'active': true, 'tabClass':"nav-item nav-link active"},
@@ -149,6 +151,7 @@ var app = angular.module('CDS-config-app', []);
 		];
 
 		$scope.current_new_options_1 = {
+			'valid' : true,
 			'name' : 'Single Edition',
 			'Edition_visible' : [1,0],
 			'IPC_visible' : [1,0,0]
@@ -277,6 +280,8 @@ var app = angular.module('CDS-config-app', []);
 		$scope.update_new = function(key) {
 			// alert("update new");
 			$scope.new_bottom.show = true;
+			$scope.new_valid = true;
+			$scope.new_valid2 = true;
 			// Part 1
 			const part_1 = function(){
 				var TF = parseInt($scope.new_values['TF']['value']) || 0;
@@ -377,7 +382,7 @@ var app = angular.module('CDS-config-app', []);
 				$scope.new_values['Clients'].small += " - option 2 invalid"
 				$scope.new_values['Clients'].valid = "is-invalid";
 				$scope.new_bottom.show = false;
-				$scope.current_new_options_1.name = "Quantity Exceeded"
+				$scope.current_new_options_1.name = "Quantity Exceeded";
 				for (var j = 0; j < 3; j++){
 					$scope.new_result_1.push({'QTY':'_','PN':'_','DESC':'_MAX_QTY_EXCEEDED_','NOTES':'_'});
 				}
@@ -486,13 +491,13 @@ var app = angular.module('CDS-config-app', []);
 			}
 
 			// Part 2
-			$scope.new_valid = true;
+			$scope.new_valid2 = true;
 			for (k in $scope.new_values){
 					if( parseInt($scope.new_values[k].value) > $scope.new_options_2[0]['max'][k].value){
-							$scope.new_valid = false;
+							$scope.new_valid2 = false;
 					}
 			}
-			if($scope.new_valid){
+			if($scope.new_valid2){
 				for (var j = 0; j < $scope.new_options_2[0]['parts'].length; j++){
 					var QTY = parseInt($scope.new_values[$scope.new_options_2[0]['parts'][j]['QTY']].value) || 0;
 					if (QTY) {
@@ -509,6 +514,7 @@ var app = angular.module('CDS-config-app', []);
 				}
 			} else {
 				for (var j = 0; j < 3; j++){
+					$scope.new_valid2 = false;
 					$scope.new_result_2.push({'QTY':'_','PN':'_','DESC':'_MAX_QTY_EXCEEDED_','NOTES':'_'});
 				}
 			}
@@ -516,6 +522,7 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.update_installation_type = function() {
+			$scope.existing_valid = true;
 			$scope.show_hide_existing();
 			$scope.update_existing_result();
 			var calc_qty = true;
@@ -524,6 +531,7 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.update_existing = function() {
+			$scope.existing_valid = true;
 			$scope.update_existing_result();
 			var calc_qty = true;
 			$scope.update_quantities_result(calc_qty);
@@ -531,13 +539,9 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.update_category = function() {
+			$scope.existing_valid = true;
 			$scope.selected_option = $scope.modification_options[$scope.selected_category][0];
 			$scope.update_existing();
-		};
-
-		$scope.update_quantities = function() {
-			var calc_qty = false;
-			$scope.update_quantities_result(calc_qty);
 		};
 
 		$scope.show_hide_existing = function() {
@@ -589,12 +593,17 @@ var app = angular.module('CDS-config-app', []);
 		$scope.update_quantities_result = function(calc_qty, new_or_existing = 'existing') {
 			// $scope.existing_result = [];
 			// Existing Part (only 1)
-			if (new_or_existing == 'existing') {
+			if (new_or_existing == 'new' && !$scope.new_valid) {
+				return false;
+			} else if (new_or_existing == 'existing' && !$scope.existing_valid) {
+				return false;
+			} else if (new_or_existing == 'existing') {
 				var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
 				var new_or_existing_values = 'existing_values';
 				var new_or_existing_result = 'existing_result';
 				var new_or_existing_validation = 'existing_validation';
-			} else { //new_or_existing = 'new'
+			}
+			else { //new_or_existing = 'new'
 				var parts_array = $scope.existing_options[$scope.tabs_information['new_chosen_type']]['Adding optional add-ons'];
 				var new_or_existing_values = 'new_values';
 				var new_or_existing_result = 'new_add_ons';
@@ -680,14 +689,21 @@ var app = angular.module('CDS-config-app', []);
 		};
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
+			if (!$scope.new_valid) { return false;	}
 			$scope.tabs_information['new_chosen'] = option_chosen;
 			var temp = $scope.current_new_options_1.name.split(" ");
 			$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
+			$scope.tabs_information.new_chosen_style = 'green';
 			var temp = option_chosen == "Option 2" ? $scope.new_result_1 : $scope.new_result_2;
 			// console.log(temp);
 			$scope.new_result_chosen = temp;
 			$scope.new_tab(new_or_existing, tab);
 			$scope.update_quantities_result(true, 'new');
+		};
+
+		$scope.removeItem = function(array_to_delete,index) {
+			console.log(array_to_delete,index);
+			$scope[array_to_delete].splice(index,1);
 		};
 
 	}]);

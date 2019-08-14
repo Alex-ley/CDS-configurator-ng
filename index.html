@@ -4,8 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-sanitize.min.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 	<script src="app.js"></script>
 
 	</head>
@@ -67,7 +70,7 @@
 												<h4>Option 1 (Enterprise):</h4>
 											</div>
 											<div class="col col-4">
-												<button type="button" ng-click="option_selected('Option 1', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 1</button>
+												<button type="button" ng-disabled="!new_valid2" ng-click="option_selected('Option 1', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 1</button>
 											</div>
 										</div>
 										<table style="width:100%" class="table">
@@ -90,7 +93,7 @@
 												<h4>Option 2 (Workstation):</h4>
 											</div>
 											<div class="col col-4">
-												<button type="button" ng-click="option_selected('Option 2', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 2</button>
+												<button type="button" ng-disabled="!new_valid" ng-click="option_selected('Option 2', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 2</button>
 											</div>
 										</div>
 										<table style="width:100%" class="table">
@@ -113,7 +116,7 @@
 								</div>
 							</form>
 							<form ng-show="tabs_information['new'][1].active">
-								<h6>{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</h6>
+								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 								<table style="width:100%" class="table">
 									<tr>
 										<th>QTY</th>
@@ -131,13 +134,27 @@
 								<h4>Please edit your optional add-ons:</h4><span style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
 								<table style="width:100%" class="table">
 									<tr>
+										<th></th>
 										<th>QTY</th>
 										<th>PN</th>
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in new_add_ons">
-										<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities()"></div></td>
+										<td style="width:5px; padding: 0px;">
+											<button type="button" class="close" aria-label="Close"
+												uib-tooltip="Delete Item"
+												tooltip-placement="top"
+												ng-click="removeItem('new_add_ons',$index)"
+												style="float: left; height: 100%; margin-top: 15px;">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</td>
+										<td>
+											<div class="form-group" style="align-items: center;">
+												<input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
+											</div>
+										</td>
 										<td>{{obj.PN}}</td>
 										<td>{{obj.DESC}}</td>
 										<td>{{obj.NOTES}}</td>
@@ -145,7 +162,7 @@
 								</table>
 							</form>
 							<form ng-show="tabs_information['new'][2].active">
-								<h6>{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</h6>
+								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 							</form>
 							<div class="row" id="bottom-row" ng-show="tabs_information['new'][0].active"> <!-- new_bottom.show &&  -->
 								<div class="col col-lg-4 col-md-6 col-12" id="enterprise_svg">
@@ -364,7 +381,7 @@
 												<th>NOTES</th>
 										  </tr>
 											<tr ng-repeat="obj in existing_result">
-												<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities()"></div></td>
+												<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false)"></div></td>
 										    <td>{{obj.PN}}</td>
 										    <td>{{obj.DESC}}</td>
 												<td>{{obj.NOTES}}</td>
