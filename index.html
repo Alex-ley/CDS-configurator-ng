@@ -119,12 +119,14 @@
 								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 								<table style="width:100%" class="table">
 									<tr>
+										<th></th>
 										<th>QTY</th>
 										<th>PN</th>
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in new_result_chosen">
+										<td style="width:24px; padding: 0px;"></td>
 										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
 										<td>{{obj.DESC}}</td>
@@ -155,6 +157,23 @@
 												<input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
 											</div>
 										</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
+								<h6 ng-if="new_add_ons_included.length > 0">Options already included:</h6>
+								<table style="width:100%" class="table" ng-if="new_add_ons_included.length > 0">
+									<tr>
+										<th></th>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in new_add_ons_included">
+										<td style="width:24px; padding: 0px;"></td>
+										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
 										<td>{{obj.DESC}}</td>
 										<td>{{obj.NOTES}}</td>
@@ -386,6 +405,23 @@
 										    <td>{{obj.DESC}}</td>
 												<td>{{obj.NOTES}}</td>
 										  </tr>
+										</table>
+										<h6 ng-if="existing_included.length > 0">Options already included:</h6>
+										<table style="width:100%" class="table" ng-if="existing_included.length > 0">
+											<tr>
+												<th></th>
+												<th>QTY</th>
+												<th>PN</th>
+												<th>DESCRIPTION</th>
+												<th>NOTES</th>
+											</tr>
+											<tr ng-repeat="obj in existing_included">
+												<td style="width:24px; padding: 0px;"></td>
+												<td>{{obj.QTY}}</td>
+												<td>{{obj.PN}}</td>
+												<td>{{obj.DESC}}</td>
+												<td>{{obj.NOTES}}</td>
+											</tr>
 										</table>
 									</div>
 									<!-- <input type="submit" value="submit" class="btn btn-success"> -->

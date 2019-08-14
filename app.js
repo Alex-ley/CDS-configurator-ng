@@ -140,15 +140,17 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 		$scope.new_add_ons = [
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
+		$scope.new_add_ons_included = [];
 		$scope.existing_result = [
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
+		$scope.existing_included = [];
 
 		$scope.current_new_options_1 = {
 			'valid' : true,
@@ -522,6 +524,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 
 		$scope.update_installation_type = function() {
+			$scope.existing_included =[];
 			$scope.existing_valid = true;
 			$scope.show_hide_existing();
 			$scope.update_existing_result();
@@ -531,6 +534,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 
 		$scope.update_existing = function() {
+			$scope.existing_included =[];
 			$scope.existing_valid = true;
 			$scope.update_existing_result();
 			var calc_qty = true;
@@ -601,44 +605,53 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
 				var new_or_existing_values = 'existing_values';
 				var new_or_existing_result = 'existing_result';
+				var new_or_existing_included = 'existing_included';
 				var new_or_existing_validation = 'existing_validation';
 			}
 			else { //new_or_existing = 'new'
 				var parts_array = $scope.existing_options[$scope.tabs_information['new_chosen_type']]['Adding optional add-ons'];
 				var new_or_existing_values = 'new_values';
 				var new_or_existing_result = 'new_add_ons';
+				var new_or_existing_included = 'new_add_ons_included';
 				var new_or_existing_validation = 'new_add_ons_validation';
 			}
 			// // alert(parts_array[0]['QTY']);
 			// $scope.existing_result = parts_array;
-			$scope[new_or_existing_result] = parts_array;
-			// $scope.existing_valid = true;
-			$scope[new_or_existing_validation] = {'style':'green','text':'Quantities are valid, please edit for your needs'};
-			for (var j = 0; j < parts_array.length; j++){
+			if (calc_qty) {
+				// $scope[new_or_existing_result] = parts_array;
+				for (var j = 0; j < parts_array.length; j++){
 					var lookup_qty = parts_array[j]['QTY'];
 					// console.log(lookup_qty, calc_qty);
 					// alert(lookup_qty);
-					if (calc_qty) {
-						if (parseInt(lookup_qty) > 0) {
-							var qty = lookup_qty;
-						}else {
-							var qty = parseInt($scope[new_or_existing_values][lookup_qty]['value']) || 1; 	// no need for scope ($scope.parts_array[lookup_qty]);
-							$scope[new_or_existing_result][j]['QTY'] = qty;
-							var max = parseInt(parts_array[j]['MAX']); // no need for scope $scope.parts_array
-						}
-					}else {
-						var qty = parseInt($scope[new_or_existing_result][j]['QTY']) || 0;
-						var max = parseInt($scope[new_or_existing_result][j]['MAX']);
+					if (!parseInt(lookup_qty) > 0) {
+						var qty = parseInt($scope[new_or_existing_values][lookup_qty]['value']) || 1; 	// no need for scope ($scope.parts_array[lookup_qty]);
+						parts_array[j]['QTY'] = qty;
 					}
-					// console.log(qty,max);
-					if(qty > max){
-						$scope[new_or_existing_result][j]['Valid'] = 'is-invalid';
-						// $scope.existing_valid = false;
-						$scope[new_or_existing_validation] = {'style':'red','text':'Max quantity exceeded, please adjust'};
-					}else {
-						// console.log($scope.existing_result);
-						$scope[new_or_existing_result][j]['Valid'] = 'is-valid';
+				}
+				$scope[new_or_existing_result] = [];
+				$scope[new_or_existing_included] =[];
+				for (var i = 0; i < parts_array.length; i++) {
+					if (parts_array[i].PN == "included") {
+						$scope[new_or_existing_included].push(parts_array[i]);
+					} else {
+						$scope[new_or_existing_result].push(parts_array[i]);
 					}
+				}
+			}
+			// $scope.existing_valid = true;
+			$scope[new_or_existing_validation] = {'style':'green','text':'Quantities are valid, please edit for your needs'};
+			for (var j = 0; j < [new_or_existing_result].length; j++) {
+				var qty = parseInt($scope[new_or_existing_result][j]['QTY']) || 0;
+				var max = parseInt($scope[new_or_existing_result][j]['MAX']);
+				// console.log(qty,max);
+				if(qty > max){
+					$scope[new_or_existing_result][j]['Valid'] = 'is-invalid';
+					// $scope.existing_valid = false;
+					$scope[new_or_existing_validation] = {'style':'red','text':'Max quantity exceeded, please adjust'};
+				}else {
+					// console.log($scope.existing_result);
+					$scope[new_or_existing_result][j]['Valid'] = 'is-valid';
+				}
 			}
 			// $scope.existing_result = parts_array;
 			// console.log(parts_array);
@@ -690,6 +703,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
 			if (!$scope.new_valid && !$scope.new_valid2) { return false;	}
+			$scope.new_add_ons_included =[];
 			$scope.tabs_information['new_chosen'] = option_chosen;
 			var temp = $scope.current_new_options_1.name.split(" ");
 			$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
