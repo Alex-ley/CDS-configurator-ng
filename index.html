@@ -116,7 +116,14 @@
 								</div>
 							</form>
 							<form ng-show="tabs_information['new'][1].active">
-								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
+								<div class="row">
+									<div class="col col-8">
+										<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
+									</div>
+									<div class="col col-4">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="send_to_final('new', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Send all to part 3</button>
+									</div>
+								</div>
 								<table style="width:100%" class="table">
 									<tr>
 										<th></th>
@@ -133,7 +140,14 @@
 										<td>{{obj.NOTES}}</td>
 									</tr>
 								</table>
+								<div class="row">
+									<div class="col col-8">
 								<h4>Please edit your optional add-ons:</h4><span style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+									</div>
+									<div class="col col-4">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="remove_all_add_ons('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Remove all add-ons</button>
+									</div>
+								</div>
 								<table style="width:100%" class="table">
 									<tr>
 										<th></th>
@@ -181,7 +195,30 @@
 								</table>
 							</form>
 							<form ng-show="tabs_information['new'][2].active">
+								<div class="row">
+									<div class="col col-8">
 								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
+									</div>
+									<div class="col col-4">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="export_as_csv('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
+									</div>
+								</div>
+								<table style="width:100%" class="table" ng-if="new_final.length > 0">
+									<tr>
+										<th></th>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in new_final">
+										<td style="width:24px; padding: 0px;"></td>
+										<td>{{obj.QTY}}</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
 							</form>
 							<div class="row" id="bottom-row" ng-show="tabs_information['new'][0].active"> <!-- new_bottom.show &&  -->
 								<div class="col col-lg-4 col-md-6 col-12" id="enterprise_svg">
@@ -391,7 +428,14 @@
 												</div>
 											</li>
 										</ul>
-										<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+										<div class="row" style="float: left; width: 100%">
+											<div class="col col-8">
+												<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+											</div>
+											<div class="col col-4">
+												<button type="button" ng-disabled="!existing_valid" ng-click="option_selected('Option 1', 'existing', 1)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 2</button>
+											</div>
+										</div>
 										<table style="width:100%" class="table">
 										  <tr>
 										    <th>QTY</th>
@@ -425,13 +469,88 @@
 										</table>
 									</div>
 									<!-- <input type="submit" value="submit" class="btn btn-success"> -->
-									<button type="button" class="btn btn-success">Submit</button>
 							</form>
 							<form ng-show="tabs_information['existing'][1].active">
-								<h6>Part 2</h6>
+								<h6>{{selected_option}}:</h6>
+								<div class="row" style="float: left; width: 100%">
+									<div class="col col-8">
+										<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+									</div>
+									<div class="col col-4">
+										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Send all to part 3</button>
+									</div>
+								</div>
+								<table style="width:100%" class="table">
+									<tr>
+										<th></th>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in existing_result_chosen">
+										<td style="width:5px; padding: 0px;">
+											<button type="button" class="close" aria-label="Close"
+												uib-tooltip="Delete Item"
+												tooltip-placement="top"
+												ng-click="removeItem('existing_result_chosen',$index)"
+												style="float: left; height: 100%; margin-top: 15px;">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</td>
+										<td>
+											<div class="form-group" style="align-items: center;">
+												<input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'existing')">
+											</div>
+										</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
+								<h6>Options alread included:</h6>
+								<table style="width:100%" class="table">
+									<tr>
+										<th></th>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in existing_included">
+										<td style="width:24px; padding: 0px;"></td>
+										<td>{{obj.QTY}}</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
 							</form>
 							<form ng-show="tabs_information['existing'][2].active">
-								<h6>Part 3</h6>
+								<div class="row" style="float: left; width: 100%">
+									<div class="col col-8">
+										<h6>{{selected_option}}:</h6>
+									</div>
+									<div class="col col-4">
+										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_csv('existing')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
+									</div>
+								</div>
+								<table style="width:100%" class="table">
+									<tr>
+										<th></th>
+										<th>QTY</th>
+										<th>PN</th>
+										<th>DESCRIPTION</th>
+										<th>NOTES</th>
+									</tr>
+									<tr ng-repeat="obj in existing_final">
+										<td style="width:24px; padding: 0px;"></td>
+										<td>{{obj.QTY}}</td>
+										<td>{{obj.PN}}</td>
+										<td>{{obj.DESC}}</td>
+										<td>{{obj.NOTES}}</td>
+									</tr>
+								</table>
 							</form>
 						</section>
 					<!-- <hr> -->

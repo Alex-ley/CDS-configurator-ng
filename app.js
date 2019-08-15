@@ -145,12 +145,27 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 		$scope.new_add_ons_included = [];
+		$scope.new_final = [
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+		];
 		$scope.existing_result = [
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
+		$scope.existing_result_chosen = [
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+		];
 		$scope.existing_included = [];
+		$scope.existing_final = [
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+		];
 
 		$scope.current_new_options_1 = {
 			'valid' : true,
@@ -702,15 +717,21 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
-			if (!$scope.new_valid && !$scope.new_valid2) { return false;	}
-			$scope.new_add_ons_included =[];
-			$scope.tabs_information['new_chosen'] = option_chosen;
-			var temp = $scope.current_new_options_1.name.split(" ");
-			$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
-			$scope.tabs_information.new_chosen_style = 'green';
-			var temp = option_chosen == "Option 2" ? $scope.new_result_1 : $scope.new_result_2;
-			// console.log(temp);
-			$scope.new_result_chosen = temp;
+			if (new_or_existing == 'new'){
+				if (!$scope.new_valid && !$scope.new_valid2) { return false;	}
+				$scope.new_add_ons_included =[];
+				$scope.tabs_information['new_chosen'] = option_chosen;
+				var temp = $scope.current_new_options_1.name.split(" ");
+				$scope.tabs_information['new_chosen_type'] = (option_chosen == "Option 1" ? "Enterprise" : temp[2]);
+				$scope.tabs_information.new_chosen_style = 'green';
+				var temp = (option_chosen == "Option 2" ? $scope.new_result_1 : $scope.new_result_2);
+				// console.log(temp);
+				$scope.new_result_chosen = temp;
+			} else {
+				if (!$scope.existing_valid) { return false;	}
+				console.log('move existing to part 2');
+				$scope.existing_result_chosen = $scope.existing_result;
+			}
 			$scope.new_tab(new_or_existing, tab);
 			$scope.update_quantities_result(true, 'new');
 		};
@@ -718,6 +739,28 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.removeItem = function(array_to_delete,index) {
 			console.log(array_to_delete,index);
 			$scope[array_to_delete].splice(index,1);
+		};
+
+		$scope.remove_all_add_ons = function(new_or_existing) {
+			var new_or_existing_result = (new_or_existing == 'new' ? 'new_add_ons' : 'existing_result');
+			$scope[new_or_existing_result] = [];
+		};
+
+		$scope.send_to_final = function(new_or_existing, tab) {
+			if (new_or_existing == 'new') {
+				$scope['new_final'] = $scope['new_result_chosen'];
+				// for (var i = 0; i < $scope['new_add_ons'].length; i++) {
+				// 	$scope['new_final'].push($scope['new_add_ons'][i]);
+				// }
+				$scope['new_final'] = $scope['new_final'].concat($scope['new_add_ons']);
+			} else {
+				$scope['existing_final'] = $scope['existing_result'];
+			}
+			$scope.new_tab(new_or_existing, tab);
+		};
+
+		$scope.export_as_csv = function(new_or_existing) {
+			console.log('export_as_csv');
 		};
 
 	}]);
