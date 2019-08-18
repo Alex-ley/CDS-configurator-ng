@@ -760,7 +760,66 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 
 		$scope.export_as_csv = function(new_or_existing) {
-			console.log('export_as_csv');
+			var todayDate = new Date().toISOString().slice(0,10);
+			console.log('export_as_csv',todayDate);
+			if (new_or_existing == 'new') {
+				var new_or_existing_final = 'new_final';
+				var filename_prefix = 'new_CDS_installation_'
+			} else {
+				var new_or_existing_final = 'existing_final';
+				var filename_prefix = 'existing_CDS_installation_'
+			}
+			var headers_to_export = ['QTY','PN','DESC','NOTES'];
+			var rows_to_export = [['QTY','PN','DESC','NOTES']];
+			for (var i = 0; i < $scope[new_or_existing_final].length; i++) {
+				var current_row = [];
+				for (var j = 0; j < headers_to_export.length; j++) {
+					current_row.push($scope[new_or_existing_final][i][headers_to_export[j]]);
+				}
+				rows_to_export.push(current_row);
+			}
+			$scope.export_to_csv(filename_prefix + todayDate + '.csv',rows_to_export);
+		};
+
+		$scope.export_to_csv = function(filename, rows) {
+	    var processRow = function (row) {
+	        var finalVal = '';
+	        for (var j = 0; j < row.length; j++) {
+	            var innerValue = row[j] === null ? '' : row[j].toString();
+	            if (row[j] instanceof Date) {
+	                innerValue = row[j].toLocaleString();
+	            };
+	            var result = innerValue.replace(/"/g, '""');
+	            if (result.search(/("|,|\n)/g) >= 0)
+	                result = '"' + result + '"';
+	            if (j > 0)
+	                finalVal += ',';
+	            finalVal += result;
+	        }
+	        return finalVal + '\n';
+	    };
+
+	    var csvFile = '';
+	    for (var i = 0; i < rows.length; i++) {
+	        csvFile += processRow(rows[i]);
+	    }
+
+	    var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+	    if (navigator.msSaveBlob) { // IE 10+
+	        navigator.msSaveBlob(blob, filename);
+	    } else {
+	        var link = document.createElement("a");
+	        if (link.download !== undefined) { // feature detection
+	            // Browsers that support HTML5 download attribute
+	            var url = URL.createObjectURL(blob);
+	            link.setAttribute("href", url);
+	            link.setAttribute("download", filename);
+	            link.style.visibility = 'hidden';
+	            document.body.appendChild(link);
+	            link.click();
+	            document.body.removeChild(link);
+	        }
+	    }
 		};
 
 	}]);
