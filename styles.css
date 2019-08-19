@@ -320,7 +320,7 @@ ul#existing-dropdowns{
   }
 
   h1 {
-    font-size: 2.2rem;
+    font-size: 2.2rem !important;
   }
 
   body #new-left{
