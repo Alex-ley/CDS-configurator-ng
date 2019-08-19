@@ -819,7 +819,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 	            link.click();
 	            document.body.removeChild(link);
 	        } else {
-						var encodedUri = 'data:attachment/csv;charset=utf-8,' + encodeURI(csvFile);
+						var encodedUri = 'data:text/csv;charset=utf-8,' + encodeURI(csvFile);
 						window.open(encodedUri);
 	        }
 	    }
