@@ -113,6 +113,11 @@ section {
   border-radius: .3rem;
 }
 
+#jumbotron {
+  max-width: 1200px;
+  margin: auto;
+}
+
 #new-installation ul{
   list-style-type: none;
   float: left;
