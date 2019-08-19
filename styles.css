@@ -309,6 +309,11 @@ ul#existing-dropdowns{
 }
 
 @media only screen and (max-width: 576px){
+  #container {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
   body #new-left{
     clear: both;
     width: 100%;
