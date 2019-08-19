@@ -168,7 +168,7 @@
 										</td>
 										<td>
 											<div class="form-group" style="align-items: center;">
-												<input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
+												<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
 											</div>
 										</td>
 										<td>{{obj.PN}}</td>
@@ -444,7 +444,7 @@
 												<th>NOTES</th>
 										  </tr>
 											<tr ng-repeat="obj in existing_result">
-												<td><div class="form-group"><input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false)"></div></td>
+												<td><div class="form-group"><input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false)"></div></td>
 										    <td>{{obj.PN}}</td>
 										    <td>{{obj.DESC}}</td>
 												<td>{{obj.NOTES}}</td>
@@ -500,7 +500,7 @@
 										</td>
 										<td>
 											<div class="form-group" style="align-items: center;">
-												<input class="{{'form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'existing')">
+												<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'existing')">
 											</div>
 										</td>
 										<td>{{obj.PN}}</td>
@@ -508,8 +508,8 @@
 										<td>{{obj.NOTES}}</td>
 									</tr>
 								</table>
-								<h6>Options alread included:</h6>
-								<table style="width:100%" class="table">
+								<h6 ng-if="existing_included.length > 0">Options alread included:</h6>
+								<table style="width:100%" class="table" ng-if="existing_included.length > 0">
 									<tr>
 										<th></th>
 										<th>QTY</th>

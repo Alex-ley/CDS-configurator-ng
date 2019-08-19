@@ -232,7 +232,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7200.0044",
-            "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
+            "DESC": "Non-targeted MS-processing/ Biopharma QC Package",
             "NOTES": "once per client"
          },
          {
@@ -516,7 +516,7 @@
             "MAX": "3",
             "QTY": "Total_Clients",
             "PN": "7200.0044",
-            "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
+            "DESC": "Non-targeted MS-processing/ Biopharma QC Package",
             "NOTES": "once per client"
          },
          {
@@ -784,7 +784,7 @@
             "MAX": "999999",
             "QTY": "Clients",
             "PN": "7200.0044",
-            "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
+            "DESC": "Non-targeted MS-processing/ Biopharma QC Package",
             "NOTES": "once per client"
          },
          {
@@ -1092,7 +1092,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7200.0044",
-            "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
+            "DESC": "Non-targeted MS-processing/ Biopharma QC Package",
             "NOTES": "once per client"
          },
          {
@@ -1376,7 +1376,7 @@
             "MAX": "1",
             "QTY": "Total_Clients",
             "PN": "7200.0044",
-            "DESC": "Non-targeted MS-Processing/Biopharma QC Package",
+            "DESC": "Non-targeted MS-processing/ Biopharma QC Package",
             "NOTES": "once per client"
          },
          {

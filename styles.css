@@ -355,7 +355,18 @@ ul#existing-dropdowns{
   }
 
   .table {
-    font-size: 3.5vw;
+    font-size: 3vw;
+  }
+
+  .table td, .table th {
+    padding: .5rem !important;
+  }
+
+  .input_qty {
+    width: 35px !important;
+    height: 30px !important;
+    padding: 3px !important;
+    text-align: center !important;
   }
 
 }
