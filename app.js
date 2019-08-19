@@ -124,48 +124,21 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		};
 		$scope.selected_option = '7.x to 7.x+1 upgrade';
 
-		$scope.new_result_1 = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
-		$scope.new_result_2 = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
-		$scope.new_result_chosen = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
-		$scope.new_add_ons = [
+		$scope.placeholder_1 = [
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
 			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
+		$scope.new_result_1 = $scope.placeholder_1;
+		$scope.new_result_2 = $scope.placeholder_1;
+		$scope.new_result_chosen = $scope.placeholder_1;
+		$scope.new_add_ons = $scope.placeholder_1;
 		$scope.new_add_ons_included = [];
-		$scope.new_final = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
-		$scope.existing_result = [
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
-		$scope.existing_result_chosen = [
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
+		$scope.new_final = $scope.placeholder_1;
+		$scope.existing_result = $scope.placeholder_1;
+		$scope.existing_result_chosen = $scope.placeholder_1;
 		$scope.existing_included = [];
-		$scope.existing_final = [
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
-		];
+		$scope.existing_final = $scope.placeholder_1;
 
 		$scope.current_new_options_1 = {
 			'valid' : true,
@@ -609,14 +582,15 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 
 		};
 
-		$scope.update_quantities_result = function(calc_qty, new_or_existing = 'existing') {
+		$scope.update_quantities_result = function(calc_qty, new_or_existing) {
 			// $scope.existing_result = [];
 			// Existing Part (only 1)
-			if (new_or_existing == 'new' && !$scope.new_valid) {
+			var new_or_existing_copy = new_or_existing || 'existing';
+			if (new_or_existing_copy == 'new' && !$scope.new_valid) {
 				return false;
-			} else if (new_or_existing == 'existing' && !$scope.existing_valid) {
+			} else if (new_or_existing_copy == 'existing' && !$scope.existing_valid) {
 				return false;
-			} else if (new_or_existing == 'existing') {
+			} else if (new_or_existing_copy == 'existing') {
 				var parts_array = $scope.existing_options[$scope.selected_installation][$scope.selected_option];
 				var new_or_existing_values = 'existing_values';
 				var new_or_existing_result = 'existing_result';
@@ -714,6 +688,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					}
 				}
 			}
+			window.scrollTo(0, 0);
 		};
 
 		$scope.option_selected = function(option_chosen, new_or_existing, tab) {
