@@ -66,10 +66,10 @@
 									</div>
 									<div id="new-right">
 										<div class="row">
-											<div class="col col-8">
+											<div class="col col-9">
 												<h4>Option 1 (Enterprise):</h4>
 											</div>
-											<div class="col col-4">
+											<div class="col col-3">
 												<button type="button" ng-disabled="!new_valid2" ng-click="option_selected('Option 1', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 1</button>
 											</div>
 										</div>
@@ -89,10 +89,10 @@
 										</table>
 										<br>
 										<div class="row">
-											<div class="col col-8">
+											<div class="col col-9">
 												<h4>Option 2 (Workstation):</h4>
 											</div>
-											<div class="col col-4">
+											<div class="col col-3">
 												<button type="button" ng-disabled="!new_valid" ng-click="option_selected('Option 2', 'new', 1)" style="float: right;" class="btn btn-sm btn-success">Select Option 2</button>
 											</div>
 										</div>
@@ -117,11 +117,11 @@
 							</form>
 							<form ng-show="tabs_information['new'][1].active">
 								<div class="row">
-									<div class="col col-8">
+									<div class="col col-9">
 										<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 									</div>
-									<div class="col col-4">
-										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="send_to_final('new', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Send all to part 3</button>
+									<div class="col col-3">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="send_to_final('new', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
 									</div>
 								</div>
 								<table style="width:100%" class="table">
@@ -141,12 +141,15 @@
 									</tr>
 								</table>
 								<div class="row">
-									<div class="col col-8">
-								<h4>Please edit your optional add-ons:</h4><span style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+									<div class="col col-9">
+								<h4>Please edit your optional add-ons:</h4>
 									</div>
-									<div class="col col-4">
-										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="remove_all_add_ons('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Remove all add-ons</button>
+									<div class="col col-3">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="remove_all_add_ons('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Remove all</button>
 									</div>
+								</div>
+								<div class="row" style="padding-left: 15px;">
+									<span class="valid_text" style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
 								</div>
 								<table style="width:100%" class="table">
 									<tr>
@@ -157,7 +160,7 @@
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in new_add_ons">
-										<td style="width:5px; padding: 0px;">
+										<td style="width:5px; padding: 0px !important;">
 											<button type="button" class="close" aria-label="Close"
 												uib-tooltip="Delete Item"
 												tooltip-placement="top"
@@ -196,10 +199,10 @@
 							</form>
 							<form ng-show="tabs_information['new'][2].active">
 								<div class="row">
-									<div class="col col-8">
+									<div class="col col-9">
 								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 									</div>
-									<div class="col col-4">
+									<div class="col col-3">
 										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="export_as_csv('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
 									</div>
 								</div>
@@ -429,12 +432,15 @@
 											</li>
 										</ul>
 										<div class="row" style="float: left; width: 100%">
-											<div class="col col-8">
-												<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+											<div class="col col-9">
+												<h4>Options:</h4>
 											</div>
-											<div class="col col-4">
+											<div class="col col-3">
 												<button type="button" ng-disabled="!existing_valid" ng-click="option_selected('Option 1', 'existing', 1)" style="float: right; margin-bottom: 5px; margin-right: -30px;" class="btn btn-sm btn-success">Move to part 2</button>
 											</div>
+										</div>
+										<div class="row" style="float: left; width: 100%; padding-left: 15px;">
+											<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
 										</div>
 										<table style="width:100%" class="table">
 										  <tr>
@@ -471,14 +477,16 @@
 									<!-- <input type="submit" value="submit" class="btn btn-success"> -->
 							</form>
 							<form ng-show="tabs_information['existing'][1].active">
-								<h6>{{selected_option}}:</h6>
 								<div class="row">
-									<div class="col col-8">
-										<h4>Options:</h4><span style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+									<div class="col col-9">
+										<h6>{{selected_option}}:</h6>
 									</div>
-									<div class="col col-4">
-										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Send all to part 3</button>
+									<div class="col col-3">
+										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
 									</div>
+								</div>
+								<div class="row" style="padding-left: 15px;">
+									<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
 								</div>
 								<table style="width:100%" class="table">
 									<tr>
@@ -489,7 +497,7 @@
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in existing_result_chosen">
-										<td style="width:5px; padding: 0px;">
+										<td style="width:5px; padding: 0px !important;">
 											<button type="button" class="close" aria-label="Close"
 												uib-tooltip="Delete Item"
 												tooltip-placement="top"
@@ -528,10 +536,10 @@
 							</form>
 							<form ng-show="tabs_information['existing'][2].active">
 								<div class="row">
-									<div class="col col-8">
+									<div class="col col-9">
 										<h6>{{selected_option}}:</h6>
 									</div>
-									<div class="col col-4">
+									<div class="col col-3">
 										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_csv('existing')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
 									</div>
 								</div>

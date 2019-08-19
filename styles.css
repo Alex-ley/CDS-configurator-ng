@@ -323,6 +323,31 @@ ul#existing-dropdowns{
     font-size: 2.2rem !important;
   }
 
+  h2 {
+    font-size: 1.8rem !important;
+  }
+
+  h3 {
+    font-size: 1.4rem !important;
+  }
+
+  h4 {
+    font-size: 1.0rem !important;
+  }
+
+  h5 {
+    font-size: 0.95rem !important;
+  }
+
+  h6 {
+    font-size: 0.9rem !important;
+  }
+
+  .btn-group-sm>.btn, .btn-sm {
+    font-size: .7rem !important;
+    margin-bottom: 3px !important
+  }
+
   body #new-left{
     clear: both;
     width: 100%;
@@ -364,9 +389,18 @@ ul#existing-dropdowns{
 
   .input_qty {
     width: 35px !important;
-    height: 30px !important;
+    height: 25px !important;
     padding: 3px !important;
     text-align: center !important;
+    font-size: 3vw !important;
+  }
+
+  .valid_text {
+    font-size: 0.8rem;
+  }
+
+  button.close {
+    margin-top: 5px !important;
   }
 
 }
