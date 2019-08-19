@@ -818,6 +818,9 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 	            document.body.appendChild(link);
 	            link.click();
 	            document.body.removeChild(link);
+	        } else {
+						var encodedUri = encodeURI(csvFile);
+						window.open(encodedUri);
 	        }
 	    }
 		};
