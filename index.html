@@ -284,7 +284,7 @@
 												<svg viewBox="0 0 300 300" preserveAspectRatio="xMinYMin" ng-show="new_bottom.show">
 													<!-- <my-custom-svg svg-class="new_WE"></my-custom-svg> -->
 													<rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none"/>
-													<g id="Single Edition" class="" style="opacity:{{current_new_options_1.Edition_visible[0]}}" transform="translate(25,25)">
+													<g id="Single Edition" class="" ng-if="current_new_options_1.Edition_visible[0]" transform="translate(25,25)">
 											      <g class="" style="opacity:{{current_new_options_1.IPC_visible[0]}}" transform="translate(0,0)">
 											         <rect fill="#ce8a2b" stroke="#222222" id="svg_2" x="0" y="7.5" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="svg_TF" />
 											           <text x="9" y="24.5" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
@@ -292,7 +292,7 @@
 											         <rect fill="#242424" stroke="#222222" id="svg_5" x="100" y="0" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
 											           <text x="115" y="25" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
 											      </g>
-											      <g class="" style="opacity:{{current_new_options_1.IPC_visible[1]}}" transform="translate(0,45)">
+											      <g class="" ng-if="current_new_options_1.IPC_visible[1]" transform="translate(0,45)">
 															<rect fill="#ce8a2b" stroke="#222222" id="svg_2" x="100" y="7.5" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="svg_TF" />
 																<text x="109" y="24.5" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
 																<line fill="#242424" stroke="#222222" x1="50" y1="20" x2="100" y2="20" id="svg_6" class=""/>
@@ -300,10 +300,10 @@
 																<text x="15" y="25" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
 											      </g>
 											    </g>
-													<g id="Workgroup Edition" class="" style="opacity:{{current_new_options_1.Edition_visible[1]}}" transform="translate(25,25)">
-											      <line fill="#242424" stroke="#222222" x1="125" y1="70" x2="75" y2="115" id="svg_6" stroke-width="{{current_new_options_1.IPC_visible[1]*3}}" class=""/>
-											      <line fill="#242424" stroke="#222222" x1="125" y1="200" x2="75" y2="155" id="svg_6" stroke-width="{{current_new_options_1.IPC_visible[2]*3}}" class=""/>
-											      <g class="" style="opacity:{{current_new_options_1.IPC_visible[0]}}" transform="translate(0,0)">
+													<g id="Workgroup Edition" class="" ng-if="current_new_options_1.Edition_visible[1]" transform="translate(25,25)">
+											      <line fill="#242424" stroke="#222222" x1="125" y1="70" x2="75" y2="115" id="svg_6" ng-attr-stroke-width="{{current_new_options_1.IPC_visible[1]*3}}" class=""/>
+											      <line fill="#242424" stroke="#222222" x1="125" y1="200" x2="75" y2="155" id="svg_6" ng-attr-stroke-width="{{current_new_options_1.IPC_visible[2]*3}}" class=""/>
+											      <g class="" ng-if="current_new_options_1.IPC_visible[0]" transform="translate(0,0)">
 											         <rect fill="#919191" stroke="#222222" id="svg_1" x="0" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[0]['svgClass']}}" />
 											           <text x="9" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
 											           <line fill="#242424" stroke="#222222" x1="50" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>
@@ -319,7 +319,7 @@
 											         <rect fill="#242424" stroke="#222222" id="svg_5" x="100" y="30" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
 											           <text x="115" y="55" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
 											      </g>
-											      <g class="" style="opacity:{{current_new_options_1.IPC_visible[1]}}" transform="translate(0,85)">
+											      <g class="" ng-if="current_new_options_1.IPC_visible[1]" transform="translate(0,85)">
 											         <rect fill="#919191" stroke="#222222" id="svg_1" x="150" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[4]['svgClass']}}" />
 											           <text x="159" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
 											           <line fill="#242424" stroke="#222222" x1="150" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>
@@ -335,7 +335,7 @@
 											         <rect fill="#242424" stroke="#222222" id="svg_5" x="50" y="30" width="50" height="40" style="color: rgb(0, 0, 0);" class=""/>
 											           <text x="65" y="55" style="font: bold 13px sans-serif; fill: #ffffff">IPC</text>
 											      </g>
-											      <g class="" style="opacity:{{current_new_options_1.IPC_visible[2]}}" transform="translate(0,170)">
+											      <g class="" ng-if="current_new_options_1.IPC_visible[2]" transform="translate(0,170)">
 											         <rect fill="#919191" stroke="#222222" id="svg_1" x="0" y="0" width="50" height="25" style="color: rgb(0, 0, 0);" class="" ng-attr-class="{{new_WE[8]['svgClass']}}" />
 											           <text x="9" y="17" style="font: bold 13px sans-serif; fill: #ffffff">INST</text>
 											           <line fill="#242424" stroke="#222222" x1="50" y1="12.5" x2="100" y2="50" id="svg_6" class=""/>

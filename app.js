@@ -345,6 +345,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					if ($scope.new_valid == true) {
 						if ($scope.new_values['Total'].value == 2 & $scope.new_values['TF'].value == 2) {
 							$scope.new_values['Clients'].value = 2;
+							$scope.new_values['Total_Clients'].value = 2 + parseInt($scope.new_values['Data'].value);
 							$scope.new_WE[1].active = true;
 							$scope.new_WE[1].svgClass = 'svg_TF';
 						}
@@ -362,20 +363,11 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
-			$scope.current_new_options_1.IPC_visible = [1,0,0];
-			$scope.new_enterprise['IPC'] = [];
-			$scope.new_WE[16].extra = 0;
-			for (var n = 0; n < $scope.new_values['Clients'].value; n++) {
-				$scope.current_new_options_1.IPC_visible[n] = 1;
-				n < 4 ? $scope.new_enterprise['IPC'].push(n+1) : null;
-				n >= 3 ? $scope.new_WE[16].extra +=1 : null;
-			}
-			$scope.new_enterprise['IPC'][0] = 1;
 
 			if(!$scope.new_valid){
 				if (key !== 'Clients') {
 					$scope.new_values['Clients'].value = 4;  //at least 4 IPC required
-					$scope.new_values['Total_Clients'].value = 4 + $scope.new_values['Data'].value;
+					$scope.new_values['Total_Clients'].value = 4 + parseInt($scope.new_values['Data'].value);
 					$scope.new_enterprise['IPC'] = [1,2,3,4];
 					$scope.new_WE[16].extra = 1;
 				}
@@ -395,7 +387,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				const limit = (key !== 'Clients' ? 12 : Math.min($scope.new_values['Total'].value,12)); //either go to 12 or total instruments if less
 				var counter = 0;
 				var incrementer = 0;
-				while (counter < limit) { //allocate each instrument to a slot taking turns
+				while (counter < limit || counter < 12) { //allocate each instrument to a slot taking turns
 					if ((incrementer+3) % 3 == 0) {
 						if (temp_enterprise['svg_TF']>0) {
 							temp_enterprise['svg_TF'] -=1;
@@ -489,6 +481,22 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					}
 				}
 			}
+
+			var total_insts = parseInt($scope.new_values['Total'].value);
+			var calculated_enterprise_IPC = (!$scope.new_valid ? (((total_insts/2) - 4) * ((total_insts-12)/(total_insts-10))) + 4 : parseInt($scope.new_values['Clients'].value));
+			var enterprise_IPC = (total_insts <= 15 ? Math.floor(calculated_enterprise_IPC) : Math.ceil(calculated_enterprise_IPC + ((total_insts-15)/(total_insts-13))));
+			$scope.new_values['Clients'].value = enterprise_IPC;  //at least 4 IPC required if invalid, scaling up with total_insts
+			$scope.new_values['Total_Clients'].value = enterprise_IPC + parseInt($scope.new_values['Data'].value);
+			$scope.current_new_options_1.IPC_visible = [1,0,0];
+			$scope.new_enterprise['IPC'] = [];
+			$scope.new_WE[16].extra = 0;
+			for (var n = 0; n < $scope.new_values['Total_Clients'].value; n++) {
+				$scope.current_new_options_1.IPC_visible[n] = 1;
+				n < 4 ? $scope.new_enterprise['IPC'].push(n+1) : null;
+				n >= 3 ? $scope.new_WE[16].extra +=1 : null;
+				// console.log('n',n);
+			}
+			$scope.new_enterprise['IPC'][0] = 1;
 
 			// Part 2
 			$scope.new_valid2 = true;
@@ -597,7 +605,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			// $scope.existing_result = [];
 			// Existing Part (only 1)
 			var new_or_existing_copy = new_or_existing || 'existing';
-			if (new_or_existing_copy == 'new' && !$scope.new_valid) {
+			if (new_or_existing_copy == 'new' && !$scope.new_valid && !$scope.new_valid2) {
 				return false;
 			} else if (new_or_existing_copy == 'existing' && !$scope.existing_valid) {
 				return false;
