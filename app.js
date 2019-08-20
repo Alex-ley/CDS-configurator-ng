@@ -138,7 +138,9 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.existing_result = $scope.placeholder_1;
 		$scope.existing_result_chosen = $scope.placeholder_1;
 		$scope.existing_included = [];
+		$scope.existing_included_chosen = [];
 		$scope.existing_final = $scope.placeholder_1;
+		$scope.existing_selected_options = [];
 
 		$scope.current_new_options_1 = {
 			'valid' : true,
@@ -269,6 +271,14 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 
 		$scope.update_new = function(key) {
 			// alert("update new");
+			$scope.new_result_chosen = $scope.placeholder_1;
+			$scope.new_add_ons = $scope.placeholder_1;
+			$scope.new_add_ons_included = [];
+			$scope.new_final = $scope.placeholder_1;
+			$scope.tabs_information['new_chosen'] = 'Please select Option 1 or 2';
+			$scope.tabs_information['new_chosen_type'] = '';
+			$scope.tabs_information['new_chosen_style'] = 'red';
+
 			$scope.new_bottom.show = true;
 			$scope.new_valid = true;
 			$scope.new_valid2 = true;
@@ -514,6 +524,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.update_installation_type = function() {
 			$scope.existing_included =[];
 			$scope.existing_valid = true;
+			$scope.delete_all_existing();
 			$scope.show_hide_existing();
 			$scope.update_existing_result();
 			var calc_qty = true;
@@ -617,14 +628,39 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 						parts_array[j]['QTY'] = qty;
 					}
 				}
+				//error lies here - we clear the existing result and loop through the parts array
+				//instead we should handle existing result differently.
+				//perhaps we could leave this for new case
+				//but for existing, don't clear existing result,
+				//and loop through this rather than the parts array to populate existing included array
 				$scope[new_or_existing_result] = [];
-				$scope[new_or_existing_included] =[];
+				$scope[new_or_existing_included] = [];
 				for (var i = 0; i < parts_array.length; i++) {
 					if (parts_array[i].PN == "included") {
 						$scope[new_or_existing_included].push(parts_array[i]);
 					} else {
 						$scope[new_or_existing_result].push(parts_array[i]);
 					}
+				}
+				if (new_or_existing_copy == 'existing') {
+					var temp_array = $scope.existing_result_chosen;
+					console.log(temp_array);
+					for (var i = temp_array.length-1; i >= 0 ; i--) {
+						if (temp_array[i].PN == "included") {
+							$scope['existing_included_chosen'].unshift(temp_array[i]);
+							$scope.existing_result_chosen.splice(i,1);
+						}
+					}
+					console.log($scope['existing_included_chosen']);
+					$scope.existing_result_chosen = $scope.existing_result_chosen.filter(function(item, index){
+						return $scope.existing_result_chosen.indexOf(item) >= index;
+					});
+					$scope.existing_included_chosen = $scope.existing_included_chosen.filter(function(item, index){
+						return $scope.existing_included_chosen.indexOf(item) >= index;
+					});
+					$scope.existing_selected_options = $scope.existing_selected_options.filter(function(item, index){
+						return $scope.existing_selected_options.indexOf(item) >= index;
+					});
 				}
 			}
 			// $scope.existing_valid = true;
@@ -704,11 +740,15 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				$scope.new_result_chosen = temp;
 			} else {
 				if (!$scope.existing_valid) { return false;	}
-				console.log('move existing to part 2');
-				$scope.existing_result_chosen = $scope.existing_result;
+				// console.log('move existing to part 2');
+				$scope.existing_selected_options.push($scope.selected_option);
+				if ($scope.existing_result_chosen[0]['DESC'] == '_') {
+					$scope.existing_result_chosen = [];
+				}
+				$scope.existing_result_chosen = $scope.existing_result_chosen.concat($scope.existing_result,$scope.existing_included);
 			}
 			$scope.new_tab(new_or_existing, tab);
-			$scope.update_quantities_result(true, 'new');
+			$scope.update_quantities_result(true, new_or_existing);
 		};
 
 		$scope.removeItem = function(array_to_delete,index) {
@@ -721,6 +761,13 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			$scope[new_or_existing_result] = [];
 		};
 
+		$scope.delete_all_existing = function() {
+			$scope.existing_result_chosen = $scope.placeholder_1;
+			$scope.existing_included = [];
+			$scope.existing_final = $scope.placeholder_1;
+			$scope.existing_selected_options = [];
+		};
+
 		$scope.send_to_final = function(new_or_existing, tab) {
 			if (new_or_existing == 'new') {
 				$scope['new_final'] = $scope['new_result_chosen'];
@@ -729,7 +776,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				// }
 				$scope['new_final'] = $scope['new_final'].concat($scope['new_add_ons']);
 			} else {
-				$scope['existing_final'] = $scope['existing_result'];
+				$scope['existing_final'] = $scope['existing_result_chosen'];
 			}
 			$scope.new_tab(new_or_existing, tab);
 		};

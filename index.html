@@ -449,7 +449,7 @@
 										    <th>DESCRIPTION</th>
 												<th>NOTES</th>
 										  </tr>
-											<tr ng-repeat="obj in existing_result">
+											<tr ng-repeat="obj in existing_result track by $index">
 												<td><div class="form-group"><input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false)"></div></td>
 										    <td>{{obj.PN}}</td>
 										    <td>{{obj.DESC}}</td>
@@ -479,14 +479,19 @@
 							<form ng-show="tabs_information['existing'][1].active">
 								<div class="row">
 									<div class="col col-9">
-										<h6>{{selected_option}}:</h6>
+										<h6 ng-repeat="option in existing_selected_options track by $index">{{option + ($last ? ':' : ',')}}</h6>
 									</div>
 									<div class="col col-3">
 										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
 									</div>
 								</div>
-								<div class="row" style="padding-left: 15px;">
-									<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+								<div class="row">
+									<div class="col col-9">
+										<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+									</div>
+									<div class="col col-3">
+										<button type="button" ng-disabled="!existing_valid" ng-click="delete_all_existing()" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Delete all</button>
+									</div>
 								</div>
 								<table style="width:100%" class="table">
 									<tr>
@@ -496,7 +501,7 @@
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
-									<tr ng-repeat="obj in existing_result_chosen">
+									<tr ng-repeat="obj in existing_result_chosen track by $index">
 										<td style="width:5px; padding: 0px !important;">
 											<button type="button" class="close" aria-label="Close"
 												uib-tooltip="Delete Item"
@@ -516,8 +521,8 @@
 										<td>{{obj.NOTES}}</td>
 									</tr>
 								</table>
-								<h6 ng-if="existing_included.length > 0">Options alread included:</h6>
-								<table style="width:100%" class="table" ng-if="existing_included.length > 0">
+								<h6 ng-if="existing_included_chosen.length > 0">Options already included:</h6>
+								<table style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">
 									<tr>
 										<th></th>
 										<th>QTY</th>
@@ -525,7 +530,7 @@
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
-									<tr ng-repeat="obj in existing_included">
+									<tr ng-repeat="obj in existing_included_chosen track by $index">
 										<td style="width:24px; padding: 0px;"></td>
 										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
@@ -537,7 +542,7 @@
 							<form ng-show="tabs_information['existing'][2].active">
 								<div class="row">
 									<div class="col col-9">
-										<h6>{{selected_option}}:</h6>
+										<h6 ng-repeat="option in existing_selected_options track by $index">{{option + ($last ? ':' : ',')}}</h6>
 									</div>
 									<div class="col col-3">
 										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_csv('existing')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
@@ -551,7 +556,7 @@
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
-									<tr ng-repeat="obj in existing_final">
+									<tr ng-repeat="obj in existing_final track by $index">
 										<td style="width:24px; padding: 0px;"></td>
 										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
