@@ -26,19 +26,21 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 	// }]);
 
 	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
+		$scope.xml = "";
+		$scope.json = "";
 		$scope.new_valid = false; //Workstation
 		$scope.new_valid2 = false; //Enterprise
 		$scope.new_values = {
-								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
-								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
-								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
-								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
-								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
-								'Clients':{'valid':'','small':'','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
-								'Data':{'valid':'','small':'','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
-								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':1, 'disabled':false, 'show':false},
-								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
-								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
+								'Packages':{'valid':'','small':'','placeholder':'Packages','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
+								'TF':{'valid':'','small':'','placeholder':'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
+								'GC':{'valid':'','small':'','placeholder':'3rd Party GC','text':'3rd Party GC Instruments','value':null, 'disabled':false, 'show':true},
+								'LC':{'valid':'','small':'','placeholder':'3rd Party LC','text':'3rd Party LC Instruments','value':null, 'disabled':false, 'show':true},
+								'Total':{'valid':'','small':'','placeholder':'Total Instrument','text':'Total Instruments','value':0, 'disabled':true, 'show':true},
+								'Clients':{'valid':'','small':'','placeholder':'IPC Clients','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
+								'Data':{'valid':'','small':'','placeholder':'Remote Data Clients','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
+								'Total_Clients':{'valid':'','small':'','placeholder':'Total Clients','text':'Total Clients','value':1, 'disabled':false, 'show':false},
+								'License':{'valid':'','small':'','placeholder':'License Keys','text':'License key','value':1, 'disabled':false, 'show':false},
+								'Max_Instruments_Clients':{'valid':'','small':'','placeholder':'Max Inst/Clients','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
 		$scope.existing_valid = false;
 		$scope.existing_values = {
@@ -46,7 +48,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'Controllers':{'valid':'','small':'','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
 								'Clients':{'valid':'','small':'','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
-								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments','value':1, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments (LC/IC/GC)','value':1, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
@@ -125,9 +127,9 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.selected_option = '7.x to 7.x+1 upgrade';
 
 		$scope.placeholder_1 = [
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
-			{'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
+			{'Selected': false, 'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Selected': false, 'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'},
+			{'Selected': false, 'Valid':'','MAX':0,'QTY':'_','PN':'_','DESC':'_','NOTES':'_'}
 		];
 		$scope.new_result_1 = $scope.placeholder_1;
 		$scope.new_result_2 = $scope.placeholder_1;
@@ -269,8 +271,12 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			}
 		};
 
+		$scope.counter = 0;
+
 		$scope.update_new = function(key) {
 			// alert("update new");
+			$scope.counter ++;
+			console.log($scope.counter);
 			$scope.new_result_chosen = $scope.placeholder_1;
 			$scope.new_add_ons = $scope.placeholder_1;
 			$scope.new_add_ons_included = [];
@@ -647,7 +653,10 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					if (parts_array[i].PN == "included") {
 						$scope[new_or_existing_included].push(parts_array[i]);
 					} else {
-						$scope[new_or_existing_result].push(parts_array[i]);
+						var temp = parts_array[i];
+						temp.Selected = false;
+						$scope[new_or_existing_result].push(temp)
+						// $scope[new_or_existing_result][i]['Selected'] = false;
 					}
 				}
 				if (new_or_existing_copy == 'existing') {
@@ -759,14 +768,22 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			$scope.update_quantities_result(true, new_or_existing);
 		};
 
+		$scope.click_table_row = function(array_to_modify,index){
+			console.log(index);
+			$scope[array_to_modify][index].Selected = !$scope[array_to_modify][index].Selected;
+		}
+
 		$scope.removeItem = function(array_to_delete,index) {
 			console.log(array_to_delete,index);
 			$scope[array_to_delete].splice(index,1);
 		};
 
-		$scope.remove_all_add_ons = function(new_or_existing) {
+		$scope.modify_all_add_ons = function(new_or_existing, select_or_deselect) {
 			var new_or_existing_result = (new_or_existing == 'new' ? 'new_add_ons' : 'existing_result');
-			$scope[new_or_existing_result] = [];
+			var true_or_false = ( select_or_deselect == 'de-select' ? false : true )
+			for (var i = 0; i < $scope[new_or_existing_result].length; i++) {
+				$scope[new_or_existing_result][i].Selected = true_or_false;
+			}
 		};
 
 		$scope.delete_all_existing = function() {
@@ -782,9 +799,9 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				// for (var i = 0; i < $scope['new_add_ons'].length; i++) {
 				// 	$scope['new_final'].push($scope['new_add_ons'][i]);
 				// }
-				$scope['new_final'] = $scope['new_final'].concat($scope['new_add_ons']);
+				$scope['new_final'] = $scope['new_final'].concat($scope['new_add_ons'].filter(function(item, index){return item.Selected;}));
 			} else {
-				$scope['existing_final'] = $scope['existing_result_chosen'];
+				$scope['existing_final'] = $scope['existing_result_chosen'].filter(function(item, index){return item.Selected;});
 			}
 			$scope.new_tab(new_or_existing, tab);
 		};
@@ -804,7 +821,11 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			for (var i = 0; i < $scope[new_or_existing_final].length; i++) {
 				var current_row = [];
 				for (var j = 0; j < headers_to_export.length; j++) {
+					if (headers_to_export[j] == 'PN') {
+						current_row.push("'" + $scope[new_or_existing_final][i][headers_to_export[j]]);
+					} else {
 					current_row.push($scope[new_or_existing_final][i][headers_to_export[j]]);
+					}
 				}
 				rows_to_export.push(current_row);
 			}
@@ -853,6 +874,46 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 						window.open(encodedUri);
 	        }
 	    }
+		};
+
+		var parseJsonSafe = function(input) {
+        var parsed;
+        try {
+            parsed =  $.parseJSON(input);
+        }catch(e) {
+            console.log('Invalid JSON');
+        }
+        return parsed;
+    };
+    var x2js = new X2JS();
+
+		$scope.xml_to_json = function(){
+			var input = $scope.xml;
+        if(input) {
+          var json = x2js.xml_str2json(input);
+          if(json) {
+              $scope.json = JSON.stringify(json,null,2); //thrid argument enables pretty-print
+          } else {
+              console.log("Invalid JSON data, unable to parse");
+          }
+        }
+		};
+		$scope.json_to_xml = function(){
+			var input = parseJsonSafe($scope.json);
+        if(input) {
+          var xml = x2js.json2xml_str(input);
+          if(xml) {
+              $scope.xml = xml;
+          }
+        }
+		};
+
+		$scope.export_as_xlsx = function(table_name, type, fn, dl) {
+			var elt = document.getElementById(table_name);
+			var wb = XLSX.utils.table_to_book(elt, {sheet:"New CDS", raw: true});
+			return dl ?
+				XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+				XLSX.writeFile(wb, fn || ('new_CDS_installation.' + (type || 'xlsx')));
 		};
 
 	}]);

@@ -38,6 +38,20 @@ section {
   border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
+.selected {
+  background-color: rgba(179, 237, 161);
+  /* background-color: rgba(0,0,0,.075); */
+}
+
+.selected:hover{
+  background-color: rgba(146, 199, 129) !important;
+  /* background-color: rgba(0,0,0,.075); */
+}
+
+.checkbox {
+  margin-left: -10px !important;
+}
+
 .fade:not(.show) {
     opacity: 1 !important;
 }
@@ -309,6 +323,11 @@ ul#existing-dropdowns{
 }
 
 @media only screen and (max-width: 576px){
+  .checkbox {
+    margin-top: -4px !important;
+    margin-left: -20px !important;
+  }
+
   #container {
     padding-right: 0px;
     padding-left: 0px;

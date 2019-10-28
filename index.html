@@ -9,11 +9,14 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+	<script src="xml_to_json.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/shim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/xlsx.full.min.js"></script>
 	<script src="app.js"></script>
 
 	</head>
 
-	<body ng-app="CDS-config-app">
+	<body ng-app="CDS-config-app" ng-cloak>
 		<div id="container" class="container-fluid">
 			<div id="jumbotron" class="jumbotron">
 				<!-- <button type="button" class="btn btn-primary">Primary</button>
@@ -27,6 +30,22 @@
 				<button type="button" class="btn btn-link">Link</button> -->
 				<h1>CDS Configurator App</h1>
 				<div ng-controller="configurator">
+					<div class="row" ng-show="false">
+						<div class="col col-6">
+							<div class="form-group">
+		              <label for="xml">XML Data</label>
+		              <textarea ng-model="xml" class="form-control" rows="10" id="xml" placeholder="Enter your XML data here" autofocus="" spellcheck="false"></textarea>
+									<button ng-click="xml_to_json()" class="btn btn-success" type="button" >XML to JSON</button>
+		          </div>
+						</div>
+						<div class="col col-6">
+							<div class="form-group">
+		            <label for="json">JSON Data</label>
+		              <textarea ng-model="json" class="form-control" id="json" rows="10" placeholder="Enter your JSON data here" spellcheck="false"></textarea>
+									<button ng-click="json_to_xml()" class="btn btn-success" type="button" >JSON to XML</button>
+		          </div>
+						</div>
+					</div>
 					<span>Please select which type of installation:</span><br>
 						<button ng-click="new_installation()" class="{{new_section.class}}" type="button" >New Installation</button>
 						<button ng-click="existing_installation()" class="{{existing_section.class}}" type="button">Existing Installation</button>
@@ -58,7 +77,7 @@
 											<li ng-repeat="(key,value) in new_values" ng-show="new_values[key]['show']">
 												<div class="form-group">
 											    <label for="{{'new_' + key}}"><strong>{{new_values[key]['text']}}</strong></label>
-											    <input class="{{'form-control ' + new_values[key]['valid']}}" aria-describedby="{{'new_' + key + '_help'}}" id="{{'new_' + key}}" type="text" ng-change="update_new(key)" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
+											    <input placeholder="{{new_values[key]['placeholder']}}" class="{{'form-control ' + new_values[key]['valid']}}" aria-describedby="{{'new_' + key + '_help'}}" id="{{'new_' + key}}" type="text" ng-change="update_new(key)" ng-model="new_values[key]['value']" ng-disabled="new_values[key]['disabled']">
 											    <small id="{{'new_' + key + '_help'}}" class="form-text text-muted">{{new_values[key]['small']}}</small>
 											  </div>
 											</li>
@@ -142,16 +161,24 @@
 								</table>
 								<div class="row">
 									<div class="col col-9">
-								<h4>Please edit your optional add-ons:</h4>
-									</div>
-									<div class="col col-3">
-										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="remove_all_add_ons('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Remove all</button>
+										<h4>Please edit your optional add-ons:</h4>
 									</div>
 								</div>
-								<div class="row" style="padding-left: 15px;">
-									<span class="valid_text" style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+								<div class="row">
+									<div class="col col-12">
+										<span class="valid_text" style="color: black;">Please select parts to move forward with</span>
+									</div>
+									<div class="col col-12">
+										<span class="valid_text" style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+									</div>
 								</div>
-								<table style="width:100%" class="table">
+								<div class="row">
+									<div class="col col-12">
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="modify_all_add_ons('new','select')" style="float: left; margin-right: 5px; margin-bottom: 5px;" class="btn btn-sm btn-success">Select all</button>
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="modify_all_add_ons('new','de-select')" style="float: left; margin-bottom: 5px;" class="btn btn-sm btn-danger">De-select all</button>
+									</div>
+								</div>
+								<table style="width:100%" class="table table-hover">
 									<tr>
 										<th></th>
 										<th>QTY</th>
@@ -159,15 +186,17 @@
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
-									<tr ng-repeat="obj in new_add_ons">
+									<tr ng-repeat="obj in new_add_ons track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('new_add_ons',$index)">
 										<td style="width:5px; padding: 0px !important;">
-											<button type="button" class="close" aria-label="Close"
-												uib-tooltip="Delete Item"
+											<div class="close" aria-label="Close"
+												uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
 												tooltip-placement="top"
-												ng-click="removeItem('new_add_ons',$index)"
 												style="float: left; height: 100%; margin-top: 15px;">
-												<span aria-hidden="true">&times;</span>
-											</button>
+												<div class="form-check">
+												  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+												</div>
+												<!-- <span aria-hidden="true">&times;</span> -->
+											</div>
 										</td>
 										<td>
 											<div class="form-group" style="align-items: center;">
@@ -199,23 +228,22 @@
 							</form>
 							<form ng-show="tabs_information['new'][2].active">
 								<div class="row">
-									<div class="col col-9">
+									<div class="col col-6">
 								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 									</div>
-									<div class="col col-3">
+									<div class="col col-6">
 										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="export_as_csv('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
+										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="export_as_xlsx('new_final','xlsx')" style="float: right; margin-right: 5px; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to xlsx</button>
 									</div>
 								</div>
-								<table style="width:100%" class="table" ng-if="new_final.length > 0">
+								<table id="new_final" style="width:100%" class="table" ng-if="new_final.length > 0">
 									<tr>
-										<th></th>
 										<th>QTY</th>
 										<th>PN</th>
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in new_final">
-										<td style="width:24px; padding: 0px;"></td>
 										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
 										<td>{{obj.DESC}}</td>
@@ -481,19 +509,25 @@
 									<div class="col col-9">
 										<h6 ng-repeat="option in existing_selected_options track by $index">{{option + ($last ? ':' : ',')}}</h6>
 									</div>
-									<div class="col col-3">
-										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
+								</div>
+								<div class="row">
+									<div class="col col-12">
+										<span class="valid_text" style="color: black;">Please select parts to move forward with</span>
+									</div>
+									<div class="col col-12">
+										<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col col-9">
-										<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+										<button type="button" ng-disabled="!existing_valid" ng-click="modify_all_add_ons('existing','select')" style="float: left; margin-right: 5px; margin-bottom: 5px;" class="btn btn-sm btn-success">Select all</button>
+										<button type="button" ng-disabled="!existing_valid" ng-click="modify_all_add_ons('existing','de-select')" style="float: left; margin-bottom: 5px;" class="btn btn-sm btn-danger">De-select all</button>
 									</div>
 									<div class="col col-3">
-										<button type="button" ng-disabled="!existing_valid" ng-click="delete_all_existing()" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-danger">Delete all</button>
+										<button type="button" ng-disabled="!existing_valid" ng-click="send_to_final('existing', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
 									</div>
 								</div>
-								<table style="width:100%" class="table">
+								<table style="width:100%" class="table table-hover">
 									<tr>
 										<th></th>
 										<th>QTY</th>
@@ -501,15 +535,17 @@
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
-									<tr ng-repeat="obj in existing_result_chosen track by $index">
+									<tr ng-repeat="obj in existing_result_chosen track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('existing_result_chosen',$index)">
 										<td style="width:5px; padding: 0px !important;">
-											<button type="button" class="close" aria-label="Close"
-												uib-tooltip="Delete Item"
+											<div class="close" aria-label="Close"
+												uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
 												tooltip-placement="top"
-												ng-click="removeItem('existing_result_chosen',$index)"
 												style="float: left; height: 100%; margin-top: 15px;">
-												<span aria-hidden="true">&times;</span>
-											</button>
+												<div class="form-check">
+												  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+												</div>
+												<!-- <span aria-hidden="true">&times;</span> -->
+											</div>
 										</td>
 										<td>
 											<div class="form-group" style="align-items: center;">
@@ -522,7 +558,7 @@
 									</tr>
 								</table>
 								<h6 ng-if="existing_included_chosen.length > 0">Options already included:</h6>
-								<table style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">
+								<table id="existing_final" style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">
 									<tr>
 										<th></th>
 										<th>QTY</th>
@@ -541,23 +577,22 @@
 							</form>
 							<form ng-show="tabs_information['existing'][2].active">
 								<div class="row">
-									<div class="col col-9">
+									<div class="col col-6">
 										<h6 ng-repeat="option in existing_selected_options track by $index">{{option + ($last ? ':' : ',')}}</h6>
 									</div>
-									<div class="col col-3">
+									<div class="col col-6">
 										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_csv('existing')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
+										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_xlsx('existing_final','xlsx')" style="float: right; margin-right: 5px; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to xlsx</button>
 									</div>
 								</div>
 								<table style="width:100%" class="table">
 									<tr>
-										<th></th>
 										<th>QTY</th>
 										<th>PN</th>
 										<th>DESCRIPTION</th>
 										<th>NOTES</th>
 									</tr>
 									<tr ng-repeat="obj in existing_final track by $index">
-										<td style="width:24px; padding: 0px;"></td>
 										<td>{{obj.QTY}}</td>
 										<td>{{obj.PN}}</td>
 										<td>{{obj.DESC}}</td>
