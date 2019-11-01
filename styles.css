@@ -39,12 +39,12 @@ section {
 }
 
 .selected {
-  background-color: rgba(179, 237, 161);
+  background-color: rgba(179, 237, 161, 1);
   /* background-color: rgba(0,0,0,.075); */
 }
 
 .selected:hover{
-  background-color: rgba(146, 199, 129) !important;
+  background-color: rgba(146, 199, 129, 1) !important;
   /* background-color: rgba(0,0,0,.075); */
 }
 
