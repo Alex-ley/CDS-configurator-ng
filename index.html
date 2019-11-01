@@ -179,34 +179,38 @@
 									</div>
 								</div>
 								<table style="width:100%" class="table table-hover">
-									<tr>
-										<th></th>
-										<th>QTY</th>
-										<th>PN</th>
-										<th>DESCRIPTION</th>
-										<th>NOTES</th>
-									</tr>
-									<tr ng-repeat="obj in new_add_ons track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('new_add_ons',$index)">
-										<td style="width:5px; padding: 0px !important;">
-											<div class="close" aria-label="Close"
-												uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
-												tooltip-placement="top"
-												style="float: left; height: 100%; margin-top: 15px;">
-												<div class="form-check">
-												  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+									<thead>
+										<tr>
+											<th></th>
+											<th>QTY</th>
+											<th>PN</th>
+											<th>DESCRIPTION</th>
+											<th>NOTES</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="obj in new_add_ons track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('new_add_ons',$index,$event)">
+											<td style="width:5px; padding: 0px !important;">
+												<div class="close" aria-label="Close"
+													uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
+													tooltip-placement="top"
+													style="float: left; height: 100%; margin-top: 15px;">
+													<div class="form-check">
+													  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-click="$event.stopPropagation();" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+													</div>
+													<!-- <span aria-hidden="true">&times;</span> -->
 												</div>
-												<!-- <span aria-hidden="true">&times;</span> -->
-											</div>
-										</td>
-										<td>
-											<div class="form-group" style="align-items: center;">
-												<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
-											</div>
-										</td>
-										<td>{{obj.PN}}</td>
-										<td>{{obj.DESC}}</td>
-										<td>{{obj.NOTES}}</td>
-									</tr>
+											</td>
+											<td>
+												<div class="form-group" style="align-items: center;">
+													<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'new')">
+												</div>
+											</td>
+											<td>{{obj.PN}}</td>
+											<td>{{obj.DESC}}</td>
+											<td>{{obj.NOTES}}</td>
+										</tr>
+									</tbody>
 								</table>
 								<h6 ng-if="new_add_ons_included.length > 0">Options already included:</h6>
 								<table style="width:100%" class="table" ng-if="new_add_ons_included.length > 0">
@@ -528,34 +532,38 @@
 									</div>
 								</div>
 								<table style="width:100%" class="table table-hover">
-									<tr>
-										<th></th>
-										<th>QTY</th>
-										<th>PN</th>
-										<th>DESCRIPTION</th>
-										<th>NOTES</th>
-									</tr>
-									<tr ng-repeat="obj in existing_result_chosen track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('existing_result_chosen',$index)">
-										<td style="width:5px; padding: 0px !important;">
-											<div class="close" aria-label="Close"
-												uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
-												tooltip-placement="top"
-												style="float: left; height: 100%; margin-top: 15px;">
-												<div class="form-check">
-												  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+									<thead>
+										<tr>
+											<th></th>
+											<th>QTY</th>
+											<th>PN</th>
+											<th>DESCRIPTION</th>
+											<th>NOTES</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="obj in existing_result_chosen track by $index" ng-class="{selected: obj.Selected}" ng-click="click_table_row('existing_result_chosen',$index,$event)">
+											<td style="width:5px; padding: 0px !important;">
+												<div class="close" aria-label="Close"
+													uib-tooltip="{{obj.Selected ? 'De-select Item': 'Select Item'}}"
+													tooltip-placement="top"
+													style="float: left; height: 100%; margin-top: 15px;">
+													<div class="form-check">
+													  <input style="width: 20px; height: 20px;" class="form-check-input checkbox" type="checkbox" ng-click="$event.stopPropagation();" ng-model="obj.Selected" id="{{'defaultCheck' + $index}}">
+													</div>
+													<!-- <span aria-hidden="true">&times;</span> -->
 												</div>
-												<!-- <span aria-hidden="true">&times;</span> -->
-											</div>
-										</td>
-										<td>
-											<div class="form-group" style="align-items: center;">
-												<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'existing')">
-											</div>
-										</td>
-										<td>{{obj.PN}}</td>
-										<td>{{obj.DESC}}</td>
-										<td>{{obj.NOTES}}</td>
-									</tr>
+											</td>
+											<td>
+												<div class="form-group" style="align-items: center;">
+													<input class="{{'input_qty form-control ' + obj.Valid}}" type="text" style="width: 45px; text-align: center;" ng-model="obj.QTY" ng-change="update_quantities_result(false,'existing')">
+												</div>
+											</td>
+											<td>{{obj.PN}}</td>
+											<td>{{obj.DESC}}</td>
+											<td>{{obj.NOTES}}</td>
+										</tr>
+									</tbody>
 								</table>
 								<h6 ng-if="existing_included_chosen.length > 0">Options already included:</h6>
 								<table id="existing_final" style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">

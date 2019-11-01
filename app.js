@@ -93,7 +93,10 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					{'id': 1, 'name': 'Part 2', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
 					{'id': 2, 'name': 'Part 3', 'show': true, 'active': false, 'tabClass':"nav-item nav-link"},
 					{'id': 3, 'name': 'Part 4', 'show': false, 'active': false, 'tabClass':"nav-item nav-link disabled"}
-		  ]
+		  ],
+			'existing_chosen': 'Please select your modificaiton options',
+			'existing_chosen_style' : 'red',
+			'existing_chosen_type': '',
 	  };
 
 		$scope.new_enterprise = {
@@ -104,7 +107,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.new_section = {'show':false,'class':'btn btn-outline-primary'};
 		$scope.new_bottom = {'show':true,'class':'tbc'};
 		$scope.existing_section = {'show':false,'class':'btn btn-outline-primary'};
-		$scope.existing_validation = {'style':'','text':''};
+		$scope.existing_validation = {'style':'red','text':'Please select your modificaiton options'};
 		$scope.new_add_ons_validation = {'style':'','text':''};
 
 		$scope.installation_type = ['Single','Workgroup','Enterprise','Existing SE/WE','Existing a-la-carte'];
@@ -768,9 +771,11 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			$scope.update_quantities_result(true, new_or_existing);
 		};
 
-		$scope.click_table_row = function(array_to_modify,index){
-			console.log(index);
+		$scope.click_table_row = function(array_to_modify, index, $event){
+			console.log(array_to_modify,index);
 			$scope[array_to_modify][index].Selected = !$scope[array_to_modify][index].Selected;
+			// $event.preventDefault();
+			// $event.stopPropagation();
 		}
 
 		$scope.removeItem = function(array_to_delete,index) {
