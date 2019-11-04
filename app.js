@@ -786,9 +786,10 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.modify_all_add_ons = function(new_or_existing, select_or_deselect) {
 			var new_or_existing_result = (new_or_existing == 'new' ? 'new_add_ons' : 'existing_result');
 			var true_or_false = ( select_or_deselect == 'de-select' ? false : true )
-			for (var i = 0; i < $scope[new_or_existing_result].length; i++) {
-				$scope[new_or_existing_result][i].Selected = true_or_false;
-			}
+			$scope[new_or_existing_result] = $scope[new_or_existing_result].map(function(obj){
+				obj.Selected = true_or_false;
+				return obj;
+			});
 		};
 
 		$scope.delete_all_existing = function() {
@@ -915,10 +916,12 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 
 		$scope.export_as_xlsx = function(table_name, type, fn, dl) {
 			var elt = document.getElementById(table_name);
-			var wb = XLSX.utils.table_to_book(elt, {sheet:"New CDS", raw: true});
+			var new_or_existing = table_name.split("_")[0]
+			new_or_existing = new_or_existing[0].toUpperCase() + new_or_existing.slice(1);
+			var wb = XLSX.utils.table_to_book(elt, {sheet: new_or_existing + " CDS", raw: true});
 			return dl ?
 				XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
-				XLSX.writeFile(wb, fn || ('new_CDS_installation.' + (type || 'xlsx')));
+				XLSX.writeFile(wb, fn || (new_or_existing + '_CDS_installation.' + (type || 'xlsx')));
 		};
 
 	}]);

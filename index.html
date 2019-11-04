@@ -137,7 +137,7 @@
 							<form ng-show="tabs_information['new'][1].active">
 								<div class="row">
 									<div class="col col-9">
-										<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
+										<h6><span ng-style="{color: tabs_information.new_chosen_style}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 									</div>
 									<div class="col col-3">
 										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="send_to_final('new', 2)" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Move to part 3</button>
@@ -169,7 +169,7 @@
 										<span class="valid_text" style="color: black;">Please select parts to move forward with</span>
 									</div>
 									<div class="col col-12">
-										<span class="valid_text" style="{{'color: ' + new_add_ons_validation.style + ';'}}">{{new_add_ons_validation.text}}</span>
+										<span class="valid_text" ng-style="{color: new_add_ons_validation.style}">{{new_add_ons_validation.text}}</span>
 									</div>
 								</div>
 								<div class="row">
@@ -233,7 +233,7 @@
 							<form ng-show="tabs_information['new'][2].active">
 								<div class="row">
 									<div class="col col-6">
-								<h6><span style="color: {{tabs_information.new_chosen_style}}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
+								<h6><span ng-style="{color: tabs_information.new_chosen_style}">{{tabs_information['new_chosen'] + ' ' + tabs_information['new_chosen_type']}}</span></h6>
 									</div>
 									<div class="col col-6">
 										<button type="button" ng-disabled="!new_valid && !new_valid2" ng-click="export_as_csv('new')" style="float: right; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to csv</button>
@@ -472,7 +472,7 @@
 											</div>
 										</div>
 										<div class="row" style="float: left; width: 100%; padding-left: 15px;">
-											<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+											<span class="valid_text" ng-style="{color: existing_validation.style}">{{existing_validation.text}}</span>
 										</div>
 										<table style="width:100%" class="table">
 										  <tr>
@@ -519,7 +519,7 @@
 										<span class="valid_text" style="color: black;">Please select parts to move forward with</span>
 									</div>
 									<div class="col col-12">
-										<span class="valid_text" style="{{'color: ' + existing_validation.style + ';'}}">{{existing_validation.text}}</span>
+										<span class="valid_text" ng-style="{color: existing_validation.style}">{{existing_validation.text}}</span>
 									</div>
 								</div>
 								<div class="row">
@@ -566,7 +566,7 @@
 									</tbody>
 								</table>
 								<h6 ng-if="existing_included_chosen.length > 0">Options already included:</h6>
-								<table id="existing_final" style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">
+								<table style="width:100%" class="table" ng-if="existing_included_chosen.length > 0">
 									<tr>
 										<th></th>
 										<th>QTY</th>
@@ -593,7 +593,7 @@
 										<button type="button" ng-disabled="!existing_valid" ng-click="export_as_xlsx('existing_final','xlsx')" style="float: right; margin-right: 5px; margin-bottom: 5px;" class="btn btn-sm btn-success">Export to xlsx</button>
 									</div>
 								</div>
-								<table style="width:100%" class="table">
+								<table id="existing_final" style="width:100%" class="table">
 									<tr>
 										<th>QTY</th>
 										<th>PN</th>
