@@ -32,7 +32,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 		$scope.new_valid2 = false; //Enterprise
 		$scope.new_values = {
 								'Packages':{'valid':'','small':'','placeholder':'Packages','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
-								'TF':{'valid':'','small':'','placeholder':'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'Dual channel instruments count as 2','placeholder':'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','placeholder':'3rd Party GC','text':'3rd Party GC Instruments','value':null, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','placeholder':'3rd Party LC','text':'3rd Party LC Instruments','value':null, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','placeholder':'Total Instrument','text':'Total Instruments','value':0, 'disabled':true, 'show':true},
@@ -44,19 +44,19 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 							};
 		$scope.existing_valid = false;
 		$scope.existing_values = {
-								'Packages':{'valid':'','small':'','text':'Packages on license key','value':1, 'disabled':false, 'show':true},
-								'WE_Packages':{'valid':'','small':'','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
-								'Controllers':{'valid':'','small':'','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
-								'Clients':{'valid':'','small':'','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
-								'TF':{'valid':'','small':'','text':'Thermo Fisher Instruments (LC/IC/GC)','value':1, 'disabled':false, 'show':true},
-								'GC':{'valid':'','small':'','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
-								'LC':{'valid':'','small':'','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
-								'Total':{'valid':'','small':'','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
-								'Data':{'valid':'','small':'','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
-								'Total_Clients':{'valid':'','small':'','text':'Total Clients','value':1, 'disabled':false, 'show':false},
-								'License':{'valid':'','small':'','text':'License key','value':1, 'disabled':false, 'show':false},
-								'Max_Controllers_Clients':{'valid':'','small':'','text':'Max of controllers / clients','value':1, 'disabled':false, 'show':false},
-								'Max_Instruments_Clients':{'valid':'','small':'','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
+								'Packages':{'valid':'','small':'','placeholder': '','text':'Packages on license key','value':1, 'disabled':false, 'show':true},
+								'WE_Packages':{'valid':'','small':'','placeholder': '','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
+								'Controllers':{'valid':'','small':'','placeholder': '','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
+								'Clients':{'valid':'','small':'','placeholder': '','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'Dual channel instruments count as 2','placeholder': 'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
+								'GC':{'valid':'','small':'','placeholder': '','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
+								'LC':{'valid':'','small':'','placeholder': '','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
+								'Total':{'valid':'','small':'','placeholder': '','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
+								'Data':{'valid':'','small':'','placeholder': '','text':'Remote Data Clients','value':0, 'disabled':false, 'show':true},
+								'Total_Clients':{'valid':'','small':'','placeholder': '','text':'Total Clients','value':1, 'disabled':false, 'show':false},
+								'License':{'valid':'','small':'','placeholder': '','text':'License key','value':1, 'disabled':false, 'show':false},
+								'Max_Controllers_Clients':{'valid':'','small':'','placeholder': '','text':'Max of controllers / clients','value':1, 'disabled':false, 'show':false},
+								'Max_Instruments_Clients':{'valid':'','small':'','placeholder': '','text':'Max of instruments / clients','value':1, 'disabled':false, 'show':false}
 							};
 		$scope.new_WE = [
 			{'active': true, 'svgClass':"svg_TF"},

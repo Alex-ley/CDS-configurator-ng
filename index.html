@@ -442,7 +442,7 @@
 											<li ng-repeat="(key,value) in existing_values" ng-show="existing_values[key]['show']">
 												<div class="form-group">
 											    <label for="{{'exist_' + key}}"><strong>{{existing_values[key]['text']}}</strong></label>
-											    <input class="{{'form-control ' + existing_values[key]['valid']}}" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
+											    <input placeholder="{{existing_values[key]['placeholder']}}" class="{{'form-control ' + existing_values[key]['valid']}}" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
 											    <small id="{{'exist_' + key + '_help'}}" class="form-text text-muted">{{existing_values[key]['small']}}</small>
 											  </div>
 											</li>
