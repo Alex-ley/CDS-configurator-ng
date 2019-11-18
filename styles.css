@@ -273,6 +273,10 @@ ul#existing-dropdowns{
     width: 50%;
   }
 
+  body #new_GC_help{
+    height: 19px !important;
+  }
+
   body #new-installation ul li{
     padding-left: 7px;
     padding-right: 7px;
@@ -375,6 +379,10 @@ ul#existing-dropdowns{
   body #new-installation ul li{
     float: left;
     width: 100%;
+  }
+
+  body #new_GC_help{
+    height: 0px !important;
   }
 
   body #new-right{
