@@ -25,14 +25,20 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 	// 	 return directiveDefinitionObject;
 	// }]);
 
-	app.controller('configurator', ['$scope', '$http', function($scope, $http) {
+	app.controller('configurator', ['$window', '$scope', '$http', function($window, $scope, $http) {
 		$scope.xml = "";
 		$scope.json = "";
 		$scope.new_valid = false; //Workstation
 		$scope.new_valid2 = false; //Enterprise
+
+		$scope.windowWidth = $window.innerWidth;
+		angular.element($window).bind('resize', function(){
+		    $scope.windowWidth = $window.innerWidth;
+		    $scope.$apply();
+		});
 		$scope.new_values = {
 								'Packages':{'valid':'','small':'','placeholder':'Packages','text':'Packages on license key','value':1, 'disabled':false, 'show':false},
-								'TF':{'valid':'','small':'Dual channel instruments count as 2','placeholder':'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'Dual channel IC/LC count as 2','placeholder':'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','placeholder':'3rd Party GC','text':'3rd Party GC Instruments','value':null, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','placeholder':'3rd Party LC','text':'3rd Party LC Instruments','value':null, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','placeholder':'Total Instrument','text':'Total Instruments','value':0, 'disabled':true, 'show':true},
@@ -48,7 +54,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 								'WE_Packages':{'valid':'','small':'','placeholder': '','text':'WE Packages on license key','value':1, 'disabled':false, 'show':false},
 								'Controllers':{'valid':'','small':'','placeholder': '','text':'Instrument Controllers','value':1, 'disabled':false, 'show':false},
 								'Clients':{'valid':'','small':'','placeholder': '','text':'Instrument PC Clients','value':1, 'disabled':false, 'show':true},
-								'TF':{'valid':'','small':'Dual channel instruments count as 2','placeholder': 'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
+								'TF':{'valid':'','small':'Dual channel IC/LC count as 2','placeholder': 'Thermo Fisher IC/GC/LC','text':'Thermo Fisher Instruments','value':null, 'disabled':false, 'show':true},
 								'GC':{'valid':'','small':'','placeholder': '','text':'3rd Party GC Instruments','value':0, 'disabled':false, 'show':true},
 								'LC':{'valid':'','small':'','placeholder': '','text':'3rd Party LC Instruments','value':0, 'disabled':false, 'show':true},
 								'Total':{'valid':'','small':'','placeholder': '','text':'Total Instruments','value':1, 'disabled':true, 'show':true},
@@ -298,9 +304,10 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				var LC = parseInt($scope.new_values['LC']['value']) || 0;
 				var Total = TF + GC + LC;
 				$scope.new_values['Total']['value'] = Total;
-
+				console.log(Total);
 				var Clients = parseInt($scope.new_values['Clients']['value']) || 1;
 				var Data = parseInt($scope.new_values['Data']['value']) || 0;
+				console.log(Clients);
 				$scope.new_values['Total_Clients']['value'] = Clients + Data;
 				$scope.new_values['Max_Instruments_Clients']['value'] = Math.max(Clients, Total, 1);
 
@@ -309,16 +316,17 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				$scope.new_options_1[2]['max']['LC'].value = Clients * 2;
 				$scope.new_options_1[2]['max']['Total'].value = Clients * 4;
 				$scope.new_options_1[2]['name'] = Clients + ' x Workgroup Edition';
-
+				console.log('Clients max updates');
 				$scope.new_result_1 = [];
 				$scope.new_result_2 = [];
-
+				console.log('new_results_cleared');
+				console.log($scope.new_options_1.length);
 				for (var i = 0; i < $scope.new_options_1.length; i++){
 					$scope.new_valid = true;
 					for (k in $scope.new_values){
 							if( parseInt($scope.new_values[k].value) > $scope.new_options_1[i]['max'][k].value){
 									$scope.new_valid = false;
-									// console.log(i,k);
+									console.log(i,k);
 							}
 					}
 					if($scope.new_valid){
@@ -341,6 +349,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 						break; //break the outer for loop as valid result was found
 					}
 				}
+				console.log('part_1 done');
 			};
 
 			if (key !== 'Clients') {
@@ -369,10 +378,12 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			else {
 				$scope.new_values['Clients'].small = "Manually entered";
 				$scope.new_values['Clients'].valid = "";
+				console.log(key);
+				console.log($scope.new_values['Clients'].value);
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
-
+			console.log('valid',$scope.new_valid);
 			if(!$scope.new_valid){
 				if (key !== 'Clients') {
 					$scope.new_values['Clients'].value = 4;  //at least 4 IPC required
@@ -396,7 +407,8 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				const limit = (key !== 'Clients' ? 12 : Math.min($scope.new_values['Total'].value,12)); //either go to 12 or total instruments if less
 				var counter = 0;
 				var incrementer = 0;
-				while (counter < limit || counter < 12) { //allocate each instrument to a slot taking turns
+				console.log(limit);
+				while (counter < limit || incrementer < 12) { //allocate each instrument to a slot taking turns
 					if ((incrementer+3) % 3 == 0) {
 						if (temp_enterprise['svg_TF']>0) {
 							temp_enterprise['svg_TF'] -=1;
@@ -492,10 +504,13 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			}
 
 			var total_insts = parseInt($scope.new_values['Total'].value);
-			var calculated_enterprise_IPC = (!$scope.new_valid ? (((total_insts/2) - 4) * ((total_insts-12)/(total_insts-10))) + 4 : parseInt($scope.new_values['Clients'].value));
+			var new_clients = parseInt($scope.new_values['Clients'].value) || 1;
+			var calculated_enterprise_IPC = (!$scope.new_valid ? (((total_insts/2) - 4) * ((total_insts-12)/(total_insts-10))) + 4 : new_clients);
+			console.log(calculated_enterprise_IPC);
 			var enterprise_IPC = (total_insts <= 15 ? Math.floor(calculated_enterprise_IPC) : Math.ceil(calculated_enterprise_IPC + ((total_insts-15)/(total_insts-13))));
-			$scope.new_values['Clients'].value = enterprise_IPC;  //at least 4 IPC required if invalid, scaling up with total_insts
-			$scope.new_values['Total_Clients'].value = enterprise_IPC + parseInt($scope.new_values['Data'].value);
+			$scope.new_values['Clients'].value = (key !== 'Clients' ? enterprise_IPC : $scope.new_values['Clients'].value );  //at least 4 IPC required if invalid, scaling up with total_insts
+			var new_clients_or_calculated = (key !== 'Clients' ? enterprise_IPC : new_clients);
+			$scope.new_values['Total_Clients'].value = new_clients_or_calculated + parseInt($scope.new_values['Data'].value);
 			$scope.current_new_options_1.IPC_visible = [1,0,0];
 			$scope.new_enterprise['IPC'] = [];
 			$scope.new_WE[16].extra = 0;
@@ -578,6 +593,8 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				// alert('a-la-carte');
 			}
 			else if ($scope.selected_installation == 'Enterprise') {
+					$scope.existing_values['WE_Packages']['show'] = false;
+					$scope.existing_values['Controllers']['show'] = false;
 					$scope.existing_values['Data']['show'] = false;
 					// $scope.existing_values['Data']['value'] = 0;
 				// alert('a-la-carte');
@@ -717,7 +734,11 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 					$scope.existing_values[k]['small'] = 'max. qty exceeded';
 				}else {
 					$scope.existing_values[k]['valid'] = '';
-					$scope.existing_values[k]['small'] = '';
+					if (k == 'TF') {
+
+					} else {
+						$scope.existing_values[k]['small'] = '';
+					}
 				}
 			}
 		};
