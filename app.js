@@ -505,7 +505,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			// IMPORTANT TO ONLY CHANGE THE CLIENTS VALUE IF THE KEY ISN'T CLIENTS
 			$scope.new_values['Clients'].value = (key !== 'Clients' ? enterprise_IPC : $scope.new_values['Clients'].value );  //at least 4 IPC required if invalid, scaling up with total_insts
 			var new_clients_or_calculated = (key !== 'Clients' ? enterprise_IPC : new_clients);
-			$scope.new_values['Total_Clients'].value = new_clients_or_calculated + parseInt($scope.new_values['Data'].value);
+			$scope.new_values['Total_Clients'].value = new_clients_or_calculated + (parseInt($scope.new_values['Data'].value) || 0 );
 			$scope.current_new_options_1.IPC_visible = [1,0,0];
 			$scope.new_enterprise['IPC'] = [];
 			$scope.new_WE[16].extra = 0;
