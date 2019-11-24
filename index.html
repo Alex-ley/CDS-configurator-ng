@@ -430,6 +430,7 @@
 						</section>
 						<section id="existing-installation" ng-show="existing_section.show">
 							<h4>Existing Installation</h4>
+							<!-- {{windowWidth}} -->
 							<form ng-show="tabs_information['existing'][0].active"> <!--  ng-submit="TBC()"  -->
 									<div id="existing-left">
 										<ul>
@@ -443,7 +444,7 @@
 												<div class="form-group">
 											    <label for="{{'exist_' + key}}"><strong>{{existing_values[key]['text']}}</strong></label>
 											    <input placeholder="{{existing_values[key]['placeholder']}}" class="{{'form-control ' + existing_values[key]['valid']}}" aria-describedby="{{'exist_' + key + '_help'}}" id="{{'exist_' + key}}" type="text" ng-change="update_existing()" ng-model="existing_values[key]['value']" ng-disabled="existing_values[key]['disabled']">
-											    <small id="{{'exist_' + key + '_help'}}" class="form-text text-muted">{{existing_values[key]['small']}}</small>
+											    <small id="{{'exist_' + key + '_help'}}" ng-style="{height: (key == 'TF' || (key == 'GC' && windowWidth <= 768 && selected_installation.substr(0,5) == 'Exist')) ? 19 +'px' : 0+'px' }" class="form-text text-muted">{{existing_values[key]['small']}}</small>
 											  </div>
 											</li>
 										</ul>

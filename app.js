@@ -304,10 +304,9 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				var LC = parseInt($scope.new_values['LC']['value']) || 0;
 				var Total = TF + GC + LC;
 				$scope.new_values['Total']['value'] = Total;
-				console.log(Total);
+
 				var Clients = parseInt($scope.new_values['Clients']['value']) || 1;
 				var Data = parseInt($scope.new_values['Data']['value']) || 0;
-				console.log(Clients);
 				$scope.new_values['Total_Clients']['value'] = Clients + Data;
 				$scope.new_values['Max_Instruments_Clients']['value'] = Math.max(Clients, Total, 1);
 
@@ -316,17 +315,16 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				$scope.new_options_1[2]['max']['LC'].value = Clients * 2;
 				$scope.new_options_1[2]['max']['Total'].value = Clients * 4;
 				$scope.new_options_1[2]['name'] = Clients + ' x Workgroup Edition';
-				console.log('Clients max updates');
+
 				$scope.new_result_1 = [];
 				$scope.new_result_2 = [];
-				console.log('new_results_cleared');
-				console.log($scope.new_options_1.length);
+
 				for (var i = 0; i < $scope.new_options_1.length; i++){
 					$scope.new_valid = true;
 					for (k in $scope.new_values){
 							if( parseInt($scope.new_values[k].value) > $scope.new_options_1[i]['max'][k].value){
 									$scope.new_valid = false;
-									console.log(i,k);
+									// console.log(i,k);
 							}
 					}
 					if($scope.new_valid){
@@ -349,7 +347,6 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 						break; //break the outer for loop as valid result was found
 					}
 				}
-				console.log('part_1 done');
 			};
 
 			if (key !== 'Clients') {
@@ -378,12 +375,10 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			else {
 				$scope.new_values['Clients'].small = "Manually entered";
 				$scope.new_values['Clients'].valid = "";
-				console.log(key);
-				console.log($scope.new_values['Clients'].value);
 				part_1(); //the user deliberately changed the clients value so don't force it to fit
 			}
 
-			console.log('valid',$scope.new_valid);
+
 			if(!$scope.new_valid){
 				if (key !== 'Clients') {
 					$scope.new_values['Clients'].value = 4;  //at least 4 IPC required
@@ -407,7 +402,7 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 				const limit = (key !== 'Clients' ? 12 : Math.min($scope.new_values['Total'].value,12)); //either go to 12 or total instruments if less
 				var counter = 0;
 				var incrementer = 0;
-				console.log(limit);
+				// IMPORTANT TO HAVE A FAIL SAFE EXIT FROM WHILE LOOP WITH INCREMENTER < 12
 				while (counter < limit || incrementer < 12) { //allocate each instrument to a slot taking turns
 					if ((incrementer+3) % 3 == 0) {
 						if (temp_enterprise['svg_TF']>0) {
@@ -506,8 +501,8 @@ var app = angular.module('CDS-config-app', ['ui.bootstrap']);
 			var total_insts = parseInt($scope.new_values['Total'].value);
 			var new_clients = parseInt($scope.new_values['Clients'].value) || 1;
 			var calculated_enterprise_IPC = (!$scope.new_valid ? (((total_insts/2) - 4) * ((total_insts-12)/(total_insts-10))) + 4 : new_clients);
-			console.log(calculated_enterprise_IPC);
 			var enterprise_IPC = (total_insts <= 15 ? Math.floor(calculated_enterprise_IPC) : Math.ceil(calculated_enterprise_IPC + ((total_insts-15)/(total_insts-13))));
+			// IMPORTANT TO ONLY CHANGE THE CLIENTS VALUE IF THE KEY ISN'T CLIENTS
 			$scope.new_values['Clients'].value = (key !== 'Clients' ? enterprise_IPC : $scope.new_values['Clients'].value );  //at least 4 IPC required if invalid, scaling up with total_insts
 			var new_clients_or_calculated = (key !== 'Clients' ? enterprise_IPC : new_clients);
 			$scope.new_values['Total_Clients'].value = new_clients_or_calculated + parseInt($scope.new_values['Data'].value);
